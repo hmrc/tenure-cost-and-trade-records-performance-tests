@@ -9,7 +9,7 @@
     </appender>
     <!-- set to DEBUG to log all failing HTTP requests -->
     <!-- set to TRACE to log all HTTP requests -->
-    <logger name="io.gatling.http.engine.response" level="TRACE"/>
+    <!--    <logger name="io.gatling.http.engine.response" level="DEBUG"/>-->
 
     <!-- Sets the performance-test-runner log level-->
     <logger name="uk.gov.hmrc.performance" level="INFO"/>

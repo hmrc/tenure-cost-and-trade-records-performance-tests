@@ -14,14 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.tctr.model
+package utils
 
-import scala.util.Random
+import java.time.LocalDateTime
 
-class ReferenceNumberGenerator {
-  def generateReferenceNumberFor6010: Long = {
-    val randomLastThreeDigits = 10001 + Random.nextInt(999) // Generates a random number between 10001 and 10999
-    99996000000L + randomLastThreeDigits // Combines the random digits with the fixed prefix
+object DateUtils {
+
+  val today: LocalDateTime = LocalDateTime.now
+
+  val nextMonth: LocalDateTime = today.plusMonths(1)
+  val pastMonth: LocalDateTime = today.minusMonths(1)
+
+  implicit class RichLocalDateTime(localDateTime: LocalDateTime) {
+    val day: String    = localDateTime.getDayOfMonth.toString
+    val month: String  = localDateTime.getMonthValue.toString
+    val year: String   = localDateTime.getYear.toString
+    val hour: String   = localDateTime.getHour.toString
+    val minute: String = localDateTime.getMinute.toString
   }
-}
 
+}

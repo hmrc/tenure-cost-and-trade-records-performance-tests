@@ -16,15 +16,20 @@
 
 package uk.gov.hmrc.perftests.tctr.config
 
-import net.sf.saxon.functions.hof.RandomNumberGenerator
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.tctr.model.ReferenceNumberGenerator
 
-trait servicesConfig extends ServicesConfiguration{
+import java.time.format.DateTimeFormatter
+import java.time.{Instant, ZoneId, ZonedDateTime}
+
+trait servicesConfig extends ServicesConfiguration {
 
   val generator = new ReferenceNumberGenerator()
-  val referenceNumberFor6011 = generator.generateReferenceNumberFor6011
+  val referenceNumberFor6010: Long = generator.generateReferenceNumberFor6010
 
+  val now: ZonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+  val dateTime: String = now.format(formatter)
 
 
 }
