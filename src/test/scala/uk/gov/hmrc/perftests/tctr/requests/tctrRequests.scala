@@ -68,6 +68,49 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getPastConnectionType: HttpRequestBuilder =
+    http("[GET] get past connection type page")
+      .get(s"$baseUrl/$route/past-connection-type")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPastConnectionType(option: String): HttpRequestBuilder =
+    http("[GET] get past connection type page")
+      .post(s"$baseUrl/$route/past-connection-type")
+      .disableFollowRedirect
+      .formParam("pastConnectionType", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRemoveConnection: HttpRequestBuilder =
+    http("[GET] get remove connection page")
+      .get(s"$baseUrl/$route/remove-connection")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRemoveConnection(name :String, telephone: String, email:String): HttpRequestBuilder =
+    http("[POST] post remove connection page")
+      .post(s"$baseUrl/$route/remove-connection")
+      .disableFollowRedirect
+      .formParam("removeConnectionFullName", name)
+      .formParam("removeConnectionDetails.phone", telephone)
+      .formParam("removeConnectionDetails.email", email)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCYANotConnected: HttpRequestBuilder =
+    http("[GET] get cya not connected page")
+      .get(s"$baseUrl/$route/check-your-answers-not-connected")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postCYANotConnected: HttpRequestBuilder =
+    http("[POST] post cya not connected page")
+      .post(s"$baseUrl/$route/check-your-answers-not-connected")
+      .disableFollowRedirect
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(302))
+
   val getVacantPropertiesPage: HttpRequestBuilder =
     http("[GET] Get vacant properties page")
       .get(s"$baseUrl/$route/vacant-properties")
@@ -217,7 +260,9 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
 
-  val submit6010VacantProperty: Seq[HttpRequestBuilder] = Seq(
+
+
+  val submit6010ForVacantProperty: Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
     postLoginPage("BN12 4AX"),
@@ -242,6 +287,20 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getCYAToVacantProperty,
     postCYAToVacantProperty,
     getDeclarationSentForVacantProperty
+  )
+
+  val submit6010ForNotConnectedToProperty : Seq[HttpRequestBuilder] =Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX"),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("no"),
+    getPastConnectionType,
+    postPastConnectionType("yes"),
+    getRemoveConnection,
+    postRemoveConnection("minion", "01234567891", "minion@example.com"),
+    getCYANotConnected,
+    postCYANotConnected
   )
 }
 

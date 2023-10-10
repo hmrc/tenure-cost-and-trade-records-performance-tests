@@ -23,7 +23,8 @@ import uk.gov.hmrc.perftests.tctr.requests.tctrRequests.getHomePage
 class tctrSimulation extends PerformanceTestRunner {
 
   setup("form-6011-submission", "submit 6011 form")
-  .withRequests(tctrRequests.submit6010VacantProperty:_*)
+//  .withRequests(tctrRequests.submit6010ForVacantProperty:_*)
+  .withRequests(tctrRequests.submit6010ForNotConnectedToProperty:_*)
 
   runSimulation()
 
