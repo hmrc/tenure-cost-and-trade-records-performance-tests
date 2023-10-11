@@ -25,18 +25,82 @@ import utils.DateUtils.{RichLocalDateTime, pastMonth}
 
 object tctrRequests extends HttpConfiguration with servicesConfig {
 
-  val baseUrl: String = baseUrlFor("tenure-cost-and-trade-records-frontend")
-  val route = "/send-trade-and-cost-information"
-
   val getHomePage: HttpRequestBuilder =
     http("[GET] Get send trade and cost information start page")
       .get(s"$baseUrl/$route")
       .check(status.is(200))
-      .check(
-        checkIf(session => session.contains("csrfToken")) {
-          css("input[name=csrfToken]", "value").saveAs("csrfToken")
-        }
-      )
+
+  val getRequestReferenceNumberWithSession: HttpRequestBuilder =
+    http("[GET] get request reference number with session")
+      .get(s"$baseUrl/$route/request-reference-number-with-session")
+      .check(status.is(303))
+
+  val getRequestReferenceNumber: HttpRequestBuilder =
+    http("[GET] get request reference number")
+      .get(s"$baseUrl/$route/request-reference-number")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRequestReferenceNumber(name: String, buildingNum: String, town: String, postcode: String): HttpRequestBuilder =
+    http("[POST] post request reference number page")
+      .post(s"$baseUrl/$route/request-reference-number")
+      .disableFollowRedirect
+      .formParam("requestReferenceNumberBusinessTradingName", name)
+      .formParam("requestReferenceNumberAddress.buildingNameNumber", buildingNum)
+      .formParam("requestReferenceNumberAddress.town", town)
+      .formParam("requestReferenceNumberAddress.postcode", postcode)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRequestReferenceNumberContactDetails: HttpRequestBuilder =
+    http("[GET] get request reference number contact details page")
+      .get(s"$baseUrl/$route/request-reference-number-contact-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRequestReferenceNumberContactDetails(name: String, buildingNum: String, email: String): HttpRequestBuilder =
+    http("[POST] post request reference number contact details page")
+      .post(s"$baseUrl/$route/request-reference-number-contact-details")
+      .disableFollowRedirect
+      .formParam("requestReferenceNumberContactDetailsFullName", name)
+      .formParam("requestReferenceNumberContactDetails.phone", buildingNum)
+      .formParam("requestReferenceNumberContactDetails.email", email)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCYARequestReferenceNumber: HttpRequestBuilder =
+    http("[GET] get cya for request reference number page")
+      .get(s"$baseUrl/$route/check-your-answers-request-reference-number")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postCYARequestReferenceNumber: HttpRequestBuilder =
+    http("[POST] post cya for request reference number page")
+      .post(s"$baseUrl/$route/check-your-answers-request-reference-number")
+      .disableFollowRedirect
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(302))
+
+  val getConfirmationRequestReferenceNumber: HttpRequestBuilder =
+    http("[GET] get confirmation request reference number")
+      .get(s"$baseUrl/$route/confirmation-request-reference-number")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getDownloadPdfReferenceNumber: HttpRequestBuilder =
+    http("[GET] get download pdf reference number page")
+      .get(s"$baseUrl/$route/download-pdf-reference-number")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postDownloadPdfReferenceNumber: HttpRequestBuilder =
+    http("[POST] post download pdf reference number page")
+      .post(s"$baseUrl/$route/download-pdf-reference-number")
+      .disableFollowRedirect
+      .formParam("downloadPdfReferenceNumber", f"$referenceNumberFor6010")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
 
   val getLoginPage: HttpRequestBuilder =
     http("[GET] Get send trade and cost information login page")
@@ -47,7 +111,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
   def postLoginPage(postcode: String): HttpRequestBuilder =
     http("[POST] Login with reference number and postcode page")
       .post(s"$baseUrl/$route/login")
-      .formParam("referenceNumber", f"${referenceNumberFor6010}")
+      .formParam("referenceNumber", f"$referenceNumberFor6010")
       .formParam("continue_button", "continue_button")
       .formParam("postcode", postcode)
       .formParam("start-time", dateTime)
@@ -65,6 +129,22 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .post(s"$baseUrl/$route/are-you-still-connected")
       .disableFollowRedirect
       .formParam("isRelated", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getEditAddressPage: HttpRequestBuilder =
+    http("[GET] get edit address page")
+      .get(s"$baseUrl/$route/edit-address")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postEditAddressPage(BuildingNum: String, town: String, postcode:String): HttpRequestBuilder =
+    http("[POST] post edit address page")
+      .post(s"$baseUrl/$route/edit-address")
+      .disableFollowRedirect
+      .formParam("editAddress.buildingNameNumber", BuildingNum)
+      .formParam("editAddress.town", town)
+      .formParam("editAddress.postcode", postcode)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -88,7 +168,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postRemoveConnection(name :String, telephone: String, email:String): HttpRequestBuilder =
+  def postRemoveConnection(name: String, telephone: String, email: String): HttpRequestBuilder =
     http("[POST] post remove connection page")
       .post(s"$baseUrl/$route/remove-connection")
       .disableFollowRedirect
@@ -161,7 +241,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLettingPartOfPropertyDetails(name: String, description:String, addressLine1:String, town:String, postcode:String): HttpRequestBuilder =
+  def postLettingPartOfPropertyDetails(name: String, description: String, addressLine1: String, town: String, postcode: String): HttpRequestBuilder =
     http("[POST] post letting part of property tenant details")
       .post(s"$baseUrl/$route/letting-part-of-property-details")
       .disableFollowRedirect
@@ -173,13 +253,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  def getLettingPartOfPropertyRent(index: Int) : HttpRequestBuilder =
+  def getLettingPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get annual rent page")
       .get(s"$baseUrl/$route/letting-part-of-property-rent?idx=$index")
+      .queryParam("idx",index)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLettingPartOfPropertyRent(index: Int, rent: Long) : HttpRequestBuilder =
+  def postLettingPartOfPropertyRent(index: Int, rent: Long): HttpRequestBuilder =
     http("[POST] get annual rent page")
       .post(s"$baseUrl/$route/letting-part-of-property-rent?idx=$index")
       .disableFollowRedirect
@@ -190,14 +271,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  def getLettingPartOfPropertyCheckBox(index: Int) : HttpRequestBuilder =
+  def getLettingPartOfPropertyCheckBox(index: Int): HttpRequestBuilder =
     http("[GET] get rent included checkboxes page")
       .get(s"$baseUrl/$route/letting-part-of-property-checkbox?idx=$index")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLettingPartOfPropertyCheckBox(index: Int, option1:String, option2:String) : HttpRequestBuilder =
-    http("[POST] get rent included checkboxes page" )
+  def postLettingPartOfPropertyCheckBox(index: Int, option1: String, option2: String): HttpRequestBuilder =
+    http("[POST] get rent included checkboxes page")
       .post(s"$baseUrl/$route/letting-part-of-property-checkbox?idx=$index")
       .disableFollowRedirect
       .formParam("itemsInRent[]", option1)
@@ -205,13 +286,13 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  def getAddAnotherLettingPartOfProperty(index: Int) :HttpRequestBuilder =
+  def getAddAnotherLettingPartOfProperty(index: Int): HttpRequestBuilder =
     http("[GET] get add another letting part of the property")
       .get(s"$baseUrl/$route/add-another-letting-part-of-property?idx=$index")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postAddAnotherLettingPartOfProperty(index: Int, option: String) :HttpRequestBuilder =
+  def postAddAnotherLettingPartOfProperty(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post add another letting part of the property")
       .post(s"$baseUrl/$route/add-another-letting-part-of-property?idx=$index")
       .disableFollowRedirect
@@ -219,13 +300,13 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getYourContactDetails : HttpRequestBuilder =
+  val getYourContactDetails: HttpRequestBuilder =
     http("[GET] get your contact details page")
       .get(s"$baseUrl/$route/your-contact-details")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postYourContactDetails(name: String, email:String, telephone:String) : HttpRequestBuilder =
+  def postYourContactDetails(name: String, email: String, telephone: String): HttpRequestBuilder =
     http("[POST] post contact details")
       .post(s"$baseUrl/$route/your-contact-details")
       .disableFollowRedirect
@@ -235,15 +316,13 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getCYAToVacantProperty :HttpRequestBuilder =
+  val getCYAToVacantProperty: HttpRequestBuilder =
     http("[GET] get cya for vacant property page")
       .get(s"$baseUrl/$route/check-your-answers-connection-to-vacant-property")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-
-//  #TODO: The url for the POST on the cya page is taking a different url
-
+  //  #TODO: The url for the POST on the cya page is taking a different url
   val postCYAToVacantProperty: HttpRequestBuilder =
     http("[POST] post cya for vacant property page")
       .post(s"$baseUrl/$route/connection-to-property-declaration")
@@ -252,22 +331,44 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("continue_button", "continue_button")
       .check(status.is(303))
 
-
   val getDeclarationSentForVacantProperty: HttpRequestBuilder =
     http("[GET] get declaration for vacant property page")
       .get(s"$baseUrl/$route/connection-to-property-confirmation")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
+  val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
+    getHomePage
+  )
 
+  val downloadPdfVersion: Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    getDownloadPdfReferenceNumber,
+    postDownloadPdfReferenceNumber
+  )
 
+  val requestReferenceNumberJourney: Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    getRequestReferenceNumberWithSession,
+    getRequestReferenceNumber,
+    postRequestReferenceNumber("Minions", "Bannana valley", "London", "BN12 4AX"),
+    getRequestReferenceNumberContactDetails,
+    postRequestReferenceNumberContactDetails("Dru", "01234567891", "eu@example.com"),
+    getCYARequestReferenceNumber,
+    postCYARequestReferenceNumber,
+    getConfirmationRequestReferenceNumber
+  )
 
   val submit6010ForVacantProperty: Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
     postLoginPage("BN12 4AX"),
     getAreYouStillConnectedPage,
-    postAreYouStillConnectedPage("yes"),
+    postAreYouStillConnectedPage("yes-change-address"),
+    getEditAddressPage,
+    postEditAddressPage("999", "GORING-BY-SEA,+WORTHING", "BN12+4AX"),
     getVacantPropertiesPage,
     postVacantProperties("yes"),
     getVacantPropertyStartDate,
@@ -289,7 +390,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getDeclarationSentForVacantProperty
   )
 
-  val submit6010ForNotConnectedToProperty : Seq[HttpRequestBuilder] =Seq(
+  val submit6010ForNotConnectedToProperty: Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
     postLoginPage("BN12 4AX"),

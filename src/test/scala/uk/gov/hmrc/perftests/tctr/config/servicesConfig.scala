@@ -18,18 +18,16 @@ package uk.gov.hmrc.perftests.tctr.config
 
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 import uk.gov.hmrc.perftests.tctr.model.ReferenceNumberGenerator
-
-import java.time.format.DateTimeFormatter
-import java.time.{Instant, ZoneId, ZonedDateTime}
+import utils.DateUtils._
 
 trait servicesConfig extends ServicesConfiguration {
 
-  val generator = new ReferenceNumberGenerator()
-  val referenceNumberFor6010: Long = generator.generateReferenceNumberFor6010
+  val baseUrl: String = baseUrlFor("tenure-cost-and-trade-records-frontend")
+  val route = "/send-trade-and-cost-information"
 
-  val now: ZonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())
-  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-  val dateTime: String = now.format(formatter)
+  val generator = new ReferenceNumberGenerator()
+  def referenceNumberFor6010: Long = generator.generateReferenceNumberFor6010
+  def dateTime: String = now.format(formatter)
 
 
 }

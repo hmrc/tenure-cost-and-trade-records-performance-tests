@@ -18,14 +18,20 @@ package uk.gov.hmrc.perftests.tctr.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.tctr.requests.tctrRequests
-import uk.gov.hmrc.perftests.tctr.requests.tctrRequests.getHomePage
 
 class tctrSimulation extends PerformanceTestRunner {
 
-  setup("form-6011-submission", "submit 6011 form")
-//  .withRequests(tctrRequests.submit6010ForVacantProperty:_*)
+  setup("vacant-property-submission-6010", "submit vacant property journey")
+  .withRequests(tctrRequests.submit6010ForVacantProperty:_*)
+
+  setup("Not-connected-to-property-submission-6010", "submit not connected to property journey")
   .withRequests(tctrRequests.submit6010ForNotConnectedToProperty:_*)
 
-  runSimulation()
+  setup("No-reference-number", "Request reference number journey")
+  .withRequests(tctrRequests.requestReferenceNumberJourney:_*)
 
+  setup("Download-pdf-version", "Download pdf version journey")
+  .withRequests(tctrRequests.downloadPdfVersion:_*)
+
+  runSimulation()
 }
