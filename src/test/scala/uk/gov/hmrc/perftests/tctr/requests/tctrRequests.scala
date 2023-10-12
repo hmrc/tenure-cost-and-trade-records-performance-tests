@@ -322,14 +322,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  //  #TODO: The url for the POST on the cya page is taking a different url
+  //  #TODO: The url for the POST on the cya page is taking a different url, the status code is 302 for staging 303 for local
   val postCYAToVacantProperty: HttpRequestBuilder =
     http("[POST] post cya for vacant property page")
       .post(s"$baseUrl/$route/connection-to-property-declaration")
       .disableFollowRedirect
       .formParam("csrfToken", f"$${csrfToken}")
       .formParam("continue_button", "continue_button")
-      .check(status.is(303))
+      .check(status.is(302))
 
   val getDeclarationSentForVacantProperty: HttpRequestBuilder =
     http("[GET] get declaration for vacant property page")
