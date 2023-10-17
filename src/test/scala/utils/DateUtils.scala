@@ -28,6 +28,7 @@ object DateUtils {
 
   val nextMonth: LocalDateTime = today.plusMonths(1)
   val pastMonth: LocalDateTime = today.minusMonths(1)
+  val pastYear: LocalDateTime = today.minusYears(1)
 
   implicit class RichLocalDateTime(localDateTime: LocalDateTime) {
     val day: String    = localDateTime.getDayOfMonth.toString

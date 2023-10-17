@@ -337,6 +337,28 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
+  val getTaskListPage: HttpRequestBuilder =
+    http("[GET] get task list page")
+      .get(s"$baseUrl/$route/task-list")
+      .check(status.is(200))
+
+  val getNameOfOperatorFromProperty: HttpRequestBuilder =
+    http("[GET] get name of operator from property page")
+      .get(s"$baseUrl/$route/name-of-operator-from-property")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postNameOfOperatorFromProperty(name: String): HttpRequestBuilder =
+    http("[POST] post name of operator from property page")
+      .post(s"$baseUrl/$route/name-of-operator-from-property")
+      .formParam("tradingNameFromProperty", name)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
+
+
   val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
     getHomePage
   )

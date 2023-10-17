@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.tctr.requests.tctrRequests
+import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, TradingHistoryRequests, tctrRequests}
 
 class tctrSimulation extends PerformanceTestRunner {
 
@@ -32,6 +32,12 @@ class tctrSimulation extends PerformanceTestRunner {
 
   setup("Download-pdf-version", "Download pdf version journey")
   .withRequests(tctrRequests.downloadPdfVersion:_*)
+
+  setup("About-property-6011", "Submit about you and your property section")
+    .withRequests(AboutPropertyRequests.aboutYouAndPropertySectionFor6011:_*)
+
+  setup("Trading-History-6011", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6011:_*)
 
   runSimulation()
 }
