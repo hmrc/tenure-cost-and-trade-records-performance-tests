@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, TradingHistoryRequests, tctrRequests}
+import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, FranchiseOrLettingsRequests, TradingHistoryRequests, tctrRequests}
 
 class tctrSimulation extends PerformanceTestRunner {
 
@@ -38,6 +38,9 @@ class tctrSimulation extends PerformanceTestRunner {
 
   setup("Trading-History-6011", "Submit Trading history section")
     .withRequests(TradingHistoryRequests.TradingHistorySectionFor6011:_*)
+
+  setup("Franchise-or-Lettings-6011", "Submit Franchise or Lettings section")
+    .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSectionFor6011:_*)
 
   runSimulation()
 }
