@@ -21,7 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.HttpConfiguration
 import uk.gov.hmrc.perftests.tctr.config.servicesConfig
-import utils.DateUtils.{RichLocalDateTime, pastMonth}
+import utils.DateUtils._
 
 object tctrRequests extends HttpConfiguration with servicesConfig {
 
@@ -354,10 +354,6 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("tradingNameFromProperty", name)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-
-
-
 
   val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
     getHomePage
