@@ -48,17 +48,20 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postTurnOver(AlcoholDrinks: Int, Food: Int, otherReceipts: Int, accommodation: Int, averageOccupancyRate:Int): HttpRequestBuilder =
+  def postTurnOver(AlcoholDrinks: Int, Food: Int, otherReceipts: Int, accommodation: Int, averageOccupancyRate: Int): HttpRequestBuilder =
     http("[POST] post turnover page")
       .post(s"$baseUrl/$route/turnover")
-      .formParam("0.financial-year-end", financialYearEndFormatter.format(today))
-      .formParam("0.weeks", "52")
-      .formParam("0.alcoholic-drinks", AlcoholDrinks)
-      .formParam("0.food", Food)
-      .formParam("0.other-receipts", otherReceipts)
-      .formParam("0.accommodation", accommodation)
-      .formParam("0.average-occupancy-rate", averageOccupancyRate)
-      .formParam("csrfToken", f"$${csrfToken}")
+      .formParamMap(Map(
+        "0.financial-year-end.day" -> today.day,
+        "0.financial-year-end.month" -> pastMonth.month,
+        "0.financial-year-end.year" -> today.year,
+        "0.weeks" -> "52",
+        "0.alcoholic-drinks" -> AlcoholDrinks,
+        "0.food" -> Food,
+        "0.other-receipts" -> otherReceipts,
+        "0.accommodation" -> accommodation,
+        "0.average-occupancy-rate" -> averageOccupancyRate,
+        "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
   val getCYAAboutTradingHistory: HttpRequestBuilder =
@@ -80,7 +83,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     getAboutYourTradingHistory,
     postAboutYourTradingHistory,
     getTurnOverPage,
-    postTurnOver(1234, 50, 2340,230, 30),
+    postTurnOver(1234, 50, 2340, 230, 30),
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes")
   )

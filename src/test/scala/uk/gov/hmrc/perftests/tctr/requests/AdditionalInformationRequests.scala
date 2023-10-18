@@ -21,7 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.HttpConfiguration
 import uk.gov.hmrc.perftests.tctr.config.servicesConfig
-import uk.gov.hmrc.perftests.tctr.requests.tctrRequests._
+import uk.gov.hmrc.perftests.tctr.requests.tctrRequests.{getTaskListPage, _}
 
 object AdditionalInformationRequests extends HttpConfiguration with servicesConfig {
 
@@ -44,7 +44,7 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postContactDetailQuestion(option: String) : HttpRequestBuilder =
+  def postContactDetailQuestion(option: String): HttpRequestBuilder =
     http("[POST] post contact details question page")
       .post(s"$baseUrl/$route/contact-details-question")
       .formParam("contactDetailsQuestion", option)
@@ -57,7 +57,7 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postAlternateContactDetails(name: String, phone: String, email: String, buildingNameNumber: String, town: String, postcode:String): HttpRequestBuilder =
+  def postAlternateContactDetails(name: String, phone: String, email: String, buildingNameNumber: String, town: String, postcode: String): HttpRequestBuilder =
     http("[POST] post alternate contact details page")
       .post(s"$baseUrl/$route/alternate-contact-details")
       .formParamMap(Map(
@@ -73,16 +73,29 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
 
   val getCYAAdditionalInformation: HttpRequestBuilder =
     http("[GET] get cya for additional information")
-      .get(s"$baseUrl/$route/contact-details-question")
+      .get(s"$baseUrl/$route/check-your-answers-additional-information")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postCYAAdditionalInformation(option: String): HttpRequestBuilder =
     http("[POST] post cya for additional information ")
-      .post(s"$baseUrl/$route/contact-details-question")
+      .post(s"$baseUrl/$route/check-your-answers-additional-information")
       .formParam("checkYourAnswersAdditionalInformation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+
+  val postTaskList: HttpRequestBuilder =
+    http("[POST] post submit on the tasklist page")
+      .post(s"$baseUrl/$route/declaration")
+      .formParam("continue_button", "continue_button")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getConfirmationPage: HttpRequestBuilder =
+    http("[GET] get confirmation page")
+      .get(s"$baseUrl/$route/confirmation")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
 
   val additionalInformationSectionFor6011: Seq[HttpRequestBuilder] = Seq(
@@ -94,7 +107,10 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
     getAlternateContactDetails,
     postAlternateContactDetails("Dru", "12345678901", "minion@example.com", "1 teachers colony", "valley", "BN12 4AX"),
     getCYAAdditionalInformation,
-    postCYAAdditionalInformation("yes")
+    postCYAAdditionalInformation("yes"),
+    getTaskListPage,
+    postTaskList,
+    getConfirmationPage
   )
 
 }
