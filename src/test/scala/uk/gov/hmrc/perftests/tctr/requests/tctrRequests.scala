@@ -21,7 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.HttpConfiguration
 import uk.gov.hmrc.perftests.tctr.config.servicesConfig
-import utils.DateUtils.{RichLocalDateTime, pastMonth}
+import utils.DateUtils._
 
 object tctrRequests extends HttpConfiguration with servicesConfig {
 
@@ -85,7 +85,6 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[GET] get confirmation request reference number")
       .get(s"$baseUrl/$route/confirmation-request-reference-number")
       .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   val getDownloadPdfReferenceNumber: HttpRequestBuilder =
     http("[GET] get download pdf reference number page")
@@ -336,6 +335,24 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .get(s"$baseUrl/$route/connection-to-property-confirmation")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getTaskListPage: HttpRequestBuilder =
+    http("[GET] get task list page")
+      .get(s"$baseUrl/$route/task-list")
+      .check(status.is(200))
+
+  val getNameOfOperatorFromProperty: HttpRequestBuilder =
+    http("[GET] get name of operator from property page")
+      .get(s"$baseUrl/$route/name-of-operator-from-property")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postNameOfOperatorFromProperty(name: String): HttpRequestBuilder =
+    http("[POST] post name of operator from property page")
+      .post(s"$baseUrl/$route/name-of-operator-from-property")
+      .formParam("tradingNameFromProperty", name)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
 
   val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
     getHomePage

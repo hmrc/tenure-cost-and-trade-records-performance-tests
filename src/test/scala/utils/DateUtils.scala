@@ -23,11 +23,14 @@ object DateUtils {
 
   val now: ZonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+  val financialYearEndFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
   val today: LocalDateTime = LocalDateTime.now
 
   val nextMonth: LocalDateTime = today.plusMonths(1)
   val pastMonth: LocalDateTime = today.minusMonths(1)
+  val pastYear: LocalDateTime = today.minusYears(1)
+  val nextYear: LocalDateTime = today.plusYears(1)
 
   implicit class RichLocalDateTime(localDateTime: LocalDateTime) {
     val day: String    = localDateTime.getDayOfMonth.toString
