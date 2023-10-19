@@ -85,7 +85,6 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[GET] get confirmation request reference number")
       .get(s"$baseUrl/$route/confirmation-request-reference-number")
       .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   val getDownloadPdfReferenceNumber: HttpRequestBuilder =
     http("[GET] get download pdf reference number page")
