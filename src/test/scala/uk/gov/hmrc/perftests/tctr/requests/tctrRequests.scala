@@ -96,7 +96,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post download pdf reference number page")
       .post(s"$baseUrl/$route/download-pdf-reference-number")
       .disableFollowRedirect
-      .formParam("downloadPdfReferenceNumber", f"$referenceNumberFor6010")
+//      .formParam("downloadPdfReferenceNumber", f"$referenceNumberFor6010")
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -107,15 +107,17 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLoginPage(postcode: String): HttpRequestBuilder =
+  def postLoginPage(postcode: String, form :String): HttpRequestBuilder = {
+    def refNumber: String = dynamicReferenceNumber(form).toString
     http("[POST] Login with reference number and postcode page")
       .post(s"$baseUrl/$route/login")
-      .formParam("referenceNumber", f"$referenceNumberFor6010")
+      .formParam("referenceNumber", f"$refNumber")
       .formParam("continue_button", "continue_button")
       .formParam("postcode", postcode)
       .formParam("start-time", dateTime)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+  }
 
   val getAreYouStillConnectedPage: HttpRequestBuilder =
     http("[GET] Get are you still connected page")
@@ -354,6 +356,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+
   val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
     getHomePage
   )
@@ -378,10 +381,10 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getConfirmationRequestReferenceNumber
   )
 
-  val submit6010ForVacantProperty: Seq[HttpRequestBuilder] = Seq(
+  def submitVacantProperty(form:String): Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
-    postLoginPage("BN12 4AX"),
+    postLoginPage("BN12 4AX", form),
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("yes-change-address"),
     getEditAddressPage,
@@ -407,10 +410,10 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getDeclarationSentForVacantProperty
   )
 
-  val submit6010ForNotConnectedToProperty: Seq[HttpRequestBuilder] = Seq(
+  def submitForNotConnectedToProperty(form: String): Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
-    postLoginPage("BN12 4AX"),
+    postLoginPage("BN12 4AX", form),
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("no"),
     getPastConnectionType,

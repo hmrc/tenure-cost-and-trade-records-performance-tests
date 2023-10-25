@@ -237,10 +237,10 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val aboutYouAndPropertySectionFor6011: Seq[HttpRequestBuilder] = Seq(
+  def aboutYouAndPropertySection(form: String): Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
-    postLoginPage("BN12 4AX"),
+    postLoginPage("BN12 4AX", form),
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("yes"),
     getVacantPropertiesPage,

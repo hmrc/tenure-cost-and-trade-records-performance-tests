@@ -16,16 +16,21 @@
 
 package uk.gov.hmrc.perftests.tctr.simulation
 
+import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, AdditionalInformationRequests, FranchiseOrLettingsRequests, LeaseOrAgreementRequests, TradingHistoryRequests, tctrRequests}
 
 class tctrSimulation extends PerformanceTestRunner {
 
-  setup("vacant-property-submission-6010", "submit vacant property journey")
-  .withRequests(tctrRequests.submit6010ForVacantProperty:_*)
+  def submit6011VacantProperty: Seq[HttpRequestBuilder] = tctrRequests.submitVacantProperty("6011")
+  val submit6011ForNotConnectedToProperty: Seq[HttpRequestBuilder] = tctrRequests.submitForNotConnectedToProperty("6011")
+  val aboutYouAndPropertySectionFor6011: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6011")
 
-  setup("Not-connected-to-property-submission-6010", "submit not connected to property journey")
-  .withRequests(tctrRequests.submit6010ForNotConnectedToProperty:_*)
+  setup("vacant-property-submission-6011", "submit vacant property journey")
+  .withRequests(submit6011VacantProperty:_*)
+
+  setup("Not-connected-to-property-submission-6011", "submit not connected to property journey")
+  .withRequests(submit6011ForNotConnectedToProperty:_*)
 
   setup("No-reference-number", "Request reference number journey")
   .withRequests(tctrRequests.requestReferenceNumberJourney:_*)
@@ -34,7 +39,7 @@ class tctrSimulation extends PerformanceTestRunner {
   .withRequests(tctrRequests.downloadPdfVersion:_*)
 
   setup("About-property-6011", "Submit about you and your property section")
-    .withRequests(AboutPropertyRequests.aboutYouAndPropertySectionFor6011:_*)
+    .withRequests(aboutYouAndPropertySectionFor6011:_*)
 
   setup("Trading-History-6011", "Submit Trading history section")
     .withRequests(TradingHistoryRequests.TradingHistorySectionFor6011:_*)
