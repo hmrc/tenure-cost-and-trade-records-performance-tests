@@ -23,5 +23,21 @@ class ReferenceNumberGenerator {
     val randomLastThreeDigits = 10001 + Random.nextInt(999) // Generates a random number between 10001 and 10999
     99996000000L + randomLastThreeDigits // Combines the random digits with the fixed prefix
   }
+
+  def generateReferenceNumberFor6011: Long =  {
+    val randomLastThreeDigits = 11000 + Random.nextInt(1000) // Generates a random number between 11000 and 11999
+    99996000000L + randomLastThreeDigits // Combines the random digits with the fixed prefix
+  }
+
+  def generateReferenceNumberFor6015: Long = {
+    val randomLastFourDigits = 15000 + Random.nextInt(1000) // Generates a random number between 15000 and 15999
+    99996000000L + randomLastFourDigits // Combines the random digits with the fixed prefix
+  }
+
+  def generateReferenceNumberFor6016: Long = {
+    val randomLastFourDigits = 16000 + Random.nextInt(1000) // Generates a random number between 15000 and 15999
+    99996000000L + randomLastFourDigits // Combines the random digits with the fixed prefix
+  }
+
 }
 

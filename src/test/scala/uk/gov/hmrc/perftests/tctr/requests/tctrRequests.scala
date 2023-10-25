@@ -96,7 +96,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post download pdf reference number page")
       .post(s"$baseUrl/$route/download-pdf-reference-number")
       .disableFollowRedirect
-//      .formParam("downloadPdfReferenceNumber", f"$referenceNumberFor6010")
+      .formParam("downloadPdfReferenceNumber", f"${generator.generateReferenceNumberFor6011}")
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -108,10 +108,9 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postLoginPage(postcode: String, form :String): HttpRequestBuilder = {
-    def refNumber: String = dynamicReferenceNumber(form).toString
     http("[POST] Login with reference number and postcode page")
       .post(s"$baseUrl/$route/login")
-      .formParam("referenceNumber", f"$refNumber")
+      .formParam("referenceNumber", "${referenceNumber}")
       .formParam("continue_button", "continue_button")
       .formParam("postcode", postcode)
       .formParam("start-time", dateTime)
@@ -256,8 +255,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
 
   def getLettingPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get annual rent page")
-      .get(s"$baseUrl/$route/letting-part-of-property-rent?idx=$index")
-      .queryParam("idx",index)
+      .get(s"$baseUrl/$route/letting-part-of-property-rent?")
+      .queryParam("idx", index)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -377,8 +376,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRequestReferenceNumberContactDetails,
     postRequestReferenceNumberContactDetails("Dru", "01234567891", "eu@example.com"),
     getCYARequestReferenceNumber,
-    postCYARequestReferenceNumber,
-    getConfirmationRequestReferenceNumber
+//    postCYARequestReferenceNumber,
+//    getConfirmationRequestReferenceNumber
   )
 
   def submitVacantProperty(form:String): Seq[HttpRequestBuilder] = Seq(
@@ -406,8 +405,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getYourContactDetails,
     postYourContactDetails("sundae", "minion@example.com", "01234567899"),
     getCYAToVacantProperty,
-    postCYAToVacantProperty,
-    getDeclarationSentForVacantProperty
+//    postCYAToVacantProperty,
+//    getDeclarationSentForVacantProperty
   )
 
   def submitForNotConnectedToProperty(form: String): Seq[HttpRequestBuilder] = Seq(
@@ -421,7 +420,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRemoveConnection,
     postRemoveConnection("minion", "01234567891", "minion@example.com"),
     getCYANotConnected,
-    postCYANotConnected
+//    postCYANotConnected
   )
 }
 

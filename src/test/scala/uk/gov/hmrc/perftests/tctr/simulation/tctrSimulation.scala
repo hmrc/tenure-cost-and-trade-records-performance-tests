@@ -19,8 +19,9 @@ package uk.gov.hmrc.perftests.tctr.simulation
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, AdditionalInformationRequests, FranchiseOrLettingsRequests, LeaseOrAgreementRequests, TradingHistoryRequests, tctrRequests}
+import uk.gov.hmrc.perftests.tctr.simulation.setup.SetupSimulation
 
-class tctrSimulation extends PerformanceTestRunner {
+class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   def submit6011VacantProperty: Seq[HttpRequestBuilder] = tctrRequests.submitVacantProperty("6011")
   val submit6011ForNotConnectedToProperty: Seq[HttpRequestBuilder] = tctrRequests.submitForNotConnectedToProperty("6011")

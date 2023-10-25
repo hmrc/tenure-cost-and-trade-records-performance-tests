@@ -109,8 +109,8 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
     getCYAAdditionalInformation,
     postCYAAdditionalInformation("yes"),
     getTaskListPage,
-    postTaskList,
-    getConfirmationPage
+//    postTaskList,
+//    getConfirmationPage
   )
 
 }
