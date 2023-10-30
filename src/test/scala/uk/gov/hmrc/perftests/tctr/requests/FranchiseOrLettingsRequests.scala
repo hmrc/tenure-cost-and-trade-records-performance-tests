@@ -204,7 +204,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .check(status.is(303))
 
 
-  val franchiseOrLettingsSectionFor6011: Seq[HttpRequestBuilder] = Seq(
+  val franchiseOrLettingsSection: Seq[HttpRequestBuilder] = Seq(
     getFranchiseOrLettingsTiedToProperty,
     postFranchiseOrLettingsTiedToProperty("yes"),
     getCateringOperationOrLettingAccommodation,

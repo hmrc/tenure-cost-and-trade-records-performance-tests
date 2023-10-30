@@ -26,8 +26,17 @@ trait servicesConfig extends ServicesConfiguration {
   val route = "/send-trade-and-cost-information"
 
   val generator = new ReferenceNumberGenerator()
-  def referenceNumberFor6010: Long = generator.generateReferenceNumberFor6010
   def dateTime: String = now.format(formatter)
+
+  def dynamicReferenceNumber(form: String): Long = {
+    form match {
+      case "6010" => generator.generateReferenceNumberFor6010
+      case "6011" => generator.generateReferenceNumberFor6011
+      case "6015" => generator.generateReferenceNumberFor6015
+      case "6016" => generator.generateReferenceNumberFor6016
+      case _ => throw new IllegalArgumentException(s"$form is not a valid form")
+    }
+  }
 
 
 }

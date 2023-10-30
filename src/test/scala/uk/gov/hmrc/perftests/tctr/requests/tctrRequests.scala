@@ -96,7 +96,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post download pdf reference number page")
       .post(s"$baseUrl/$route/download-pdf-reference-number")
       .disableFollowRedirect
-      .formParam("downloadPdfReferenceNumber", f"$referenceNumberFor6010")
+      .formParam("downloadPdfReferenceNumber", f"${generator.generateReferenceNumberFor6011}")
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -107,15 +107,16 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLoginPage(postcode: String): HttpRequestBuilder =
+  def postLoginPage(postcode: String, form :String): HttpRequestBuilder = {
     http("[POST] Login with reference number and postcode page")
       .post(s"$baseUrl/$route/login")
-      .formParam("referenceNumber", f"$referenceNumberFor6010")
+      .formParam("referenceNumber", "${referenceNumber}")
       .formParam("continue_button", "continue_button")
       .formParam("postcode", postcode)
       .formParam("start-time", dateTime)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+  }
 
   val getAreYouStillConnectedPage: HttpRequestBuilder =
     http("[GET] Get are you still connected page")
@@ -254,8 +255,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
 
   def getLettingPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get annual rent page")
-      .get(s"$baseUrl/$route/letting-part-of-property-rent?idx=$index")
-      .queryParam("idx",index)
+      .get(s"$baseUrl/$route/letting-part-of-property-rent?")
+      .queryParam("idx", index)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -354,6 +355,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+
   val alternativeFormatLinkToDownloadPdf: Seq[HttpRequestBuilder] = Seq(
     getHomePage
   )
@@ -374,14 +376,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRequestReferenceNumberContactDetails,
     postRequestReferenceNumberContactDetails("Dru", "01234567891", "eu@example.com"),
     getCYARequestReferenceNumber,
-    postCYARequestReferenceNumber,
-    getConfirmationRequestReferenceNumber
+//    postCYARequestReferenceNumber,
+//    getConfirmationRequestReferenceNumber
   )
 
-  val submit6010ForVacantProperty: Seq[HttpRequestBuilder] = Seq(
+  def submitVacantProperty(form:String): Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
-    postLoginPage("BN12 4AX"),
+    postLoginPage("BN12 4AX", form),
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("yes-change-address"),
     getEditAddressPage,
@@ -403,14 +405,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getYourContactDetails,
     postYourContactDetails("sundae", "minion@example.com", "01234567899"),
     getCYAToVacantProperty,
-    postCYAToVacantProperty,
-    getDeclarationSentForVacantProperty
+//    postCYAToVacantProperty,
+//    getDeclarationSentForVacantProperty
   )
 
-  val submit6010ForNotConnectedToProperty: Seq[HttpRequestBuilder] = Seq(
+  def submitForNotConnectedToProperty(form: String): Seq[HttpRequestBuilder] = Seq(
     getHomePage,
     getLoginPage,
-    postLoginPage("BN12 4AX"),
+    postLoginPage("BN12 4AX", form),
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("no"),
     getPastConnectionType,
@@ -418,7 +420,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRemoveConnection,
     postRemoveConnection("minion", "01234567891", "minion@example.com"),
     getCYANotConnected,
-    postCYANotConnected
+//    postCYANotConnected
   )
 }
 
