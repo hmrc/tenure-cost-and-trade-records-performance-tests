@@ -26,6 +26,7 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   def submit6011VacantProperty: Seq[HttpRequestBuilder] = tctrRequests.submitVacantProperty("6011")
   val submit6011ForNotConnectedToProperty: Seq[HttpRequestBuilder] = tctrRequests.submitForNotConnectedToProperty("6011")
   val aboutYouAndPropertySectionFor6011: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6011")
+  val aboutYouAndPropertySectionFor6010: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6010")
 
   setup("vacant-property-submission-6011", "submit vacant property journey")
   .withRequests(submit6011VacantProperty:_*)
@@ -39,20 +40,40 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   setup("Download-pdf-version", "Download pdf version journey")
   .withRequests(tctrRequests.downloadPdfVersion:_*)
 
+  //----6011------
+
   setup("About-property-6011", "Submit about you and your property section")
     .withRequests(aboutYouAndPropertySectionFor6011:_*)
 
   setup("Trading-History-6011", "Submit Trading history section")
-    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6011:_*)
+    .withRequests(TradingHistoryRequests.TradingHistorySection:_*)
 
   setup("Franchise-or-Lettings-6011", "Submit Franchise or Lettings section")
-    .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSectionFor6011:_*)
+    .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSection:_*)
 
   setup("Lease-or-Agreement-6011", "Submit Lease or agreement section")
     .withRequests(LeaseOrAgreementRequests.leaseOrAgreementSectionFor6011:_*)
 
   setup("Additional-information-6011", "Submit Additional information section")
-    .withRequests(AdditionalInformationRequests.additionalInformationSectionFor6011:_*)
+    .withRequests(AdditionalInformationRequests.additionalInformationSection:_*)
+
+  //----6010------
+
+  setup("About-property-6010", "Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6010: _*)
+
+  setup("Trading-History-6010", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySection: _*)
+
+  setup("Franchise-or-Lettings-6010", "Submit Franchise or Lettings section")
+    .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSection: _*)
+
+  setup("Lease-or-Agreement-6010", "Submit Lease or agreement section")
+    .withRequests(LeaseOrAgreementRequests.leaseOrAgreementSectionFor6010: _*)
+
+  setup("Additional-information-6010", "Submit Additional information section")
+    .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
+
 
   runSimulation()
 }

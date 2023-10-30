@@ -98,7 +98,7 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
 
-  val additionalInformationSectionFor6011: Seq[HttpRequestBuilder] = Seq(
+  val additionalInformationSection: Seq[HttpRequestBuilder] = Seq(
     getTaskListPage,
     getFurtherInformationOrRemarks,
     postFurtherInformationOrRemarks("Further information and remarks"),

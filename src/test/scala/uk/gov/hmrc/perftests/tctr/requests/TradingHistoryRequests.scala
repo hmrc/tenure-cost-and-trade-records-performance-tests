@@ -78,7 +78,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
 
-  val TradingHistorySectionFor6011: Seq[HttpRequestBuilder] = Seq(
+  val TradingHistorySection: Seq[HttpRequestBuilder] = Seq(
     getTaskListPage,
     getAboutYourTradingHistory,
     postAboutYourTradingHistory,

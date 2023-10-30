@@ -23,7 +23,9 @@ import uk.gov.hmrc.perftests.tctr.setup.Setup
 trait SetupSimulation {
   this: PerformanceTestRunner =>
   def setupSessionFor6011: List[ActionBuilder] = Setup.setupSession("6011")
+  def setupSessionFor6010: List[ActionBuilder] = Setup.setupSession("6010")
 
-  setup("web-test-prep", "Prepare for test") withActions (setupSessionFor6011: _*)
+  setup("web-test-prep-for-6011", "Prepare for test") withActions (setupSessionFor6011: _*)
+  setup("web-test-prep-for-6010", "Prepare for test") withActions (setupSessionFor6010: _*)
 
 }

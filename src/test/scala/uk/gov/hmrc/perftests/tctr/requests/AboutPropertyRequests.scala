@@ -248,7 +248,7 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     getNameOfOperatorFromProperty,
     postNameOfOperatorFromProperty("Dru"),
     getTradingNameOwnTheProperty,
-    postTradingNameOwnTheProperty("yes"),
+    postTradingNameOwnTheProperty("no"),
     getTradingNamePayingRent,
     postPostTradingNamePayingRent("yes"),
     getAreYouThirdParty,

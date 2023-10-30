@@ -126,7 +126,6 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
 
-
   val getCurrentRentFirstPaid: HttpRequestBuilder =
     http("[GET] get current rent first paid page")
       .get(s"$baseUrl/$route/current-rent-first-paid")
@@ -161,7 +160,336 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
-  val getTenancyLeaseAgreementExpire : HttpRequestBuilder =
+  val getIncludedInYourRent: HttpRequestBuilder =
+    http("[GET] get included in your rent page")
+      .get(s"$baseUrl/$route/included-in-your-rent")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIncludedInYourRent(option: String): HttpRequestBuilder =
+    http("[POST] post included in your rent page")
+      .post(s"$baseUrl/$route/included-in-your-rent")
+      .formParam("includedInYourRent[]", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getDoesTheRentPayable: HttpRequestBuilder =
+    http("[GET] get does the rent payable")
+      .get(s"$baseUrl/$route/does-the-rent-payable")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postDoesRentPayable(option1: String, option2: String): HttpRequestBuilder =
+    http("[POST] post does the rent payable page")
+      .post(s"$baseUrl/$route/does-the-rent-payable")
+      .formParam("rentPayable[]", option1)
+      .formParam("rentPayable[]", option2)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getUltimatelyResponsible: HttpRequestBuilder =
+    http("[GET] get ultimately responsible page")
+      .get(s"$baseUrl/$route/ultimately-responsible")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postUltimatelyResponsible(option1: String, option2: String, option3: String): HttpRequestBuilder =
+    http("[POST] post ultimately responsible page")
+      .post(s"$baseUrl/$route/ultimately-responsible")
+      .formParamMap(Map(
+        "outsideRepairs" -> option1,
+        "insideRepairs" -> option2,
+        "buildingInsurance" -> option3,
+        "continue_button" -> "continue_button",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getRentIncludeTradeServices: HttpRequestBuilder =
+    http("[GET] get rent include trade services")
+      .get(s"$baseUrl/$route/rent-include-trade-services")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentIncludeTradeServices(option: String): HttpRequestBuilder =
+    http("[POST] post rent include trade services")
+      .post(s"$baseUrl/$route/rent-include-trade-services")
+      .formParam("rentIncludeTradeServices", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentIncludeTradeServicesDetails: HttpRequestBuilder =
+    http("[GET] get rent include trade services details")
+      .get(s"$baseUrl/$route/rent-include-trade-services-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentIncludeTradeServiceDetails(sum: String, services: String): HttpRequestBuilder =
+    http("[POST] post rent include trade services details ")
+      .post(s"$baseUrl/$route/rent-include-trade-services-details")
+      .formParam("sumIncludedInRent", sum)
+      .formParam("describeServices", services)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentIncludeFixturesAndFittings: HttpRequestBuilder =
+    http("[GET] get rent include fixtures and fittings")
+      .get(s"$baseUrl/$route/rent-include-fixtures-and-fittings")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentIncludeFixturesAndFittings(option: String): HttpRequestBuilder =
+    http("[POST] post rent includes fixtures and fittings")
+      .post(s"$baseUrl/$route/rent-include-fixtures-and-fittings")
+      .formParam("rentIncludeFixturesAndFittings", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+  val getRentIncludeFixturesAndFittingsDetails: HttpRequestBuilder =
+    http("[GET] get rent includes fixtures and fittings details")
+      .get(s"$baseUrl/$route/rent-include-fixtures-and-fittings-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentIncludeFixturesAndFittingsDetails(rent: String): HttpRequestBuilder =
+    http("[POST] post rent includes fixtures and fittings details")
+      .post(s"$baseUrl/$route/rent-include-fixtures-and-fittings-details")
+      .formParam("rentIncludeFixturesAndFittingsDetails", rent)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentOpenMarketValue: HttpRequestBuilder =
+    http("[GET] get rent open market value")
+      .get(s"$baseUrl/$route/rent-open-market-value")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentOpenMarketValue(option: String): HttpRequestBuilder =
+    http("[POST] post rent open market value")
+      .post(s"$baseUrl/$route/rent-open-market-value")
+      .formParam("rentOpenMarketValue", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentIncreaseAnnuallyWithRpi: HttpRequestBuilder =
+    http("[GET] get rent increased annually with rpi page")
+      .get(s"$baseUrl/$route/rent-increase-annually-with-rpi")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentIncreaseAnnuallyWithRpi(option: String): HttpRequestBuilder =
+    http("[POST] post rent increased annually with rpi page")
+      .post(s"$baseUrl/$route/rent-increase-annually-with-rpi")
+      .formParam("rentIncreasedAnnuallyWithRPIs", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentPayableVaryAccordingToGrossOrNetDetails: HttpRequestBuilder =
+    http("[GET] get rent payable vary according to gross or net details page")
+      .get(s"$baseUrl/$route/rent-payable-vary-according-to-gross-or-net-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+
+  def postRentPayableVaryAccordingToGrossOrNetDetails(details: String): HttpRequestBuilder =
+    http("[POST] post rent payable vary according to gross or net details page")
+      .post(s"$baseUrl/$route/rent-payable-vary-according-to-gross-or-net-details")
+      .formParam("rentPayableVaryAccordingToGrossOrNetDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentPayableVaryOnQuantityOfBeers: HttpRequestBuilder =
+    http("[GET] get rent payable vary on quantity of beers")
+      .get(s"$baseUrl/$route/rent-payable-vary-on-quantity-of-beers")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentPayableVaryOnQuantityOfBeers(option: String): HttpRequestBuilder =
+    http("[POST] post rent payable vary on quantity of beers")
+      .post(s"$baseUrl/$route/rent-payable-vary-on-quantity-of-beers")
+      .formParam("rentPayableVaryOnQuantityOfBeers", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentPayableVaryOnQuantityOfBeersDetails: HttpRequestBuilder =
+    http("[GET] get rent payable vary on quantity of beers details")
+      .get(s"$baseUrl/$route/rent-payable-vary-on-quantity-of-beers-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentPayableVaryOnQuantityOfBeersDetails(details: String): HttpRequestBuilder =
+    http("[POST] post rent payable vary on quantity of beers details")
+      .post(s"$baseUrl/$route/rent-payable-vary-on-quantity-of-beers-details")
+      .formParam("rentPayableVaryOnQuantityOfBeersDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getHowCurrentRentIsFixed: HttpRequestBuilder =
+    http("[GET] get how current rent is fixed page")
+      .get(s"$baseUrl/$route/how-is-current-rent-fixed")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postHowCurrentRentIsFixed(answer: String): HttpRequestBuilder =
+    http("[POST] post how current rent is fixed page")
+      .post(s"$baseUrl/$route/how-is-current-rent-fixed")
+      .formParamMap(Map(
+        "howIsCurrentRentFixed" -> answer,
+        "rentActuallyAgreed.day" -> today.day,
+        "rentActuallyAgreed.month" -> pastMonth.month,
+        "rentActuallyAgreed.year" -> pastYear.year,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getMethodToFixCurrentRent : HttpRequestBuilder =
+    http("[GET] get method to fix current rent")
+      .get(s"$baseUrl/$route/method-to-fix-current-rent")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postMethodToFixCurrentRent(method: String): HttpRequestBuilder =
+    http("[POST] post method to fix current rent")
+      .post(s"$baseUrl/$route/method-to-fix-current-rent")
+      .formParam("methodUsedToFixCurrentRent", method)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getIntervalsOfRentReview: HttpRequestBuilder =
+    http("[GET] get intervals of rent review")
+      .get(s"$baseUrl/$route/intervals-of-rent-review")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIntervalsOfRentReview(details: String): HttpRequestBuilder =
+    http("[POST] post intervals of rent review")
+      .post(s"$baseUrl/$route/intervals-of-rent-review")
+      .formParamMap(Map(
+        "intervalsOfRentReview" -> details,
+        "nextReview.day" -> today.day,
+        "nextReview.month" -> pastMonth.month,
+        "nextReview.year" -> nextYear.year,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getCanRentBeReducedOnReview: HttpRequestBuilder =
+    http("[GET] get can rent be reduced on review page")
+      .get(s"$baseUrl/$route/can-rent-be-reduced-on-review")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCanRentBeReducedOnReview(option: String): HttpRequestBuilder =
+    http("[POST] post can rent be reduced on review pag")
+      .post(s"$baseUrl/$route/can-rent-be-reduced-on-review")
+      .formParam("canRentBeReducedOnReview", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getFormerLeaseSurrendered: HttpRequestBuilder =
+    http("[GET] get former lease surrendered page")
+      .get(s"$baseUrl/$route/former-lease-surrendered")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postFormerLeaseSurrendered(option: String): HttpRequestBuilder =
+    http("[POST] post former lease surrendered page")
+      .post(s"$baseUrl/$route/former-lease-surrendered")
+      .formParam("formerLeaseSurrendered", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getTenantsAdditionsDisregarded: HttpRequestBuilder =
+    http("[GET] get tenants additions disregarded page")
+      .get(s"$baseUrl/$route/tenants-additions-disregarded")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTenantsAdditionsDisregarded(option: String): HttpRequestBuilder =
+    http("[POST] post tenants additions disregarded page")
+      .post(s"$baseUrl/$route/tenants-additions-disregarded")
+      .formParam("tenantsAdditionsDisregarded", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getTenantsAdditionsDisregardedDetails: HttpRequestBuilder =
+    http("[GET] get tenants additions disregarded details page")
+      .get(s"$baseUrl/$route/tenants-additions-disregarded-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTenantsAdditionsDisregardedDetails(details: String): HttpRequestBuilder =
+    http("[POST] post tenants additions disregarded details page")
+      .post(s"$baseUrl/$route/tenants-additions-disregarded-details")
+      .formParam("tenantsAdditionsDisregardedDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPayACapitalSum : HttpRequestBuilder =
+    http("[GET] get pay a capital sum page")
+      .get(s"$baseUrl/$route/pay-a-capital-sum")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def PostPayACapitalSum(option: String) : HttpRequestBuilder =
+    http("[POST] post pay a capital sum page")
+      .post(s"$baseUrl/$route/pay-a-capital-sum")
+      .formParam("payACapitalSum", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getReceivePaymentWhenLeaseGranted : HttpRequestBuilder =
+    http("[GET] get receive payment when lease granted page")
+      .get(s"$baseUrl/$route/receive-payment-when-lease-granted")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postReceivePaymentWhenLeaseGranted(option: String) : HttpRequestBuilder =
+    http("[POST] post receive payment when lease granted page")
+      .post(s"$baseUrl/$route/receive-payment-when-lease-granted")
+      .formParam("receivePaymentWhenLeaseGranted", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getLegalOrPlanningRestrictions: HttpRequestBuilder =
+    http("[GET] get legal or planning restrictions page")
+      .get(s"$baseUrl/$route/legal-or-planning-restrictions")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postLegalOrPlanningRestrictions(option: String): HttpRequestBuilder =
+    http("[POST] post legal or planning restrictions page")
+      .post(s"$baseUrl/$route/legal-or-planning-restrictions")
+      .formParam("legalOrPlanningRestrictions", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getLegalOrPlanningRestrictionsDetails: HttpRequestBuilder =
+    http("[GET] get legal or planning restrictions details page")
+      .get(s"$baseUrl/$route/legal-or-planning-restrictions-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postLegalOrPlanningRestrictionsDetails(details: String): HttpRequestBuilder =
+    http("[POST] post legal or planning restrictions details page")
+      .post(s"$baseUrl/$route/legal-or-planning-restrictions-details")
+      .formParam("legalOrPlanningRestrictionsDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
+
+
+
+
+
+
+
+
+
+  val getTenancyLeaseAgreementExpire: HttpRequestBuilder =
     http("[GET] get tenancy lease agreement expire page")
       .get(s"$baseUrl/$route/tenancy-lease-agreement-expire")
       .check(status.is(200))
@@ -207,6 +535,72 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     postCurrentRentFirstPaid,
     getTenancyLeaseAgreementExpire,
     postTenancyLeaseAgreementExpire,
+    getCYALeaseOrTenure,
+    postCYALeaseOrTenure("yes")
+  )
+
+  val leaseOrAgreementSectionFor6010: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourLandlord,
+    postAboutYourLandlord("Dru", "11 bannana valley", "Minions", "BN12 4AX"),
+    getConnectionToLandlord,
+    postConnectionToLandlord("yes"),
+    getConnectedLandlordDetails,
+    postConnectedLandlordDetails("Details of teh landlord relationship"),
+    getLeaseOAgreementDetails,
+    postLeaseOrAgreementDetails("yes"),
+    getPropertyUseLeaseBackArrangement,
+    postPropertyUseLeaseBackArrangement("yes"),
+    getCurrentAnnualRent,
+    postCurrentAnnualRent("1234"),
+    getCurrentRentFirstPaid,
+    postCurrentRentFirstPaid,
+    getCurrentLeaseOrAgreementBegin,
+    postCurrentLeaseOrAgreementBegin("60"),
+    getIncludedInYourRent,
+    postIncludedInYourRent("vat"),
+    getDoesTheRentPayable,
+    postDoesRentPayable("proprietor", "otherProperty"),
+    getUltimatelyResponsible,
+    postUltimatelyResponsible("landlord", "tenant", "both"),
+    getRentIncludeTradeServices,
+    postRentIncludeTradeServices("yes"),
+    postRentIncludeTradeServiceDetails("1234", "services"),
+    getRentIncludeFixturesAndFittings,
+    postRentIncludeFixturesAndFittings("yes"),
+    getRentIncludeFixturesAndFittingsDetails,
+    postRentIncludeFixturesAndFittingsDetails("1234"),
+    getRentOpenMarketValue,
+    postRentOpenMarketValue("yes"),
+    getRentIncreaseAnnuallyWithRpi,
+    postRentIncreaseAnnuallyWithRpi("yes"),
+    getRentPayableVaryAccordingToGrossOrNetDetails,
+    postRentPayableVaryAccordingToGrossOrNetDetails("details"),
+    getRentPayableVaryOnQuantityOfBeers,
+    postRentPayableVaryOnQuantityOfBeers("yes"),
+    getRentPayableVaryOnQuantityOfBeersDetails,
+    postRentPayableVaryOnQuantityOfBeersDetails("details"),
+    getHowCurrentRentIsFixed,
+    postHowCurrentRentIsFixed("newLeaseAgreement"),
+    getMethodToFixCurrentRent,
+    postMethodToFixCurrentRent("agreement"),
+    getIntervalsOfRentReview,
+    postIntervalsOfRentReview("details"),
+    getCanRentBeReducedOnReview,
+    postCanRentBeReducedOnReview("yes"),
+    getFormerLeaseSurrendered,
+    postFormerLeaseSurrendered("yes"),
+    getTenantsAdditionsDisregarded,
+    postTenantsAdditionsDisregarded("yes"),
+    getTenantsAdditionsDisregardedDetails,
+    postTenantsAdditionsDisregardedDetails("disregarded details"),
+    getPayACapitalSum,
+    PostPayACapitalSum("yes"),
+    getReceivePaymentWhenLeaseGranted,
+    postReceivePaymentWhenLeaseGranted("yes"),
+    getLegalOrPlanningRestrictions,
+    postLegalOrPlanningRestrictions("yes"),
+    getLegalOrPlanningRestrictionsDetails,
+    postLegalOrPlanningRestrictionsDetails("legal or planning restrictions details"),
     getCYALeaseOrTenure,
     postCYALeaseOrTenure("yes")
   )
