@@ -158,7 +158,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .formParamMap(Map(
         "annualRent" -> rent,
         "dateInput.day" -> today.day,
-        "dateInput.month" -> pastMonth.month,
+        "dateInput.month" -> today.month,
         "dateInput.year" -> pastYear.year,
         "csrfToken" -> f"$${csrfToken}"
       ))
