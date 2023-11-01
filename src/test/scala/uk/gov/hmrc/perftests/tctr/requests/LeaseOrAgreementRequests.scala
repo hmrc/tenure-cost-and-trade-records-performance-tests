@@ -200,6 +200,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
         "outsideRepairs" -> option1,
         "insideRepairs" -> option2,
         "buildingInsurance" -> option3,
+        "sharedResponsibilities" -> "shared responsibilities",
         "continue_button" -> "continue_button",
         "csrfToken" -> f"$${csrfToken}"
       ))
