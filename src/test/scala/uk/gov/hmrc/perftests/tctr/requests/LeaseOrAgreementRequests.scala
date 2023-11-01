@@ -136,8 +136,8 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post current rent first paid page")
       .post(s"$baseUrl/$route/current-rent-first-paid")
       .formParamMap(Map(
-        "currentRentFirstPaid.day" -> pastMonth.day,
-        "currentRentFirstPaid.month" -> today.month,
+        "currentRentFirstPaid.day" -> pastDay.day,
+        "currentRentFirstPaid.month" -> pastMonth.month,
         "currentRentFirstPaid.year" -> today.year,
         "csrfToken" -> f"$${csrfToken}"
       ))
