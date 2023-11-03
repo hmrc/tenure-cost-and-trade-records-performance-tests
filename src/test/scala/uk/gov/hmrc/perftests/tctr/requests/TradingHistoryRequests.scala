@@ -37,10 +37,41 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .post(s"$baseUrl/$route/about-your-trading-history")
       .formParam("firstOccupy.month", today.month)
       .formParam("firstOccupy.year", today.year)
-      .formParam("financialYear.day", today.day)
-      .formParam("financialYear.month", today.month)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+
+  val getFinancialYearEnd: HttpRequestBuilder =
+    http("[GET] get financial year end page")
+      .get(s"$baseUrl/$route/financial-year-end")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postFinancialYearEnd: HttpRequestBuilder =
+    http("[POST] post financial year end page")
+      .post(s"$baseUrl/$route/financial-year-end")
+      .formParam("financialYear.day", today.day)
+      .formParam("financialYear.month", today.month)
+      .formParam("yearEndChanged", "true")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getFinancialYearEndDates: HttpRequestBuilder =
+    http("[GET] get financial year end dates page")
+      .get(s"$baseUrl/$route/financial-year-end-dates")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postFinancialYearEndDates: HttpRequestBuilder =
+    http("[POST] post financial year end dates page")
+      .post(s"$baseUrl/$route/financial-year-end-dates")
+      .formParamMap(Map(
+        "financial-year-end[0].date.day" -> today.day,
+        "financial-year-end[0].date.month" -> today.month,
+        "financial-year-end[0].date.year" -> today.year,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
 
   val getTurnOverPage: HttpRequestBuilder =
     http("[GET] get turnover page")
@@ -82,6 +113,10 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     getTaskListPage,
     getAboutYourTradingHistory,
     postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDates,
+    postFinancialYearEndDates,
     getTurnOverPage,
     postTurnOver(1234, 50, 2340, 230, 30),
     getCYAAboutTradingHistory,
