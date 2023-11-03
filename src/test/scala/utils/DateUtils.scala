@@ -29,6 +29,7 @@ object DateUtils {
 
   val nextMonth: LocalDateTime = today.plusMonths(1)
   val pastMonth: LocalDateTime = today.minusMonths(1)
+  val pastDay: LocalDateTime = today.minusDays(1)
   val pastYear: LocalDateTime = today.minusYears(1)
   val nextYear: LocalDateTime = today.plusYears(1)
 

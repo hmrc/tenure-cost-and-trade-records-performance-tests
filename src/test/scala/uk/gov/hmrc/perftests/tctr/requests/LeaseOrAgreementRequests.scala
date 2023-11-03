@@ -136,7 +136,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post current rent first paid page")
       .post(s"$baseUrl/$route/current-rent-first-paid")
       .formParamMap(Map(
-        "currentRentFirstPaid.day" -> today.day,
+        "currentRentFirstPaid.day" -> pastDay.day,
         "currentRentFirstPaid.month" -> pastMonth.month,
         "currentRentFirstPaid.year" -> today.year,
         "csrfToken" -> f"$${csrfToken}"
@@ -200,6 +200,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
         "outsideRepairs" -> option1,
         "insideRepairs" -> option2,
         "buildingInsurance" -> option3,
+        "sharedResponsibilities" -> "shared responsibilities",
         "continue_button" -> "continue_button",
         "csrfToken" -> f"$${csrfToken}"
       ))
@@ -337,7 +338,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParamMap(Map(
         "howIsCurrentRentFixed" -> answer,
         "rentActuallyAgreed.day" -> today.day,
-        "rentActuallyAgreed.month" -> pastMonth.month,
+        "rentActuallyAgreed.month" -> today.month,
         "rentActuallyAgreed.year" -> pastYear.year,
         "csrfToken" -> f"$${csrfToken}"
       ))
@@ -368,7 +369,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParamMap(Map(
         "intervalsOfRentReview" -> details,
         "nextReview.day" -> today.day,
-        "nextReview.month" -> pastMonth.month,
+        "nextReview.month" -> today.month,
         "nextReview.year" -> nextYear.year,
         "csrfToken" -> f"$${csrfToken}"
       ))

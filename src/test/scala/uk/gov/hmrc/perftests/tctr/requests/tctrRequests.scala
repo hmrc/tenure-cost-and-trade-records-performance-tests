@@ -376,8 +376,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRequestReferenceNumberContactDetails,
     postRequestReferenceNumberContactDetails("Dru", "01234567891", "eu@example.com"),
     getCYARequestReferenceNumber,
-//    postCYARequestReferenceNumber,
-//    getConfirmationRequestReferenceNumber
+    postCYARequestReferenceNumber,
+    getConfirmationRequestReferenceNumber
   )
 
   def submitVacantProperty(form:String): Seq[HttpRequestBuilder] = Seq(
@@ -405,8 +405,8 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getYourContactDetails,
     postYourContactDetails("sundae", "minion@example.com", "01234567899"),
     getCYAToVacantProperty,
-//    postCYAToVacantProperty,
-//    getDeclarationSentForVacantProperty
+    postCYAToVacantProperty,
+    getDeclarationSentForVacantProperty
   )
 
   def submitForNotConnectedToProperty(form: String): Seq[HttpRequestBuilder] = Seq(
@@ -420,7 +420,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getRemoveConnection,
     postRemoveConnection("minion", "01234567891", "minion@example.com"),
     getCYANotConnected,
-//    postCYANotConnected
+    postCYANotConnected
   )
 }
 

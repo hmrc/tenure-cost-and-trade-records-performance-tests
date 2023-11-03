@@ -35,7 +35,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
   val postAboutYourTradingHistory: HttpRequestBuilder =
     http("[POST] post about your trading history page")
       .post(s"$baseUrl/$route/about-your-trading-history")
-      .formParam("firstOccupy.month", pastMonth.month)
+      .formParam("firstOccupy.month", today.month)
       .formParam("firstOccupy.year", today.year)
       .formParam("financialYear.day", today.day)
       .formParam("financialYear.month", today.month)
@@ -53,7 +53,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .post(s"$baseUrl/$route/turnover")
       .formParamMap(Map(
         "0.financial-year-end.day" -> today.day,
-        "0.financial-year-end.month" -> pastMonth.month,
+        "0.financial-year-end.month" -> today.month,
         "0.financial-year-end.year" -> today.year,
         "0.weeks" -> "52",
         "0.alcoholic-drinks" -> AlcoholDrinks,
