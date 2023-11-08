@@ -149,6 +149,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
   def getLettingOtherPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get letting other part of property rent page")
       .get(s"$baseUrl/$route/letting-other-part-of-property-rent?idx=$index")
+      .queryParam("idx", index)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
