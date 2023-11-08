@@ -35,7 +35,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
   val postAboutYourTradingHistory: HttpRequestBuilder =
     http("[POST] post about your trading history page")
       .post(s"$baseUrl/$route/about-your-trading-history")
-      .formParam("firstOccupy.month", today.month)
+      .formParam("firstOccupy.month", pastMonth.month)
       .formParam("firstOccupy.year", today.year)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
