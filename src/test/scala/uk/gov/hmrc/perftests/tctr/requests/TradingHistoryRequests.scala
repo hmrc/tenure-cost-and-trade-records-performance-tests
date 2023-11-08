@@ -83,9 +83,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post turnover page")
       .post(s"$baseUrl/$route/turnover")
       .formParamMap(Map(
-        "0.financial-year-end.day" -> pastMonth.day,
-        "0.financial-year-end.month" -> pastMonth.month,
-        "0.financial-year-end.year" -> today.year,
         "0.weeks" -> "52",
         "0.alcoholic-drinks" -> AlcoholDrinks,
         "0.food" -> Food,
