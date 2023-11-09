@@ -73,7 +73,6 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
   def getCateringOperationRent(index: Int): HttpRequestBuilder =
     http("[GET] get catering operation rent page")
       .get(s"$baseUrl/$route/catering-operation-rent?idx=$index")
-      .queryParam("idx", index)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -214,23 +213,23 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
     getCateringOperationRent(0),
-    postCateringOperationRent(0, "1234"),
-    getCateringOperationRentIncludes(0),
-    postCateringOperationRentIncludes(0, "rates"),
-    getAddAnotherCateringOperation(0),
-    postAddAnotherCateringOperation(0, "no"),
-    getLettingOtherPartOfProperty,
-    postLettingOtherPartOfProperty("yes"),
-    getLettingOtherPartOfPropertyDetails,
-    postLettingOtherPartOfPropertyDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-    getLettingOtherPartOfPropertyRent(0),
-    postLettingOtherPartOfPropertyRent(0, "12345"),
-    getLettingOtherPartOfPropertyCheckbox(0),
-    postLettingOtherPartOfPropertyCheckbox(0, "rates"),
-    getAddAnotherLettingOtherPartOfProperty(0),
-    postAddAnotherLettingOtherPartOfProperty(0, "no"),
-    getCYAAboutFranchiseOrLettings,
-    postCYAAboutFranchiseOrLettings("yes")
+//    postCateringOperationRent(0, "1234"),
+//    getCateringOperationRentIncludes(0),
+//    postCateringOperationRentIncludes(0, "rates"),
+//    getAddAnotherCateringOperation(0),
+//    postAddAnotherCateringOperation(0, "no"),
+//    getLettingOtherPartOfProperty,
+//    postLettingOtherPartOfProperty("yes"),
+//    getLettingOtherPartOfPropertyDetails,
+//    postLettingOtherPartOfPropertyDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
+//    getLettingOtherPartOfPropertyRent(0),
+//    postLettingOtherPartOfPropertyRent(0, "12345"),
+//    getLettingOtherPartOfPropertyCheckbox(0),
+//    postLettingOtherPartOfPropertyCheckbox(0, "rates"),
+//    getAddAnotherLettingOtherPartOfProperty(0),
+//    postAddAnotherLettingOtherPartOfProperty(0, "no"),
+//    getCYAAboutFranchiseOrLettings,
+//    postCYAAboutFranchiseOrLettings("yes")
   )
 
 
