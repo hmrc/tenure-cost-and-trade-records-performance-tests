@@ -72,7 +72,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getCateringOperationRent(index: Int): HttpRequestBuilder =
     http("[GET] get catering operation rent page")
-      .get(s"$baseUrl/$route/catering-operation-rent?idx=$index")
+      .get(s"$baseUrl/$route/catering-operation-rent")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
