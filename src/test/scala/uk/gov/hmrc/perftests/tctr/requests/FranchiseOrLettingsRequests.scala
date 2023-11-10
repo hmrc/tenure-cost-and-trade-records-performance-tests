@@ -72,7 +72,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getCateringOperationRent(index: Int): HttpRequestBuilder =
     http("[GET] get catering operation rent page")
-      .get(s"$baseUrl/$route/catering-operation-rent?idx=$index")
+      .get(s"$baseUrl/$route/catering-operation-rent")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -90,7 +91,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getCateringOperationRentIncludes(index: Int): HttpRequestBuilder =
     http("[GET] get catering operation rent includes")
-      .get(s"$baseUrl/$route/catering-operation-rent-includes?idx=$index")
+      .get(s"$baseUrl/$route/catering-operation-rent-includes")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -103,7 +105,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getAddAnotherCateringOperation(index: Int): HttpRequestBuilder =
     http("[GET] get add another catering operation page")
-      .get(s"$baseUrl/$route/add-another-catering-operation?idx=$index")
+      .get(s"$baseUrl/$route/add-another-catering-operation")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -148,8 +151,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getLettingOtherPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get letting other part of property rent page")
-      .get(s"$baseUrl/$route/letting-other-part-of-property-rent?idx=$index")
-      .queryParam("idx", index)
+      .get(s"$baseUrl/$route/letting-other-part-of-property-rent")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -167,7 +170,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getLettingOtherPartOfPropertyCheckbox(index: Int): HttpRequestBuilder =
     http("[GET] get letting other part of property checkbox")
-      .get(s"$baseUrl/$route/letting-other-part-of-property-checkbox?idx=$index")
+      .get(s"$baseUrl/$route/letting-other-part-of-property-checkbox")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
@@ -180,7 +184,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getAddAnotherLettingOtherPartOfProperty(index: Int): HttpRequestBuilder =
     http("[GET] get add another letting other part of property")
-      .get(s"$baseUrl/$route/add-another-letting-other-part-of-property?idx=$index")
+      .get(s"$baseUrl/$route/add-another-letting-other-part-of-property")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
