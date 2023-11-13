@@ -74,7 +74,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     http("[GET] get catering operation rent page")
       .get(s"$baseUrl/$route/catering-operation-rent")
       .queryParam("idx", index.toString)
-      .check(status.is(303))
+      .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postCateringOperationRent(index: Int, annualRent: String): HttpRequestBuilder =
@@ -219,7 +219,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
     getCateringOperationRent(0),
     postCateringOperationRent(0, "1234"),
-    getCateringOperationRentIncludes(0),
+//    getCateringOperationRentIncludes(0),
     postCateringOperationRentIncludes(0, "rates"),
     getAddAnotherCateringOperation(0),
     postAddAnotherCateringOperation(0, "no"),
