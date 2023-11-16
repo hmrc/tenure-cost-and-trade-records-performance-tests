@@ -49,6 +49,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     http("[POST] post catering operation or letting accommodation page")
       .post(s"$baseUrl/$route/catering-operation-or-letting-accommodation")
       .formParam("cateringOperationOrLettingAccommodation", option)
+      .formParam("from", "")
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -67,6 +68,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
         "cateringAddress.buildingNameNumber" -> buildingNumber,
         "cateringAddress.town" -> town,
         "cateringAddress.postcode" -> postcode,
+        "from"-> "",
         "csrfToken" -> f"$${csrfToken}"
       ))
       .check(status.is(303))
@@ -232,7 +234,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     postCateringOperationOrLettingAccommodation("yes"),
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-    //getCateringOperationRent(0),
+    getCateringOperationRent(0),
     postCateringOperationRent(0, "1234"),
     getCateringOperationRentIncludes(0),
     postCateringOperationRentIncludes(0, "rates"),
