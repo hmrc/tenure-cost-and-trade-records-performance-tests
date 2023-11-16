@@ -17,6 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.requests
 
 import io.gatling.core.Predef._
+import io.gatling.core.session.Expression
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.HttpConfiguration
@@ -69,13 +70,27 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
         "csrfToken" -> f"$${csrfToken}"
       ))
       .check(status.is(303))
+      .check(jsonPath("$.operatorName").saveAs("operatorName"))
+      .check(jsonPath("$.typeOfBusiness").saveAs("typeOfBusiness"))
+      .check(jsonPath("$.cateringAddress.buildingNameNumber").saveAs("buildingNumber"))
+      .check(jsonPath("$.cateringAddress.town").saveAs("town"))
+      .check(jsonPath("$.cateringAddress.postcode").saveAs("postcode"))
 
-  def getCateringOperationRent(index: Int): HttpRequestBuilder =
-    http("[GET] get catering operation rent page")
-      .get(s"$baseUrl/$route/catering-operation-rent")
-      .queryParam("idx", index.toString)
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def myCondition(): Expression[Boolean] =
+    session =>
+      session("operatorName").asOption[String].exists(_.nonEmpty) ||
+        session("typeOfBusiness").asOption[String].exists(_.nonEmpty) ||
+        session("buildingNumber").asOption[String].exists(_.nonEmpty) ||
+        session("town").asOption[String].exists(_.nonEmpty) ||
+        session("postcode").asOption[String].exists(_.nonEmpty) ||
+
+  def getCateringOperationRent(index: Int): HttpRequestBuilder = {
+      http("[GET] get catering operation rent page")
+        .get(s"$baseUrl/$route/catering-operation-rent")
+        .queryParam("idx", index.toString)
+        .check(status.is(200))
+        .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  }
 
   def postCateringOperationRent(index: Int, annualRent: String): HttpRequestBuilder =
     http("[POST] post catering operation rent page")
@@ -217,9 +232,9 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     postCateringOperationOrLettingAccommodation("yes"),
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-    getCateringOperationRent(0),
+    //getCateringOperationRent(0),
     postCateringOperationRent(0, "1234"),
-//    getCateringOperationRentIncludes(0),
+    getCateringOperationRentIncludes(0),
     postCateringOperationRentIncludes(0, "rates"),
     getAddAnotherCateringOperation(0),
     postAddAnotherCateringOperation(0, "no"),
