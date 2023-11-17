@@ -215,9 +215,9 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post vacant property start date")
       .post(s"$baseUrl/$route/vacant-property-start-date")
       .disableFollowRedirect
-      .formParam("startDateOfVacantProperty.day", pastMonth.day)
-      .formParam("startDateOfVacantProperty.month", pastMonth.month)
-      .formParam("startDateOfVacantProperty.year", pastMonth.year)
+      .formParam("startDateOfVacantProperty.day", pastMonth.getDayOfMonth.toString)
+      .formParam("startDateOfVacantProperty.month", pastMonth.getMonthValue.toString)
+      .formParam("startDateOfVacantProperty.year", pastMonth.getYear.toString)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -265,9 +265,9 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .post(s"$baseUrl/$route/letting-part-of-property-rent?idx=$index")
       .disableFollowRedirect
       .formParam("annualRent", rent)
-      .formParam("dateInput.day", pastMonth.day)
-      .formParam("dateInput.month", pastMonth.month)
-      .formParam("dateInput.year", pastMonth.year)
+      .formParam("dateInput.day", pastMonth.getDayOfMonth.toString)
+      .formParam("dateInput.month", pastMonth.getMonthValue.toString)
+      .formParam("dateInput.year", pastMonth.getYear.toString)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
