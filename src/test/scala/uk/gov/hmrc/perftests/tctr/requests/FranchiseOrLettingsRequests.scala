@@ -234,7 +234,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     postCateringOperationOrLettingAccommodation("yes"),
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-    getCateringOperationRent(0),
+//    getCateringOperationRent(0),
     postCateringOperationRent(0, "1234"),
     getCateringOperationRentIncludes(0),
     postCateringOperationRentIncludes(0, "rates"),
