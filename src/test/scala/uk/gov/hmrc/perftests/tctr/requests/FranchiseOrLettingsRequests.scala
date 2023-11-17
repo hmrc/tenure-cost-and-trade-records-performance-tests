@@ -68,15 +68,9 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
         "cateringAddress.buildingNameNumber" -> buildingNumber,
         "cateringAddress.town" -> town,
         "cateringAddress.postcode" -> postcode,
-        "from"-> "",
         "csrfToken" -> f"$${csrfToken}"
       ))
       .check(status.is(303))
-      .check(jsonPath("$.operatorName").saveAs("operatorName"))
-      .check(jsonPath("$.typeOfBusiness").saveAs("typeOfBusiness"))
-      .check(jsonPath("$.cateringAddress.buildingNameNumber").saveAs("buildingNumber"))
-      .check(jsonPath("$.cateringAddress.town").saveAs("town"))
-      .check(jsonPath("$.cateringAddress.postcode").saveAs("postcode"))
 
 //  def myCondition(): Expression[Boolean] =
 //    session =>
@@ -96,7 +90,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postCateringOperationRent(index: Int, annualRent: String): HttpRequestBuilder =
     http("[POST] post catering operation rent page")
-      .post(s"$baseUrl/$route/catering-operation-rent?idx=$index")
+      .post(s"$baseUrl/$route/catering-operation-rent")
+      .queryParam("idx", index.toString)
       .formParamMap(Map(
         "annualRent" -> annualRent,
         "dateInput.day" -> today.day,
@@ -115,7 +110,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postCateringOperationRentIncludes(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post catering operation rent includes")
-      .post(s"$baseUrl/$route/catering-operation-rent-includes?idx=$index")
+      .post(s"$baseUrl/$route/catering-operation-rent-includes")
+      .queryParam("idx", index.toString)
       .formParam("itemsInRent[]", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
@@ -129,7 +125,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postAddAnotherCateringOperation(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post add another catering operation page")
-      .post(s"$baseUrl/$route/add-another-catering-operation?idx=$index")
+      .post(s"$baseUrl/$route/add-another-catering-operation")
+      .queryParam("idx", index.toString)
       .formParam("addAnotherCateringOperation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
@@ -175,7 +172,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postLettingOtherPartOfPropertyRent(index: Int, rent: String): HttpRequestBuilder =
     http("[POST] post letting other part of property rent page")
-      .post(s"$baseUrl/$route/letting-other-part-of-property-rent?idx=$index")
+      .post(s"$baseUrl/$route/letting-other-part-of-property-rent")
+      .queryParam("idx", index.toString)
       .formParamMap(Map(
         "annualRent" -> rent,
         "dateInput.day" -> today.day,
@@ -194,7 +192,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postLettingOtherPartOfPropertyCheckbox(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post letting other part of property checkbox")
-      .post(s"$baseUrl/$route/letting-other-part-of-property-checkbox?idx=$index")
+      .post(s"$baseUrl/$route/letting-other-part-of-property-checkbox")
+      .queryParam("idx", index.toString)
       .formParam("itemsInRent[]", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
@@ -208,7 +207,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def postAddAnotherLettingOtherPartOfProperty(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post add another letting other part of property")
-      .post(s"$baseUrl/$route/add-another-letting-other-part-of-property?idx=$index")
+      .post(s"$baseUrl/$route/add-another-letting-other-part-of-property")
+      .queryParam("idx", index.toString)
       .formParam("addAnotherLettingOtherPartOfProperty", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
@@ -234,7 +234,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     postCateringOperationOrLettingAccommodation("yes"),
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-//    getCateringOperationRent(0),
+    getCateringOperationRent(0),
     postCateringOperationRent(0, "1234"),
     getCateringOperationRentIncludes(0),
     postCateringOperationRentIncludes(0, "rates"),
