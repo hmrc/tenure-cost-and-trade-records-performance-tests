@@ -17,6 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.requests
 
 import io.gatling.core.Predef._
+import io.gatling.core.session.Expression
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.HttpConfiguration
@@ -48,6 +49,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     http("[POST] post catering operation or letting accommodation page")
       .post(s"$baseUrl/$route/catering-operation-or-letting-accommodation")
       .formParam("cateringOperationOrLettingAccommodation", option)
+      .formParam("from", "")
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -70,15 +72,18 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       ))
       .check(status.is(303))
 
-  def getCateringOperationRent(index: Int): HttpRequestBuilder =
-    http("[GET] get catering operation rent page")
-      .get(s"$baseUrl/$route/catering-operation-rent?idx=$index")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def getCateringOperationRent(index: Int): HttpRequestBuilder = {
+      http("[GET] get catering operation rent page")
+        .get(s"$baseUrl/$route/catering-operation-rent")
+        .queryParam("idx", index.toString)
+        .check(status.is(200))
+        .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  }
 
   def postCateringOperationRent(index: Int, annualRent: String): HttpRequestBuilder =
     http("[POST] post catering operation rent page")
-      .post(s"$baseUrl/$route/catering-operation-rent?idx=$index")
+      .post(s"$baseUrl/$route/catering-operation-rent")
+      .queryParam("idx", index.toString)
       .formParamMap(Map(
         "annualRent" -> annualRent,
         "dateInput.day" -> today.day,
@@ -90,26 +95,30 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getCateringOperationRentIncludes(index: Int): HttpRequestBuilder =
     http("[GET] get catering operation rent includes")
-      .get(s"$baseUrl/$route/catering-operation-rent-includes?idx=$index")
+      .get(s"$baseUrl/$route/catering-operation-rent-includes")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postCateringOperationRentIncludes(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post catering operation rent includes")
-      .post(s"$baseUrl/$route/catering-operation-rent-includes?idx=$index")
+      .post(s"$baseUrl/$route/catering-operation-rent-includes")
+      .queryParam("idx", index.toString)
       .formParam("itemsInRent[]", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
   def getAddAnotherCateringOperation(index: Int): HttpRequestBuilder =
     http("[GET] get add another catering operation page")
-      .get(s"$baseUrl/$route/add-another-catering-operation?idx=$index")
+      .get(s"$baseUrl/$route/add-another-catering-operation")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postAddAnotherCateringOperation(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post add another catering operation page")
-      .post(s"$baseUrl/$route/add-another-catering-operation?idx=$index")
+      .post(s"$baseUrl/$route/add-another-catering-operation")
+      .queryParam("idx", index.toString)
       .formParam("addAnotherCateringOperation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
@@ -148,13 +157,15 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getLettingOtherPartOfPropertyRent(index: Int): HttpRequestBuilder =
     http("[GET] get letting other part of property rent page")
-      .get(s"$baseUrl/$route/letting-other-part-of-property-rent?idx=$index")
+      .get(s"$baseUrl/$route/letting-other-part-of-property-rent")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postLettingOtherPartOfPropertyRent(index: Int, rent: String): HttpRequestBuilder =
     http("[POST] post letting other part of property rent page")
-      .post(s"$baseUrl/$route/letting-other-part-of-property-rent?idx=$index")
+      .post(s"$baseUrl/$route/letting-other-part-of-property-rent")
+      .queryParam("idx", index.toString)
       .formParamMap(Map(
         "annualRent" -> rent,
         "dateInput.day" -> today.day,
@@ -166,26 +177,30 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getLettingOtherPartOfPropertyCheckbox(index: Int): HttpRequestBuilder =
     http("[GET] get letting other part of property checkbox")
-      .get(s"$baseUrl/$route/letting-other-part-of-property-checkbox?idx=$index")
+      .get(s"$baseUrl/$route/letting-other-part-of-property-checkbox")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postLettingOtherPartOfPropertyCheckbox(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post letting other part of property checkbox")
-      .post(s"$baseUrl/$route/letting-other-part-of-property-checkbox?idx=$index")
+      .post(s"$baseUrl/$route/letting-other-part-of-property-checkbox")
+      .queryParam("idx", index.toString)
       .formParam("itemsInRent[]", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
   def getAddAnotherLettingOtherPartOfProperty(index: Int): HttpRequestBuilder =
     http("[GET] get add another letting other part of property")
-      .get(s"$baseUrl/$route/add-another-letting-other-part-of-property?idx=$index")
+      .get(s"$baseUrl/$route/add-another-letting-other-part-of-property")
+      .queryParam("idx", index.toString)
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postAddAnotherLettingOtherPartOfProperty(index: Int, option: String): HttpRequestBuilder =
     http("[POST] post add another letting other part of property")
-      .post(s"$baseUrl/$route/add-another-letting-other-part-of-property?idx=$index")
+      .post(s"$baseUrl/$route/add-another-letting-other-part-of-property")
+      .queryParam("idx", index.toString)
       .formParam("addAnotherLettingOtherPartOfProperty", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
