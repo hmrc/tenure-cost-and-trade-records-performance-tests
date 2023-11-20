@@ -72,14 +72,6 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       ))
       .check(status.is(303))
 
-//  def myCondition(): Expression[Boolean] =
-//    session =>
-//      session("operatorName").asOption[String].exists(_.nonEmpty) ||
-//        session("typeOfBusiness").asOption[String].exists(_.nonEmpty) ||
-//        session("buildingNumber").asOption[String].exists(_.nonEmpty) ||
-//        session("town").asOption[String].exists(_.nonEmpty) ||
-//        session("postcode").asOption[String].exists(_.nonEmpty) ||
-
   def getCateringOperationRent(index: Int): HttpRequestBuilder = {
       http("[GET] get catering operation rent page")
         .get(s"$baseUrl/$route/catering-operation-rent")
