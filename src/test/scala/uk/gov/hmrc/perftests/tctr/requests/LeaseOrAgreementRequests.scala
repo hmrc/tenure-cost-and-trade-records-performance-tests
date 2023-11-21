@@ -370,7 +370,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
         "intervalsOfRentReview" -> details,
         "nextReview.day" -> today.day,
         "nextReview.month" -> today.month,
-        "nextReview.year" -> nextYear.year,
+        "nextReview.year" -> today.year,
         "csrfToken" -> f"$${csrfToken}"
       ))
       .check(status.is(303))
