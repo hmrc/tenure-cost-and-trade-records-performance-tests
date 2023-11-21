@@ -101,7 +101,7 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
   def postAboutTheProperty(option: String): HttpRequestBuilder =
     http("[POST] post about the property page")
       .post(s"$baseUrl/$route/about-the-property")
-      .formParam("propertyCurrentlyUsed[0]", option)
+      .formParam("propertyCurrentlyUsed", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
