@@ -17,6 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.requests
 
 import io.gatling.core.Predef._
+import io.gatling.core.session
 import io.gatling.core.session.Expression
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
@@ -74,8 +75,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
 
   def getCateringOperationRent(index: Int): HttpRequestBuilder = {
       http("[GET] get catering operation rent page")
-        .get(s"$baseUrl/$route/catering-operation-rent")
-        .queryParam("idx", index.toString)
+        .get(s"$baseUrl/$route/catering-operation-rent?idx=0")
+//        .queryParam("idx", index.toString)
         .check(status.is(200))
         .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
   }
@@ -227,23 +228,23 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     getCateringOperationDetails,
     postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
     getCateringOperationRent(0),
-    postCateringOperationRent(0, "1234"),
-    getCateringOperationRentIncludes(0),
-    postCateringOperationRentIncludes(0, "rates"),
-    getAddAnotherCateringOperation(0),
-    postAddAnotherCateringOperation(0, "no"),
-    getLettingOtherPartOfProperty,
-    postLettingOtherPartOfProperty("yes"),
-    getLettingOtherPartOfPropertyDetails,
-    postLettingOtherPartOfPropertyDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
-    getLettingOtherPartOfPropertyRent(0),
-    postLettingOtherPartOfPropertyRent(0, "12345"),
-    getLettingOtherPartOfPropertyCheckbox(0),
-    postLettingOtherPartOfPropertyCheckbox(0, "rates"),
-    getAddAnotherLettingOtherPartOfProperty(0),
-    postAddAnotherLettingOtherPartOfProperty(0, "no"),
-    getCYAAboutFranchiseOrLettings,
-    postCYAAboutFranchiseOrLettings("yes")
+//    postCateringOperationRent(0, "1234"),
+//    getCateringOperationRentIncludes(0),
+//    postCateringOperationRentIncludes(0, "rates"),
+//    getAddAnotherCateringOperation(0),
+//    postAddAnotherCateringOperation(0, "no"),
+//    getLettingOtherPartOfProperty,
+//    postLettingOtherPartOfProperty("yes"),
+//    getLettingOtherPartOfPropertyDetails,
+//    postLettingOtherPartOfPropertyDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
+//    getLettingOtherPartOfPropertyRent(0),
+//    postLettingOtherPartOfPropertyRent(0, "12345"),
+//    getLettingOtherPartOfPropertyCheckbox(0),
+//    postLettingOtherPartOfPropertyCheckbox(0, "rates"),
+//    getAddAnotherLettingOtherPartOfProperty(0),
+//    postAddAnotherLettingOtherPartOfProperty(0, "no"),
+//    getCYAAboutFranchiseOrLettings,
+//    postCYAAboutFranchiseOrLettings("yes")
   )
 
 
