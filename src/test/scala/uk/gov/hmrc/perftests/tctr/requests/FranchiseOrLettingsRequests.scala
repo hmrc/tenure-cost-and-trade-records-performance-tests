@@ -17,6 +17,7 @@
 package uk.gov.hmrc.perftests.tctr.requests
 
 import io.gatling.core.Predef._
+import io.gatling.core.session
 import io.gatling.core.session.Expression
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
