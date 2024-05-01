@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   val aboutYouAndPropertySectionFor6011: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6011")
   val aboutYouAndPropertySectionFor6010: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6010")
+  val aboutYouAndPropertySectionFor6015: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6015")
 
   setup("vacant-property-submission-6011", "submit vacant property journey")
   .withRequests(submit6011VacantProperty:_*)
@@ -74,6 +75,10 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   setup("Additional-information-6010", "Submit Additional information section")
     .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
+
+  //----6015------
+  setup("About-property-6015", "Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6015: _*)
 
 
   runSimulation()

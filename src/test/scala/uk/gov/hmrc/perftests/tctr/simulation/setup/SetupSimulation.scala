@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,10 @@ trait SetupSimulation {
   this: PerformanceTestRunner =>
   def setupSessionFor6011: List[ActionBuilder] = Setup.setupSession("6011")
   def setupSessionFor6010: List[ActionBuilder] = Setup.setupSession("6010")
+  def setupSessionFor6015: List[ActionBuilder] = Setup.setupSession("6015")
 
   setup("web-test-prep-for-6011", "Prepare for test") withActions (setupSessionFor6011: _*)
   setup("web-test-prep-for-6010", "Prepare for test") withActions (setupSessionFor6010: _*)
+  setup("web-test-prep-for-6015", "Prepare for test") withActions (setupSessionFor6015: _*)
 
 }

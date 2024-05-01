@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -138,11 +138,12 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postEditAddressPage(BuildingNum: String, town: String, postcode:String): HttpRequestBuilder =
+  def postEditAddressPage(BuildingNum: String, street: String, town: String, postcode:String): HttpRequestBuilder =
     http("[POST] post edit address page")
       .post(s"$baseUrl/$route/edit-address")
       .disableFollowRedirect
       .formParam("editAddress.buildingNameNumber", BuildingNum)
+      .formParam("editAddress.street1:", street)
       .formParam("editAddress.town", town)
       .formParam("editAddress.postcode", postcode)
       .formParam("csrfToken", f"$${csrfToken}")
@@ -241,13 +242,14 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postLettingPartOfPropertyDetails(name: String, description: String, addressLine1: String, town: String, postcode: String): HttpRequestBuilder =
+  def postLettingPartOfPropertyDetails(name: String, buildingNameNumber: String, description: String, addressLine1: String, town: String, postcode: String): HttpRequestBuilder =
     http("[POST] post letting part of property tenant details")
       .post(s"$baseUrl/$route/letting-part-of-property-details")
       .disableFollowRedirect
       .formParam("tenantName", name)
       .formParam("descriptionOfLetting", description)
-      .formParam("correspondenceAddress.addressLineOne", addressLine1)
+      .formParam("correspondenceAddress.buildingNameNumber", buildingNameNumber)
+      .formParam("correspondenceAddress.street1", addressLine1)
       .formParam("correspondenceAddress.town", town)
       .formParam("correspondenceAddress.postcode", postcode)
       .formParam("csrfToken", f"$${csrfToken}")
@@ -387,7 +389,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getAreYouStillConnectedPage,
     postAreYouStillConnectedPage("yes-change-address"),
     getEditAddressPage,
-    postEditAddressPage("999", "GORING-BY-SEA,+WORTHING", "BN12+4AX"),
+    postEditAddressPage("999", "GORING ROAD","GORING-BY-SEA, WORTHING", "BN12 4AX"),
     getVacantPropertiesPage,
     postVacantProperties("yes"),
     getVacantPropertyStartDate,
@@ -395,7 +397,7 @@ object tctrRequests extends HttpConfiguration with servicesConfig {
     getIsRentReceivedFromLetting,
     postIsRentReceivedFromLetting("yes"),
     getLettingPartOfPropertyDetails,
-    postLettingPartOfPropertyDetails("HardRockCafe", "Dine-in", "1 Guild Hall", "SandHill", "NE1 3AF"),
+    postLettingPartOfPropertyDetails("Dru", "HardRockCafe", "Dine-in", "1 Guild Hall", "SandHill", "NE1 3AF"),
     getLettingPartOfPropertyRent(0),
     postLettingPartOfPropertyRent(0, 10000),
     getLettingPartOfPropertyCheckBox(0),
