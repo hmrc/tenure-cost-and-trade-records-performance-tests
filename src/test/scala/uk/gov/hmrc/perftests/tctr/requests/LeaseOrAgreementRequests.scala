@@ -187,23 +187,45 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getUltimatelyResponsible: HttpRequestBuilder =
-    http("[GET] get ultimately responsible page")
-      .get(s"$baseUrl/$route/ultimately-responsible")
+
+  val getUltimatelyResponsibleInsideRepairs: HttpRequestBuilder =
+    http("[GET] get ultimately responsible inside repairs page")
+      .get(s"$baseUrl/$route/ultimately-responsible-inside-repairs")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postUltimatelyResponsible(option1: String, option2: String, option3: String): HttpRequestBuilder =
-    http("[POST] post ultimately responsible page")
-      .post(s"$baseUrl/$route/ultimately-responsible")
-      .formParamMap(Map(
-        "outsideRepairs" -> option1,
-        "insideRepairs" -> option2,
-        "buildingInsurance" -> option3,
-        "sharedResponsibilities" -> "shared responsibilities",
-        "continue_button" -> "continue_button",
-        "csrfToken" -> f"$${csrfToken}"
-      ))
+  def postUltimatelyResponsibleInsideRepairs(Option: String): HttpRequestBuilder =
+    http("[POST] post ultimately responsible inside repairs page")
+      .post(s"$baseUrl/$route/ultimately-responsible-inside-repairs")
+      .formParam("insideRepairs", Option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getUltimatelyResponsibleOutsideRepairs: HttpRequestBuilder =
+    http("[GET] get ultimately responsible outside repairs page")
+      .get(s"$baseUrl/$route/ultimately-responsible-outside-repairs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postUltimatelyResponsibleOutsideRepairs(Option: String): HttpRequestBuilder =
+    http("[POST] post ultimately responsible outside repairs page")
+      .post(s"$baseUrl/$route/ultimately-responsible-outside-repairs")
+      .formParam("outsideRepairs", Option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getUltimatelyResponsibleBuildingInsurance: HttpRequestBuilder =
+    http("[GET] get ultimately responsible inside repairs page")
+      .get(s"$baseUrl/$route/ultimately-responsible-building-insurance")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postUltimatelyResponsibleBuildingInsurance(Option: String): HttpRequestBuilder =
+    http("[POST] post ultimately responsible outside repairs page")
+      .post(s"$baseUrl/$route/ultimately-responsible-building-insurance")
+      .formParam("buildingInsurance", Option)
+      .formParam("sharedResponsibilitiesBI", "building insurance details")
+      .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
   val getRentIncludeTradeServices: HttpRequestBuilder =
@@ -552,7 +574,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     getPropertyUseLeaseBackArrangement,
     postPropertyUseLeaseBackArrangement("yes"),
     getCurrentAnnualRent,
-    postCurrentAnnualRent("1234"),
+    postCurrentAnnualRent("10000"),
     getCurrentRentFirstPaid,
     postCurrentRentFirstPaid,
     getCurrentLeaseOrAgreementBegin,
@@ -561,15 +583,19 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     postIncludedInYourRent("vat"),
     getDoesTheRentPayable,
     postDoesRentPayable("proprietor", "otherProperty"),
-    getUltimatelyResponsible,
-    postUltimatelyResponsible("landlord", "tenant", "both"),
+    getUltimatelyResponsibleInsideRepairs,
+    postUltimatelyResponsibleInsideRepairs("landlord"),
+    getUltimatelyResponsibleOutsideRepairs,
+    postUltimatelyResponsibleOutsideRepairs("tenant"),
+    getUltimatelyResponsibleBuildingInsurance,
+    postUltimatelyResponsibleBuildingInsurance("both"),
     getRentIncludeTradeServices,
     postRentIncludeTradeServices("yes"),
     postRentIncludeTradeServiceDetails("1234", "services"),
     getRentIncludeFixturesAndFittings,
     postRentIncludeFixturesAndFittings("yes"),
     getRentIncludeFixturesAndFittingsDetails,
-    postRentIncludeFixturesAndFittingsDetails("1234"),
+    postRentIncludeFixturesAndFittingsDetails("0"),
     getRentOpenMarketValue,
     postRentOpenMarketValue("yes"),
     getRentIncreaseAnnuallyWithRpi,
