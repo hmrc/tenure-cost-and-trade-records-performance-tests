@@ -152,8 +152,8 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .formParamMap(Map(
         "rentDetails" -> rentDetails,
         "dateInput.day" -> pastDay.day,
-        "ateInput.month" -> pastDay.month,
-        "ateInput.year" -> pastDay.year,
+        "dateInput.month" -> pastDay.month,
+        "dateInput.year" -> pastDay.year,
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
@@ -180,10 +180,10 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postRemoveCateringOperation(index: Int, option: String) : HttpRequestBuilder =
-    http("[POST] get remove catering operation page")
+    http("[POST] post remove catering operation page")
       .post(s"$baseUrl/$route/remove-catering-operation")
       .queryParam("idx", index.toString)
-      .formParam("genericRemoveConfirmation:", option)
+      .formParam("genericRemoveConfirmation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -294,10 +294,10 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postRemoveLettingOtherPartOfProperty(index: Int, option: String): HttpRequestBuilder =
-    http("[POST] get remove catering operation page")
+    http("[POST] post remove catering operation page")
       .post(s"$baseUrl/$route/remove-catering-operation")
       .queryParam("idx", index.toString)
-      .formParam("genericRemoveConfirmation:", option)
+      .formParam("genericRemoveConfirmation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -331,7 +331,7 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     getLettingOtherPartOfProperty,
     postLettingOtherPartOfProperty("yes"),
     getLettingOtherPartOfPropertyDetails(0),
-    postLettingOtherPartOfPropertyDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
+    postLettingOtherPartOfPropertyDetails(0, "Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
     getLettingOtherPartOfPropertyRent(0),
     postLettingOtherPartOfPropertyRent(0, "12345"),
     getLettingOtherPartOfPropertyCheckbox(0),
