@@ -99,13 +99,8 @@ object AdditionalInformationRequests extends HttpConfiguration with servicesConf
 
 
   val additionalInformationSection: Seq[HttpRequestBuilder] = Seq(
-    getTaskListPage,
     getFurtherInformationOrRemarks,
     postFurtherInformationOrRemarks("Further information and remarks"),
-    getContactDetailQuestion,
-    postContactDetailQuestion("yes"),
-    getAlternateContactDetails,
-    postAlternateContactDetails("Dru", "12345678901", "minion@example.com", "1 teachers colony", "valley", "BN12 4AX"),
     getCYAAdditionalInformation,
     postCYAAdditionalInformation("yes"),
     getTaskListPage,

@@ -105,6 +105,13 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  def postAboutThePropertyFor6016(option: String): HttpRequestBuilder =
+    http("[POST] post about the property page")
+      .post(s"$baseUrl/$route/about-the-property")
+      .formParam("propertyCurrentlyUsed", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getContactDetailsQuestion: HttpRequestBuilder =
     http("[GET] get contact details question page")
       .get(s"$baseUrl/$route/contact-details-question")
@@ -155,6 +162,12 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .get(s"$baseUrl/$route/licensable-activities")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postLicensableActivities(option: String): HttpRequestBuilder =
+    http("[POST] post licensable activities page")
+      .post(s"$baseUrl/$route/licensable-activities")
+      .formParam("licensableActivities", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
 
   val getPremisesLicenseGranted: HttpRequestBuilder =
     http("[GET] get premises license granted page")
@@ -169,12 +182,22 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  def postLicensableActivities(option: String): HttpRequestBuilder =
-    http("[POST] post licensable activities page")
-      .post(s"$baseUrl/$route/licensable-activities")
-      .formParam("licensableActivities", option)
+  val getPremisesLicenseGrantedDetails: HttpRequestBuilder =
+    http("[GET] get premises license granted details")
+      .get(s"$baseUrl/$route/premises-license-granted-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPremisesLicenseGrantedDetails(option: String): HttpRequestBuilder =
+    http("[POST] post premises license granted details")
+      .post(s"$baseUrl/$route/premises-license-granted-details")
+      .formParam("premisesLicenseGrantedInformation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+
+
+
+
 
   val getLicensableActivitiesDetails: HttpRequestBuilder =
     http("[GET] get licensable activities details")
@@ -361,6 +384,41 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postWebsiteForProperty("yes", "www.ertyu.com"),
     getPremisesLicenseGranted,
     postPremisesLicenseGranted("yes"),
+    getPremisesLicenseGrantedDetails,
+    postPremisesLicenseGrantedDetails("Details"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+  def aboutYouAndPropertySection6016(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getAboutTheProperty,
+    postAboutThePropertyFor6016("hotel"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes", "www.ertyu.com"),
+    getPremisesLicenseGranted,
+    postPremisesLicenseGranted("yes"),
+    getPremisesLicenseGrantedDetails,
+    postPremisesLicenseGrantedDetails("Details"),
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )

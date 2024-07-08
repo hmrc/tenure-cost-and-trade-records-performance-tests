@@ -43,6 +43,15 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
+  def postAboutYourLandlordFor6015(name: String): HttpRequestBuilder =
+    http("[POST] post about your landlord page")
+      .post(s"$baseUrl/$route/about-your-landlord")
+      .formParamMap(Map(
+        "landlordFullName" -> name,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
   val getConnectionToLandlord: HttpRequestBuilder =
     http("[GET] get connection to landlord page")
       .get(s"$baseUrl/$route/connected-to-landlord")
@@ -308,12 +317,24 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getRentPayableVaryAccordingToGrossOrNet: HttpRequestBuilder =
+    http("[GET] get rent payable vary according to gross or net page")
+      .get(s"$baseUrl/$route/rent-payable-vary-according-to-gross-or-net")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentPayableVaryAccordingToGrossOrNet(option: String): HttpRequestBuilder =
+    http("[GET] get rent payable vary according to gross or net page")
+      .post(s"$baseUrl/$route/rent-payable-vary-according-to-gross-or-net")
+      .formParam("rentPayableVaryAccordingToGrossOrNet", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getRentPayableVaryAccordingToGrossOrNetDetails: HttpRequestBuilder =
     http("[GET] get rent payable vary according to gross or net details page")
       .get(s"$baseUrl/$route/rent-payable-vary-according-to-gross-or-net-details")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
 
   def postRentPayableVaryAccordingToGrossOrNetDetails(details: String): HttpRequestBuilder =
     http("[POST] post rent payable vary according to gross or net details page")
@@ -455,7 +476,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def PostPayACapitalSum(option: String) : HttpRequestBuilder =
+  def postPayACapitalSum(option: String) : HttpRequestBuilder =
     http("[POST] post pay a capital sum page")
       .post(s"$baseUrl/$route/pay-a-capital-sum")
       .formParam("payACapitalSum", option)
@@ -500,16 +521,6 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("legalOrPlanningRestrictionsDetails", details)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-
-
-
-
-
-
-
-
-
 
 
   val getTenancyLeaseAgreementExpire: HttpRequestBuilder =
@@ -621,7 +632,7 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     getTenantsAdditionsDisregardedDetails,
     postTenantsAdditionsDisregardedDetails("disregarded details"),
     getPayACapitalSum,
-    PostPayACapitalSum("yes"),
+    postPayACapitalSum("yes"),
     getReceivePaymentWhenLeaseGranted,
     postReceivePaymentWhenLeaseGranted("yes"),
     getLegalOrPlanningRestrictions,
@@ -631,4 +642,97 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     getCYALeaseOrTenure,
     postCYALeaseOrTenure("yes")
   )
+
+  val leaseOrAgreementSectionFor6015: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourLandlord,
+    postAboutYourLandlordFor6015("Dru"),
+    getConnectionToLandlord,
+    postConnectionToLandlord("yes"),
+    getConnectedLandlordDetails,
+    postConnectedLandlordDetails("Details to landlord"),
+    getLeaseOAgreementDetails,
+    postLeaseOrAgreementDetails("yes"),
+    getPropertyUseLeaseBackArrangement,
+    postPropertyUseLeaseBackArrangement("yes"),
+    getCurrentAnnualRent,
+    postCurrentAnnualRent("1000"),
+    getCurrentRentFirstPaid,
+    postCurrentRentFirstPaid,
+    getCurrentLeaseOrAgreementBegin,
+    postCurrentLeaseOrAgreementBegin("60"),
+    getIncludedInYourRent,
+    postIncludedInYourRent("vat"),
+    getDoesTheRentPayable,
+    postDoesRentPayable("proprietor", "otherProperty"),
+    getUltimatelyResponsibleOutsideRepairs,
+    postUltimatelyResponsibleOutsideRepairs("landlord"),
+    getUltimatelyResponsibleInsideRepairs,
+    postUltimatelyResponsibleInsideRepairs("landlord"),
+    getUltimatelyResponsibleBuildingInsurance,
+    postUltimatelyResponsibleBuildingInsurance("landlord"),
+    getRentIncludeTradeServices,
+    postRentIncludeTradeServices("yes"),
+    getRentIncludeTradeServicesDetails,
+    postRentIncludeTradeServiceDetails("1000", "trade service details"),
+    getRentIncludeFixturesAndFittings,
+    postRentIncludeFixturesAndFittings("yes"),
+    getRentIncludeFixturesAndFittingsDetails,
+    postRentIncludeFixturesAndFittingsDetails("0"),
+    getRentOpenMarketValue,
+    postRentOpenMarketValue("yes"),
+    getRentIncreaseAnnuallyWithRpi,
+    postRentIncreaseAnnuallyWithRpi("yes"),
+    getRentPayableVaryAccordingToGrossOrNet,
+    postRentPayableVaryAccordingToGrossOrNet("yes"),
+    getRentPayableVaryAccordingToGrossOrNetDetails,
+    postRentPayableVaryAccordingToGrossOrNetDetails("Details"),
+    getHowCurrentRentIsFixed,
+    postHowCurrentRentIsFixed("newLeaseAgreement"),
+    getMethodToFixCurrentRent,
+    postMethodToFixCurrentRent("agreement"),
+    getIntervalsOfRentReview,
+    postIntervalsOfRentReview("details"),
+    getCanRentBeReducedOnReview,
+    postCanRentBeReducedOnReview("yes"),
+    getFormerLeaseSurrendered,
+    postFormerLeaseSurrendered("yes"),
+    getTenantsAdditionsDisregarded,
+    postTenantsAdditionsDisregarded("yes"),
+    getTenantsAdditionsDisregardedDetails,
+    postTenantsAdditionsDisregardedDetails("Disregarded details"),
+    getPayACapitalSum,
+    postPayACapitalSum("yes"),
+    getReceivePaymentWhenLeaseGranted,
+    postReceivePaymentWhenLeaseGranted("yes"),
+    getLegalOrPlanningRestrictions,
+    postLegalOrPlanningRestrictions("yes"),
+    getLegalOrPlanningRestrictionsDetails,
+    postLegalOrPlanningRestrictionsDetails("Legal or Planning restrictions details"),
+    getCYALeaseOrTenure,
+    postCYALeaseOrTenure("yes")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  )
+
 }

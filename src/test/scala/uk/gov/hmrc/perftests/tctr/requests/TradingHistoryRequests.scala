@@ -260,4 +260,17 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes")
   )
+
+  val TradingHistorySectionFor6016: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDates,
+    postFinancialYearEndDates,
+    getTurnOverPage,
+    postTurnOver(1234, 50, 2340, 230, 30),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes")
+  )
 }
