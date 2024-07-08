@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,6 +105,44 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  def postAboutThePropertyFor6016(option: String): HttpRequestBuilder =
+    http("[POST] post about the property page")
+      .post(s"$baseUrl/$route/about-the-property")
+      .formParam("propertyCurrentlyUsed", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getContactDetailsQuestion: HttpRequestBuilder =
+    http("[GET] get contact details question page")
+      .get(s"$baseUrl/$route/contact-details-question")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postContactDetailsQuestion(option: String): HttpRequestBuilder =
+    http("[POST] contact details question page")
+      .post(s"$baseUrl/$route/contact-details-question")
+      .formParam("contactDetailsQuestion", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getAlternateContactDetails: HttpRequestBuilder =
+    http("[GET] get alternate contact details page")
+      .get(s"$baseUrl/$route/alternate-contact-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAlternateContactDetails(buildingNameNumber: String, town: String, postcode: String): HttpRequestBuilder =
+    http("[POST] post alternate contact details page")
+      .post(s"$baseUrl/$route/alternate-contact-details")
+      .formParamMap(Map(
+        "alternativeContactAddress.buildingNameNumber" -> buildingNameNumber,
+        "alternativeContactAddress.town" -> town,
+        "alternativeContactAddress.postcode" -> postcode,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+
   val getWebsiteForProperty: HttpRequestBuilder =
     http("[GET] get website for the property")
       .get(s"$baseUrl/$route/website-for-property")
@@ -120,17 +158,46 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
   val getLicensableActivities: HttpRequestBuilder =
-    http("[GET get licensable activities page]")
+    http("[GET] get licensable activities page")
       .get(s"$baseUrl/$route/licensable-activities")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postLicensableActivities(option: String): HttpRequestBuilder =
     http("[POST] post licensable activities page")
       .post(s"$baseUrl/$route/licensable-activities")
       .formParam("licensableActivities", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
+
+  val getPremisesLicenseGranted: HttpRequestBuilder =
+    http("[GET] get premises license granted page")
+      .get(s"$baseUrl/$route/premises-license-granted")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPremisesLicenseGranted(Option: String): HttpRequestBuilder =
+    http("[POST] post premises license granted page")
+      .post(s"$baseUrl/$route/premises-license-granted")
+      .formParam("premisesLicenseGranted", Option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPremisesLicenseGrantedDetails: HttpRequestBuilder =
+    http("[GET] get premises license granted details")
+      .get(s"$baseUrl/$route/premises-license-granted-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPremisesLicenseGrantedDetails(option: String): HttpRequestBuilder =
+    http("[POST] post premises license granted details")
+      .post(s"$baseUrl/$route/premises-license-granted-details")
+      .formParam("premisesLicenseGrantedInformation", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
+
 
   val getLicensableActivitiesDetails: HttpRequestBuilder =
     http("[GET] get licensable activities details")
@@ -258,6 +325,10 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     getTaskListPage,
     getAboutYouPage,
     postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
     getAboutTheProperty,
     postAboutTheProperty("publicHouse"),
     getWebsiteForProperty,
@@ -278,6 +349,76 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postTiedForGoods("yes"),
     getTiedForGoodDetails,
     postTiedForGoodDetails("fullTie"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+  def aboutYouAndPropertySection6015(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getTaskListPage,
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getAboutTheProperty,
+    postAboutTheProperty("publicHouse"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes", "www.ertyu.com"),
+    getPremisesLicenseGranted,
+    postPremisesLicenseGranted("yes"),
+    getPremisesLicenseGrantedDetails,
+    postPremisesLicenseGrantedDetails("Details"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+  def aboutYouAndPropertySection6016(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getAboutTheProperty,
+    postAboutThePropertyFor6016("hotel"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes", "www.ertyu.com"),
+    getPremisesLicenseGranted,
+    postPremisesLicenseGranted("yes"),
+    getPremisesLicenseGrantedDetails,
+    postPremisesLicenseGrantedDetails("Details"),
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )

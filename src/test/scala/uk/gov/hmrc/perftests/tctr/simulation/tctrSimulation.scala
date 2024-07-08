@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   val aboutYouAndPropertySectionFor6011: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6011")
   val aboutYouAndPropertySectionFor6010: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection("6010")
+  val aboutYouAndPropertySectionFor6015: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6015("6015")
+  val aboutYouAndPropertySectionFor6016: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6016("6016")
 
   setup("vacant-property-submission-6011", "submit vacant property journey")
   .withRequests(submit6011VacantProperty:_*)
@@ -74,6 +76,30 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   setup("Additional-information-6010", "Submit Additional information section")
     .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
+
+  //----6015------
+  setup("About-property-6015", "Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6015: _*)
+
+  setup("Trading-History-6015", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6015:_*)
+
+  setup("Franchise-or-Lettings-6015","Submit Franchise or Lettings section")
+    .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSectionFor6015: _*)
+
+  setup("Lease-or-Agreement-6015", "Submit Lease or agreement section")
+    .withRequests(LeaseOrAgreementRequests.leaseOrAgreementSectionFor6015: _*)
+
+  setup("Additional-information-6015", "Submit Additional information section")
+    .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
+
+  //----6016-----
+  setup("About-property-6016","Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6016: _*)
+
+  setup("Trading-History-6016", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6016: _*)
+
 
 
   runSimulation()

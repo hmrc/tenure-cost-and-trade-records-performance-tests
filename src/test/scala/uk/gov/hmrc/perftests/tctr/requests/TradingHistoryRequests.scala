@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,6 +92,121 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
+  val getCostOfSales: HttpRequestBuilder =
+    http("[GET] get cost of sales page")
+      .get(s"$baseUrl/$route/cost-of-sales")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCostOfSales(accommodation: String, food: String, drinks: String, other: String): HttpRequestBuilder =
+    http("[POST] post cost of sales page")
+      .post(s"$baseUrl/$route/cost-of-sales")
+      .formParamMap(Map(
+        "costOfSales[0].accommodation" -> accommodation,
+        "costOfSales[0].food" -> food,
+        "costOfSales[0].drinks" -> drinks,
+        "costOfSales[0].other" -> other,
+        "csrfToken" -> f"$${csrfToken}"))
+        .check(status.is(303))
+
+  val getTotalPayrollCosts: HttpRequestBuilder =
+    http("[GET] get total payroll costs page")
+      .get(s"$baseUrl/$route/total-payroll-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTotalPayrollCosts(managerAndStaff: String, remuneration:String): HttpRequestBuilder =
+    http("[POST] POST total payroll costs page")
+      .post(s"$baseUrl/$route/total-payroll-costs")
+      .formParamMap(Map(
+        "totalPayrollCosts[0].managers-and-staff" -> managerAndStaff,
+        "totalPayrollCosts[0].directors-remuneration" -> remuneration,
+        "csrfToken" -> f"$${csrfToken}"))
+      .check(status.is(303))
+
+  val getVariableOperatingExpenses: HttpRequestBuilder =
+    http("[GET] get Variable Operating Expenses page")
+      .get(s"$baseUrl/$route/variable-operating-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postVariableOperatingExpenses(energyAndUtilities: String, cleaningAndLaundry: String, buildingMaintenanceAndRepairs: String, fixturesFittingsAndEquipment:String, advertisingAndPromotions:String, administrationAndSundries:String, entertainment: String, other: String, otherExpensesDetails: String ): HttpRequestBuilder =
+    http("[POST] post Variable Operating Expenses page")
+      .post(s"$baseUrl/$route/variable-operating-expenses")
+      .formParamMap(Map(
+        "variableOperatingExpenses.year[0].energy-and-utilities" -> energyAndUtilities,
+        "variableOperatingExpenses.year[0].cleaning-and-laundry" -> cleaningAndLaundry,
+        "variableOperatingExpenses.year[0].building-maintenance-and-repairs" -> buildingMaintenanceAndRepairs,
+        "variableOperatingExpenses.year[0].fixtures-fittings-and-equipment" -> fixturesFittingsAndEquipment,
+        "variableOperatingExpenses.year[0].advertising-and-promotions" -> advertisingAndPromotions,
+        "variableOperatingExpenses.year[0].administration-and-sundries" -> administrationAndSundries,
+        "variableOperatingExpenses.year[0].entertainment" -> entertainment,
+        "variableOperatingExpenses.year[0].other" -> other,
+        "otherExpensesDetails" -> otherExpensesDetails,
+        "csrfToken" -> f"$${csrfToken}"))
+      .check(status.is(303))
+
+  val getFixedOperatingExpenses: HttpRequestBuilder =
+    http("[GET] get Fixed Operating Expenses page")
+      .get(s"$baseUrl/$route/fixed-operating-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postFixedOperatingExpenses(rent: String, businessRates:String, insurance: String, loanInterest: String, depreciation: String ): HttpRequestBuilder =
+    http("[POST] post Fixed Operating Expenses page")
+      .post(s"$baseUrl/$route/fixed-operating-expenses")
+      .formParamMap(Map(
+        "fixedOperatingExpenses[0].rent" -> rent,
+        "fixedOperatingExpenses[0].business-rates" -> businessRates,
+        "fixedOperatingExpenses[0].insurance" -> insurance,
+        "fixedOperatingExpenses[0].loan-interest" -> loanInterest,
+        "fixedOperatingExpenses[0].depreciation" -> depreciation,
+        "csrfToken" -> f"$${csrfToken}"))
+      .check(status.is(303))
+
+  val getOtherCosts: HttpRequestBuilder =
+    http("[GET] get other costs page")
+      .get(s"$baseUrl/$route/other-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postOtherCosts(contributionsToHeadOffice: String, otherCosts: String, otherCostsDetails: String): HttpRequestBuilder =
+    http("[POST] post other costs page")
+      .post(s"$baseUrl/$route/other-costs")
+      .formParamMap(Map(
+        "otherCosts[0].contributionsToHeadOffice" -> contributionsToHeadOffice,
+        "otherCosts[0].otherCosts" -> otherCosts,
+        "otherCostDetails" -> otherCostsDetails,
+        "csrfToken" -> f"$${csrfToken}"))
+      .check(status.is(303))
+
+  val getIncomeExpenditureSummary: HttpRequestBuilder =
+    http("[GET] get income expenditure summary page")
+      .get(s"$baseUrl/$route/income-expenditure-summary")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIncomeExpenditureSummary(option: String): HttpRequestBuilder =
+    http("[POST] post income expenditure summary page")
+      .post(s"$baseUrl/$route/income-expenditure-summary")
+      .formParam("incomeExpenditureSummary", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getUnusualCircumstances: HttpRequestBuilder =
+    http("[GET] get unusual circumstances page")
+      .get(s"$baseUrl/$route/unusual-circumstances")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postUnusualCircumstances(details: String): HttpRequestBuilder =
+    http("[POST] post unusual circumstances page")
+      .post(s"$baseUrl/$route/unusual-circumstances")
+      .formParam("unusualCircumstances", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
   val getCYAAboutTradingHistory: HttpRequestBuilder =
     http("[GET] get cya about your trading history")
       .get(s"$baseUrl/$route/check-your-answers-about-the-trading-history")
@@ -108,6 +223,45 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
 
   val TradingHistorySection: Seq[HttpRequestBuilder] = Seq(
     getTaskListPage,
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDates,
+    postFinancialYearEndDates,
+    getTurnOverPage,
+    postTurnOver(1234, 50, 2340, 230, 30),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes")
+  )
+
+  val TradingHistorySectionFor6015: Seq[HttpRequestBuilder] = Seq(
+    getTaskListPage,
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDates,
+    postFinancialYearEndDates,
+    getTurnOverPage,
+    postTurnOver(1234, 50, 2340, 230, 30),
+    getCostOfSales,
+    postCostOfSales("110", "11", "23", "24"),
+    getTotalPayrollCosts,
+    postTotalPayrollCosts("33", "10"),
+    getVariableOperatingExpenses,
+    postVariableOperatingExpenses("11", "23", "345", "123", "34", "0", "0", "23", "other expense details"),
+    getFixedOperatingExpenses,
+    postFixedOperatingExpenses("2300", "0", "50", "11", "23"),
+    getOtherCosts,
+    postOtherCosts("124", "400", "other details"),
+    getIncomeExpenditureSummary,
+    postIncomeExpenditureSummary("confirmed"),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes")
+  )
+
+  val TradingHistorySectionFor6016: Seq[HttpRequestBuilder] = Seq(
     getAboutYourTradingHistory,
     postAboutYourTradingHistory,
     getFinancialYearEnd,
