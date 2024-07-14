@@ -98,6 +98,20 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
+  val getAboutThePropertyDescription: HttpRequestBuilder =
+    http("[GET] get about the property description")
+      .get(s"$baseUrl/$route/about-the-property-description")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAboutThePropertyDescription(answer: String): HttpRequestBuilder =
+    http("[POST] post about the property description")
+      .post(s"$baseUrl/$route/about-the-property-description")
+      .formParam("propertyCurrentlyUsedString", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
   def postAboutTheProperty(option: String): HttpRequestBuilder =
     http("[POST] post about the property page")
       .post(s"$baseUrl/$route/about-the-property")
@@ -419,6 +433,34 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postPremisesLicenseGranted("yes"),
     getPremisesLicenseGrantedDetails,
     postPremisesLicenseGrantedDetails("Details"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+  def aboutYouAndPropertySection6020(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getAboutThePropertyDescription,
+    postAboutThePropertyDescription("hotel"),
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )

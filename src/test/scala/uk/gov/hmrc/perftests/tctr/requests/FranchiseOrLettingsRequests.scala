@@ -52,6 +52,62 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getTypeOfLetting: HttpRequestBuilder =
+    http("[GET] get type of letting")
+      .get(s"$baseUrl/$route/type-of-letting")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postTypeOfLetting(option: String): HttpRequestBuilder =
+    http("[POST] post type of letting page")
+      .post(s"$baseUrl/$route/type-of-letting")
+      .formParam("typeOfLetting", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getAtmLetting: HttpRequestBuilder =
+    http("[GET] get atm letting page")
+      .get(s"$baseUrl/$route/atm-letting")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAtmLetting(bank: String, buildingNameNumber:String, town: String, postcode: String) : HttpRequestBuilder =
+    http("[GET] get atm letting page")
+      .post(s"$baseUrl/$route/atm-letting")
+      .formParamMap(Map(
+        "bankOrCompany" -> bank,
+        "correspondenceAddress.buildingNameNumber" -> buildingNameNumber,
+        "correspondenceAddress.town" -> town,
+        "correspondenceAddress.postcode" -> postcode,
+        "csrfToken"-> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getRentDetails: HttpRequestBuilder =
+    http("[GET] get rent details page")
+      .get(s"$baseUrl/$route/rent-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentDetails(rent: String): HttpRequestBuilder =
+    http("[POST] post rent details page")
+      .post(s"$baseUrl/$route/rent-details")
+      .formParamMap(Map(
+        "annualRent" -> rent,
+        "dateInput.day" -> today.day,
+        "dateInput.month" -> today.month,
+        "dateInput.year" -> today.year,
+        "csrfToken"-> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+
+
+
+
+
+
+
+
 
   val getCateringOperationOrLettingAccommodation: HttpRequestBuilder =
     http("[GET] get catering operation or lettting accommodation page")
@@ -286,6 +342,19 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getAddAnotherLetting: HttpRequestBuilder =
+    http("[GET] get add another letting page")
+      .get(s"$baseUrl/$route/add-another-letting")
+        .check(status.is(200))
+        .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAddAnotherLetting(option: String): HttpRequestBuilder =
+    http("[POST] post add another letting page")
+      .post(s"$baseUrl/$route/add-another-letting")
+      .formParam("addAnotherLetting", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   def getRemoveLettingOtherPartOfProperty(index: Int): HttpRequestBuilder =
     http("[GET] get remove catering operation page")
       .get(s"$baseUrl/$route/remove-letting-other-part-of-property")
@@ -374,5 +443,51 @@ object FranchiseOrLettingsRequests extends HttpConfiguration with servicesConfig
     getCYAAboutFranchiseOrLettings,
     postCYAAboutFranchiseOrLettings("yes")
   )
+
+  val franchiseOrLettingsSectionFor6016: Seq[HttpRequestBuilder] = Seq(
+    getFranchiseOrLettingsTiedToProperty,
+    postFranchiseOrLettingsTiedToProperty("yes"),
+    getConcessionsOrFranchise,
+    postConcessionsOrFranchise("yes"),
+    getCateringOperationDetails,
+    postCateringOperationDetails("Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
+    getRentReceivedFrom(0),
+    postRentReceivedFrom(0, "1234", "true"),
+    getCalculatingTheRent(0),
+    postCalculatingTheRent(0, "rent details"),
+    getCateringOperationRentIncludes(0),
+    postCateringOperationRentIncludes(0, "rates"),
+    getAddAnotherCateringOperation(0),
+    getRemoveCateringOperation(0),
+    postRemoveCateringOperation(0, "no"),
+    postAddAnotherCateringOperation(0, "no"),
+    getLettingOtherPartOfProperty,
+    postLettingOtherPartOfProperty("yes"),
+    getLettingOtherPartOfPropertyDetails(0),
+    postLettingOtherPartOfPropertyDetails(0, "Minions Group", "Banana Group Ltd", "12 valley", "Despicable city", "BN12 4AX"),
+    getLettingOtherPartOfPropertyRent(0),
+    postLettingOtherPartOfPropertyRentFor6015(0, "12345"),
+    getLettingOtherPartOfPropertyCheckbox(0),
+    postLettingOtherPartOfPropertyCheckbox(0, "rates"),
+    getAddAnotherLettingOtherPartOfProperty(0),
+    getRemoveLettingOtherPartOfProperty(0),
+    postRemoveLettingOtherPartOfProperty(0, "no"),
+    postAddAnotherLettingOtherPartOfProperty(0, "no"),
+    getCYAAboutFranchiseOrLettings,
+    postCYAAboutFranchiseOrLettings("yes"))
+
+  val franchiseOrLettingsSectionFor6020: Seq[HttpRequestBuilder] = Seq(
+    getFranchiseOrLettingsTiedToProperty,
+    postFranchiseOrLettingsTiedToProperty("yes"),
+    getTypeOfLetting,
+    postTypeOfLetting("automatedTellerMachine"),
+    getAtmLetting,
+    postAtmLetting("TSB", "10 minion street", "Minion city", "BN12 4AX"),
+    getRentDetails,
+    postRentDetails("1234"),
+    getAddAnotherLetting,
+    postAddAnotherLetting("no"),
+    getCYAAboutFranchiseOrLettings,
+    postCYAAboutFranchiseOrLettings("yes"))
 
 }
