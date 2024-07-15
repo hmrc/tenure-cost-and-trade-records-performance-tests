@@ -55,6 +55,20 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getFinancialYearEndDatesSummary: HttpRequestBuilder =
+    http("[GET]bget financial year end dates summary page")
+      .get(s"$baseUrl/$route/financial-year-end-dates-summary")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postFinancialYearEndDatesSummary(option: String): HttpRequestBuilder =
+    http("[GET]bget financial year end dates summary page")
+      .post(s"$baseUrl/$route/financial-year-end-dates-summary")
+      .formParamMap(Map(
+        "isFinancialYearEndDatesCorrect" -> option,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+
   val getFinancialYearEndDates: HttpRequestBuilder =
     http("[GET] get financial year end dates page")
       .get(s"$baseUrl/$route/financial-year-end-dates")
@@ -220,6 +234,168 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getTotalFuelSold: HttpRequestBuilder =
+    http("[GET] get total fuel sold page")
+      .get(s"$baseUrl/$route/total-fuel-sold")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTotalFuelSold(answer: String): HttpRequestBuilder =
+    http("[POST] post total fuel sold")
+      .post(s"$baseUrl/$route/total-fuel-sold")
+      .formParam("totalFuelSold-0", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getBunkeredFuelQuestion: HttpRequestBuilder =
+    http("[GET] get bunkered fuel question page")
+      .get(s"$baseUrl/$route/bunkered-fuel-question")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postBunkeredFuelQuestion(option: String): HttpRequestBuilder =
+    http("[POST] post bunkered fuel question page")
+      .post(s"$baseUrl/$route/bunkered-fuel-question")
+      .formParam("bunkeredFuelQuestion", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getBunkeredFuelSold : HttpRequestBuilder =
+    http("[GET] get bunkered fuel sold page")
+      .get(s"$baseUrl/$route/bunkered-fuel-sold")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postBunkeredFuelSold(option : String) : HttpRequestBuilder =
+    http("[POST] post bunkered fuel sold page")
+      .post(s"$baseUrl/$route/bunkered-fuel-sold")
+      .formParam("bunkeredFuelSold-0", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getBunkerFuelCardsDetails : HttpRequestBuilder =
+    http("[GET] get bunkered fuel card details page")
+      .get(s"$baseUrl/$route/bunker-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postBunkerFuelCardsDetails(answer1: String, answer2 : String) : HttpRequestBuilder =
+    http("[POST] post bunkered fuel card details page")
+      .post(s"$baseUrl/$route/bunker-fuel-cards-details")
+      .formParam("name", answer1)
+      .formParam("handlingFee", answer2)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getAddAnotherBunkerFuelCardsDetails : HttpRequestBuilder =
+    http("[GET] get add another bunker fuel card details page")
+      .get(s"$baseUrl/$route/add-another-bunker-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAddAnotherBunkerFuelCardsDetails(option: String) : HttpRequestBuilder =
+    http("[POST] post add another bunker fuel card details page")
+      .post(s"$baseUrl/$route/add-another-bunker-fuel-cards-details")
+      .formParam("addAnotherBunkerFuelCardsDetails", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCustomerCreditAccounts : HttpRequestBuilder =
+    http("[GET] get customer credit accounts page")
+      .get(s"$baseUrl/$route/customer-credit-accounts")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postCustomerCreditAccounts(option: String) : HttpRequestBuilder =
+    http("[POST] post customer credit accounts page")
+      .post(s"$baseUrl/$route/customer-credit-accounts")
+      .formParam("customerCreditAccounts-0", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getAcceptLowMarginFuelCard : HttpRequestBuilder =
+    http("[GET] get Accept Low Margin Fuel Card")
+      .get(s"$baseUrl/$route/accept-low-margin-fuel-card")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAcceptLowMarginFuelCard(option: String) : HttpRequestBuilder =
+    http("[POST] post accept low Margin Fuel Card")
+      .post(s"$baseUrl/$route/accept-low-margin-fuel-card")
+      .formParam("acceptLowMarginFuelCard", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPercentageFromFuelCards : HttpRequestBuilder =
+    http("[GET] get percentage from fuel card page")
+      .get(s"$baseUrl/$route/percentage-from-fuel-cards")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPercentageFromFuelCards(answer: String): HttpRequestBuilder =
+    http("[POST] post percentage from fuel card page")
+      .post(s"$baseUrl/$route/percentage-from-fuel-cards")
+      .formParam("percentageFromFuelCards-0", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getLowMarginFuelCardsDetails: HttpRequestBuilder =
+    http("[GET] get low margin fuel cards details page")
+      .get(s"$baseUrl/$route/low-margin-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postLowMarginFuelCardsDetails(answer1: String, answer2: String): HttpRequestBuilder =
+    http("[POST] post low margin fuel cards details page")
+      .post(s"$baseUrl/$route/low-margin-fuel-cards-details")
+      .formParam("name", answer1)
+      .formParam("handlingFee", answer2)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getAddAnotherLowMarginFuelCardDetails : HttpRequestBuilder =
+    http("[GET] get add another low margin fuel cards details page")
+      .get(s"$baseUrl/$route/add-another-low-margin-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postAddAnotherLowMarginFuelCardDetails(option: String) : HttpRequestBuilder =
+    http("[POST] post add another low margin fuel cards details page")
+      .post(s"$baseUrl/$route/add-another-low-margin-fuel-cards-details")
+      .formParam("addAnotherLowMarginFuelCardsDetails", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getNonFuelTurnOver : HttpRequestBuilder =
+    http("[GET] get non fuel turn over page")
+      .get(s"$baseUrl/$route/non-fuel-turnover")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postNonFuelTurnOver(shop: String, carWash: String, jetWash: String, lottery: String, payPointOrZone: String, otherIncome: String) : HttpRequestBuilder =
+    http("[POST] post non fuel turn over page")
+      .post(s"$baseUrl/$route/non-fuel-turnover")
+      .formParamMap(Map(
+        "turnover[0].shop" -> shop,
+        "turnover[0].carWash" -> carWash,
+        "turnover[0].jetWash" -> jetWash,
+        "turnover[0].lottery" -> lottery,
+        "turnover[0].payPointOrZone" -> payPointOrZone,
+        "turnover[0].otherIncome" -> otherIncome,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getElectricVehicleChargingPoints: HttpRequestBuilder =
+    http("[GET] get electric vehicle charging points page")
+      .get(s"$baseUrl/$route/electric-vehicle-charging-points")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postElectricVehicleChargingPoints(option: String, answer: String) : HttpRequestBuilder =
+    http("[POST] post electric vehicle charging points page")
+      .post(s"$baseUrl/$route/electric-vehicle-charging-points")
+      .formParam("electricVehicleChargingPoints", option)
+      .formParam("spacesOrBays", answer)
 
   val TradingHistorySection: Seq[HttpRequestBuilder] = Seq(
     getTaskListPage,
@@ -273,4 +449,38 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes")
   )
+
+  val TradingHistorySectionFor6020: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDatesSummary,
+    postFinancialYearEndDatesSummary("true"),
+    getTotalFuelSold,
+    postTotalFuelSold("100"),
+    getBunkeredFuelQuestion,
+    postBunkeredFuelQuestion("yes"),
+    getBunkeredFuelSold,
+    postBunkeredFuelSold("50"),
+    getBunkerFuelCardsDetails,
+    postBunkerFuelCardsDetails("shell", "23.5"),
+    getAddAnotherBunkerFuelCardsDetails,
+    postAddAnotherBunkerFuelCardsDetails("no"),
+    getCustomerCreditAccounts,
+    postCustomerCreditAccounts("30"),
+    getAcceptLowMarginFuelCard,
+    postAcceptLowMarginFuelCard("yes"),
+    getPercentageFromFuelCards,
+    postPercentageFromFuelCards("100"),
+    getLowMarginFuelCardsDetails,
+    postLowMarginFuelCardsDetails("shell", "23.5"),
+    getAddAnotherLowMarginFuelCardDetails,
+    postAddAnotherLowMarginFuelCardDetails("no"),
+    getNonFuelTurnOver,
+    postNonFuelTurnOver("22", "223", "123", "67", "789", "67"),
+    getElectricVehicleChargingPoints,
+    postElectricVehicleChargingPoints("yes", "12"),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes"))
 }

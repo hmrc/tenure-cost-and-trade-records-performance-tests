@@ -43,6 +43,20 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
+  val getTypeOfTenure: HttpRequestBuilder =
+    http("[GET] get type of tenure page")
+      .get(s"$baseUrl/$route/type-of-tenure")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTypeOfTenure(tenureType: String, tenureDetails: String): HttpRequestBuilder =
+    http("[POST] post type of tenure page")
+      .post(s"$baseUrl/$route/type-of-tenure")
+      .formParam("typeOfTenure[]", tenureType)
+      .formParam("typeOfTenureDetails", tenureDetails)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   def postAboutYourLandlordFor6015(name: String): HttpRequestBuilder =
     http("[POST] post about your landlord page")
       .post(s"$baseUrl/$route/about-your-landlord")
@@ -121,6 +135,33 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getThroughputAffectsRent: HttpRequestBuilder =
+    http("[GET] get throughput affects rent page")
+      .get(s"$baseUrl/$route/throughput-affects-rent")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postThroughputAffectsRent(option: String): HttpRequestBuilder =
+    http("[POST] get throughput affects rent page")
+      .post(s"$baseUrl/$route/throughput-affects-rent")
+      .formParam("throughputAffectsRent", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getThroughputAffectsRentDetails: HttpRequestBuilder =
+    http("[GET] get throughput affects rent details page" )
+      .get(s"$baseUrl/$route/throughput-affects-rent-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postThroughputAffectsRentDetails(details: String): HttpRequestBuilder =
+    http("[POST] post throughput affects rent details page")
+      .post(s"$baseUrl/$route/throughput-affects-rent-details")
+      .formParam("throughputAffectsRentDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
   val getRentIncludesVat: HttpRequestBuilder =
     http("[GET] get rent includes VAT page")
       .get(s"$baseUrl/$route/rent-includes-vat")
@@ -182,6 +223,19 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getIsVatPayableForWholeProperty: HttpRequestBuilder =
+    http("[GET] get is vat payable for whole property")
+      .get(s"$baseUrl/$route/is-vat-payable-for-whole-property")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIsVatPayableForWholeProperty(option: String): HttpRequestBuilder =
+    http("[GET] get is vat payable for whole property")
+      .post(s"$baseUrl/$route/is-vat-payable-for-whole-property")
+      .formParam("isVatPayableForWholeProperty", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getDoesTheRentPayable: HttpRequestBuilder =
     http("[GET] get does the rent payable")
       .get(s"$baseUrl/$route/does-the-rent-payable")
@@ -195,7 +249,6 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("rentPayable[]", option2)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
 
   val getUltimatelyResponsibleInsideRepairs: HttpRequestBuilder =
     http("[GET] get ultimately responsible inside repairs page")
@@ -238,16 +291,171 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
   val getRentIncludeTradeServices: HttpRequestBuilder =
-    http("[GET] get rent include trade services")
+    http("[GET] get rent include trade services page")
       .get(s"$baseUrl/$route/rent-include-trade-services")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postRentIncludeTradeServices(option: String): HttpRequestBuilder =
-    http("[POST] post rent include trade services")
+    http("[POST] post rent include trade services page")
       .post(s"$baseUrl/$route/rent-include-trade-services")
       .formParam("rentIncludeTradeServices", option)
       .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getTradeServicesDescription: HttpRequestBuilder =
+    http("[GET] get trade services description page")
+      .get(s"$baseUrl/$route/trade-services-description")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postTradeServicesDescription(answer: String): HttpRequestBuilder =
+    http("[POST] post trade services description page")
+      .post(s"$baseUrl/$route/trade-services-description")
+      .formParam("description", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getTradeServicesList: HttpRequestBuilder =
+    http("[GET] get trade services list page")
+      .get(s"$baseUrl/$route/trade-services-list")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTradeServicesList(option: String): HttpRequestBuilder =
+    http("[POST] post trade services list page")
+      .post(s"$baseUrl/$route/trade-services-list")
+      .formParam("tradeServicesList", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPaymentForTradeServices: HttpRequestBuilder =
+    http("[GET] get payment for trade services page")
+      .get(s"$baseUrl/$route/payment-for-trade-services")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPaymentForTradeServices(option: String): HttpRequestBuilder =
+    http("[POST] post payment for trade services page")
+      .post(s"$baseUrl/$route/payment-for-trade-services")
+      .formParam("paymentForTradeServices", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getServicesPaidSeperately: HttpRequestBuilder =
+    http("[GET] get service paid separately page")
+      .get(s"$baseUrl/$route/service-paid-separately")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postServicesPaidSeperately(description: String): HttpRequestBuilder =
+    http("[POST] post services paid separately page")
+      .post(s"$baseUrl/$route/service-paid-separately")
+      .formParam("description", description)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getServicesPaidSeparatelyCharge: HttpRequestBuilder =
+    http("[GET] get services paid separately page")
+      .get(s"$baseUrl/$route/service-paid-separately-charge")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postServicesPaidSeparatelyCharge(annualCharge: String): HttpRequestBuilder =
+    http("[POST] post services paid separately page")
+      .post(s"$baseUrl/$route/service-paid-separately-charge")
+      .formParam("annualCharge", annualCharge)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getServicesPaidSeperatelyList: HttpRequestBuilder =
+    http("[GET] get service paid separately list page")
+      .get(s"$baseUrl/$route/service-paid-separately-list")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postServicesPaidSeperatelyList(option: String): HttpRequestBuilder =
+    http("[POST] post service paid separately list page")
+      .post(s"$baseUrl/$route/service-paid-separately-list")
+      .formParam("servicePaidSeparatelyList", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getDoesRentIncludeParking : HttpRequestBuilder =
+    http("[GET] get does rent include parking page")
+      .get(s"$baseUrl/$route/does-rent-include-parking")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postDoesRentIncludeParking(option: String): HttpRequestBuilder =
+    http("[POST] post does rent include parking page")
+      .post(s"$baseUrl/$route/does-rent-include-parking")
+      .formParam("doesRentIncludeParking", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getIncludedInRentParkingSpaces: HttpRequestBuilder =
+    http("[GET] get included in rent parking spaces page")
+      .get(s"$baseUrl/$route/included-in-rent-parking-spaces")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIncludedInRentParkingSpaces(openSpaces: String, coveredSpaces:String, garages:String ): HttpRequestBuilder =
+    http("[POST] get included in rent parking spaces page")
+      .post(s"$baseUrl/$route/included-in-rent-parking-spaces")
+      .formParamMap(Map(
+        "openSpaces" -> openSpaces,
+        "coveredSpaces" -> coveredSpaces,
+        "garages" -> garages,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getIsParkingRentPaidSeparately: HttpRequestBuilder =
+    http("[GET] get is parking rent paid separately page")
+      .get(s"$baseUrl/$route/is-parking-rent-paid-separately")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIsParkingRentPaidSeparately(option: String): HttpRequestBuilder =
+    http("[POST] post is parking rent paid separately page")
+      .post(s"$baseUrl/$route/is-parking-rent-paid-separately")
+      .formParam("isParkingRentPaidSeparately", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRentedSeparatelyParkingSpaces: HttpRequestBuilder =
+    http("[GET] get rented separately parking spaces page")
+      .get(s"$baseUrl/$route/rented-separately-parking-spaces")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentedSeparatelyParkingSpaces(openSpaces: String, coveredSpaces:String, garages:String): HttpRequestBuilder =
+    http("[POST] post rented separately parking spaces page")
+      .post(s"$baseUrl/$route/rented-separately-parking-spaces")
+      .formParamMap(Map(
+        "openSpaces" -> openSpaces,
+        "coveredSpaces" -> coveredSpaces,
+        "garages" -> garages,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getCarParkingAnnualRent: HttpRequestBuilder =
+    http("[GET] get car parking annual rent page")
+      .get(s"$baseUrl/$route/car-parking-annual-rent")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCarParkingAnnualRent(annualRent: String): HttpRequestBuilder =
+    http("[POST] post car parking annual rent page ")
+      .post(s"$baseUrl/$route/car-parking-annual-rent")
+      .formParamMap(Map(
+        "annualRent" -> annualRent,
+        "fixedRentFrom.day" -> today.day,
+        "fixedRentFrom.month" -> today.month,
+        "ixedRentFrom.year" -> today.year,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
       .check(status.is(303))
 
   val getRentIncludeTradeServicesDetails: HttpRequestBuilder =
@@ -277,6 +485,35 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getRentedEquipmentDetails: HttpRequestBuilder =
+    http("[GET] get rented equipment details page")
+      .get(s"$baseUrl/$route/rented-equipment-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRentedEquipmentDetails(details: String): HttpRequestBuilder =
+    http("[POST] post rented equipment details page")
+      .post(s"$baseUrl/$route/rented-equipment-details")
+      .formParam("rentedEquipmentDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getIncludedInRent: HttpRequestBuilder =
+    http("[GET] get included in rent page")
+      .get(s"$baseUrl/$route/included-in-rent")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postIncludedInRent(option1: String, option2: String, details: String): HttpRequestBuilder =
+    http("[POST] post included in rent page")
+      .post(s"$baseUrl/$route/included-in-rent")
+      .formParamMap(Map(
+        "rentPayable[]" -> option1,
+         " rentPayable[]"-> option2,
+       "rentPayableDetails" -> details,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
 
   val getRentIncludeFixturesAndFittingsDetails: HttpRequestBuilder =
     http("[GET] get rent includes fixtures and fittings details")
@@ -431,6 +668,45 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getPropertyUpdates: HttpRequestBuilder =
+    http("[GET] get property updates page")
+      .get(s"$baseUrl/$route/property-updates")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPropertyUpdates(option: String): HttpRequestBuilder =
+    http("[POST] post property updates page")
+      .post(s"$baseUrl/$route/property-updates")
+      .formParam("propertyUpdates", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getWorkCarriedOutDetails: HttpRequestBuilder =
+    http("[GET] get work carried out details page")
+      .get(s"$baseUrl/$route/work-carried-out-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postWorkCarriedOutDetails(answer: String): HttpRequestBuilder =
+    http("[POST] post work carried out details page")
+      .post(s"$baseUrl/$route/work-carried-out-details")
+      .formParam("workCarriedOutDetails", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getWorkCarriedOutCondition: HttpRequestBuilder =
+    http("[GET] get work carried out condition page")
+      .get(s"$baseUrl/$route/work-carried-out-condition")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postWorkCarriedOutCondition(option: String): HttpRequestBuilder =
+    http("[POST] post work carried out condition page")
+      .post(s"$baseUrl/$route/work-carried-out-condition")
+      .formParam("workCarriedOutCondition", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getFormerLeaseSurrendered: HttpRequestBuilder =
     http("[GET] get former lease surrendered page")
       .get(s"$baseUrl/$route/former-lease-surrendered")
@@ -470,6 +746,32 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getLeaseSurrenderedEarly: HttpRequestBuilder =
+    http("[GET] get lease surrendered early page")
+      .get(s"$baseUrl/$route/lease-surrendered-early")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postLeaseSurrenderedEarly(option: String): HttpRequestBuilder =
+    http("[POST] post lease surrendered early page")
+      .post(s"$baseUrl/$route/lease-surrendered-early")
+      .formParam("leaseSurrenderedEarly", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getBenefitsGivenDetails: HttpRequestBuilder =
+    http("[GET] get benefits given details page")
+      .get(s"$baseUrl/$route/benefits-given-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postBenefitsGivenDetails(details: String): HttpRequestBuilder =
+    http("[POST] post benefits given details page")
+      .post(s"$baseUrl/$route/benefits-given-details")
+      .formParam("benefitsGivenDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getPayACapitalSum : HttpRequestBuilder =
     http("[GET] get pay a capital sum page")
       .get(s"$baseUrl/$route/pay-a-capital-sum")
@@ -480,6 +782,19 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post pay a capital sum page")
       .post(s"$baseUrl/$route/pay-a-capital-sum")
       .formParam("payACapitalSum", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCapitalSumDescription: HttpRequestBuilder =
+    http("[GET] get capital sum description page")
+      .get(s"$baseUrl/$route/capital-sum-description")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCapitalSumDescription(description:String): HttpRequestBuilder =
+    http("[POST] post capital sum description page" )
+      .post(s"$baseUrl/$route/capital-sum-description")
+      .formParam("capitalSumDescription", description)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -709,30 +1024,165 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     getLegalOrPlanningRestrictionsDetails,
     postLegalOrPlanningRestrictionsDetails("Legal or Planning restrictions details"),
     getCYALeaseOrTenure,
-    postCYALeaseOrTenure("yes")
+    postCYALeaseOrTenure("yes"))
 
+  val leaseOrAgreementSectionFor6016: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourLandlord,
+    postAboutYourLandlordFor6015("Dru"),
+    getConnectionToLandlord,
+    postConnectionToLandlord("yes"),
+    getConnectedLandlordDetails,
+    postConnectedLandlordDetails("Details to landlord"),
+    getLeaseOAgreementDetails,
+    postLeaseOrAgreementDetails("yes"),
+    getPropertyUseLeaseBackArrangement,
+    postPropertyUseLeaseBackArrangement("yes"),
+    getCurrentAnnualRent,
+    postCurrentAnnualRent("1000"),
+    getCurrentRentFirstPaid,
+    postCurrentRentFirstPaid,
+    getCurrentLeaseOrAgreementBegin,
+    postCurrentLeaseOrAgreementBegin("60"),
+    getIncludedInYourRent,
+    postIncludedInYourRent("vat"),
+    getDoesTheRentPayable,
+    postDoesRentPayable("proprietor", "otherProperty"),
+    getUltimatelyResponsibleOutsideRepairs,
+    postUltimatelyResponsibleOutsideRepairs("landlord"),
+    getUltimatelyResponsibleInsideRepairs,
+    postUltimatelyResponsibleInsideRepairs("landlord"),
+    getUltimatelyResponsibleBuildingInsurance,
+    postUltimatelyResponsibleBuildingInsurance("landlord"),
+    getRentIncludeTradeServices,
+    postRentIncludeTradeServices("yes"),
+    getRentIncludeTradeServicesDetails,
+    postRentIncludeTradeServiceDetails("1000", "trade service details"),
+    getRentIncludeFixturesAndFittings,
+    postRentIncludeFixturesAndFittings("yes"),
+    getRentIncludeFixturesAndFittingsDetails,
+    postRentIncludeFixturesAndFittingsDetails("0"),
+    getRentOpenMarketValue,
+    postRentOpenMarketValue("yes"),
+    getRentIncreaseAnnuallyWithRpi,
+    postRentIncreaseAnnuallyWithRpi("yes"),
+    getRentPayableVaryAccordingToGrossOrNet,
+    postRentPayableVaryAccordingToGrossOrNet("yes"),
+    getRentPayableVaryAccordingToGrossOrNetDetails,
+    postRentPayableVaryAccordingToGrossOrNetDetails("Details"),
+    getHowCurrentRentIsFixed,
+    postHowCurrentRentIsFixed("newLeaseAgreement"),
+    getMethodToFixCurrentRent,
+    postMethodToFixCurrentRent("agreement"),
+    getIntervalsOfRentReview,
+    postIntervalsOfRentReview("details"),
+    getCanRentBeReducedOnReview,
+    postCanRentBeReducedOnReview("yes"),
+    getFormerLeaseSurrendered,
+    postFormerLeaseSurrendered("yes"),
+    getTenantsAdditionsDisregarded,
+    postTenantsAdditionsDisregarded("yes"),
+    getTenantsAdditionsDisregardedDetails,
+    postTenantsAdditionsDisregardedDetails("Disregarded details"),
+    getPayACapitalSum,
+    postPayACapitalSum("yes"),
+    getReceivePaymentWhenLeaseGranted,
+    postReceivePaymentWhenLeaseGranted("yes"),
+    getLegalOrPlanningRestrictions,
+    postLegalOrPlanningRestrictions("yes"),
+    getLegalOrPlanningRestrictionsDetails,
+    postLegalOrPlanningRestrictionsDetails("Legal or Planning restrictions details"),
+    getCYALeaseOrTenure,
+    postCYALeaseOrTenure("yes"))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  )
-
+  val leaseOrAgreementSectionFor6020: Seq[HttpRequestBuilder] = Seq(
+    getTypeOfTenure,
+    postTypeOfTenure("leasehold", "tenure details"),
+    getAboutYourLandlord,
+    postAboutYourLandlordFor6015("Dru"),
+    getConnectionToLandlord,
+    postConnectionToLandlord("yes"),
+    getPropertyUseLeaseBackArrangement,
+    postPropertyUseLeaseBackArrangement("yes"),
+    getCurrentAnnualRent,
+    postCurrentAnnualRent("1000"),
+    getThroughputAffectsRent,
+    postThroughputAffectsRent("yes"),
+    getThroughputAffectsRentDetails,
+    postThroughputAffectsRentDetails("throughput affects rent details"),
+    getCurrentRentFirstPaid,
+    postCurrentRentFirstPaid,
+    getCurrentLeaseOrAgreementBegin,
+    postCurrentLeaseOrAgreementBegin("60 months"),
+    getIncludedInYourRent,
+    postIncludedInYourRent("vat"),
+    getIsVatPayableForWholeProperty,
+    postIsVatPayableForWholeProperty("yes"),
+    getUltimatelyResponsibleOutsideRepairs,
+    postUltimatelyResponsibleOutsideRepairs("landlord"),
+    getUltimatelyResponsibleInsideRepairs,
+    postUltimatelyResponsibleInsideRepairs("landlord"),
+    getUltimatelyResponsibleBuildingInsurance,
+    postUltimatelyResponsibleBuildingInsurance("landlord"),
+    getRentIncludeTradeServices,
+    postRentIncludeTradeServices("yes"),
+    getTradeServicesDescription,
+    postTradeServicesDescription("trade service details"),
+    getTradeServicesList,
+    postTradeServicesList("yes"),
+    getServicesPaidSeperately,
+    postServicesPaidSeperately("description"),
+    getServicesPaidSeparatelyCharge,
+    postServicesPaidSeparatelyCharge("1234"),
+    getServicesPaidSeperatelyList,
+    postServicesPaidSeperatelyList("no"),
+    getDoesRentIncludeParking,
+    postDoesRentIncludeParking("yes"),
+    getIncludedInRentParkingSpaces,
+    postIncludedInRentParkingSpaces("10", "10", "22"),
+    getIsParkingRentPaidSeparately,
+    postIsParkingRentPaidSeparately("yes"),
+    getRentedSeparatelyParkingSpaces,
+    postRentedSeparatelyParkingSpaces("10", "10", "22"),
+    getCarParkingAnnualRent,
+    postCarParkingAnnualRent("1234"),
+    getRentIncludeFixturesAndFittings,
+    postRentIncludeFixturesAndFittings("yes"),
+    getRentedEquipmentDetails,
+    postRentedEquipmentDetails("details"),
+    getIncludedInRent,
+    postIncludedInRent("fullyEquippedStation", "otherProperty", "" ),
+    getRentOpenMarketValue,
+    postRentOpenMarketValue("yes"),
+    getHowCurrentRentIsFixed,
+    postHowCurrentRentIsFixed("newLeaseAgreement"),
+    getMethodToFixCurrentRent,
+    postMethodToFixCurrentRent("agreement"),
+    getIntervalsOfRentReview,
+    postIntervalsOfRentReview("yearly"),
+    getCanRentBeReducedOnReview,
+    postCanRentBeReducedOnReview("yes"),
+    getPropertyUpdates,
+    postPropertyUpdates("yes"),
+    getWorkCarriedOutDetails,
+    postWorkCarriedOutDetails("details"),
+    getWorkCarriedOutCondition,
+    postWorkCarriedOutCondition("yes"),
+    getTenantsAdditionsDisregarded,
+    postTenantsAdditionsDisregarded("yes"),
+    getTenantsAdditionsDisregardedDetails,
+    postTenantsAdditionsDisregardedDetails("yes"),
+    getLeaseSurrenderedEarly,
+    postLeaseSurrenderedEarly("yes"),
+    getBenefitsGivenDetails,
+    postBenefitsGivenDetails("Details"),
+    getPayACapitalSum,
+    postPayACapitalSum("yes"),
+    getCapitalSumDescription,
+    postCapitalSumDescription("Details"),
+    getLegalOrPlanningRestrictions,
+    postLegalOrPlanningRestrictions("yes"),
+    getLegalOrPlanningRestrictionsDetails,
+    postLegalOrPlanningRestrictionsDetails("Details"),
+    getCYALeaseOrTenure,
+    postCYALeaseOrTenure("yes"))
 }
