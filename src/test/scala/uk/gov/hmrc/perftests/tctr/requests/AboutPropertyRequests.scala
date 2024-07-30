@@ -171,6 +171,37 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getCharityQuestion: HttpRequestBuilder =
+    http("[GET] get charity question page")
+      .get(s"$baseUrl/$route/charity-question")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCharityQuestion(option: String): HttpRequestBuilder =
+    http("[POST] post charity question page")
+      .post(s"$baseUrl/$route/charity-question")
+      .formParam("charityQuestion", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getTradingActivity: HttpRequestBuilder =
+    http("[GET] get trading activity page")
+      .get(s"$baseUrl/$route/trading-activity")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTradingActivity(answer: String, option: String): HttpRequestBuilder =
+    http("[POST] post trading activity page")
+      .post(s"$baseUrl/$route/trading-activity")
+      .formParam("tradingActivityQuestion", option)
+      .formParam("tradingActivityDetails", answer)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
+
+
   val getLicensableActivities: HttpRequestBuilder =
     http("[GET] get licensable activities page")
       .get(s"$baseUrl/$route/licensable-activities")
@@ -421,6 +452,8 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postAreYouThirdParty("yes"),
     getCYAConnectionToTheProperty,
     postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
     getContactDetailsQuestion,
     postContactDetailsQuestion("yes"),
     getAlternateContactDetails,
@@ -455,12 +488,48 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postAreYouThirdParty("yes"),
     getCYAConnectionToTheProperty,
     postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
     getContactDetailsQuestion,
     postContactDetailsQuestion("yes"),
     getAlternateContactDetails,
     postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
     getAboutThePropertyDescription,
     postAboutThePropertyDescription("hotel"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+  def aboutYouAndPropertySection6030(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getAboutTheProperty,
+    postAboutTheProperty("restaurant"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes","www.example.com"),
+    getCharityQuestion,
+    postCharityQuestion("yes"),
+    getTradingActivity,
+    postTradingActivity("yes", "catering services"),
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )

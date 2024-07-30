@@ -27,11 +27,13 @@ trait SetupSimulation {
   def setupSessionFor6015: List[ActionBuilder] = Setup.setupSession("6015")
   def setupSessionFor6016: List[ActionBuilder] = Setup.setupSession("6016")
   def setupSessionFor6020: List[ActionBuilder] = Setup.setupSession("6020")
+  def setupSessionFor6030: List[ActionBuilder] = Setup.setupSession("6030")
 
   setup("web-test-prep-for-6011", "Prepare for test") withActions (setupSessionFor6011: _*)
   setup("web-test-prep-for-6010", "Prepare for test") withActions (setupSessionFor6010: _*)
   setup("web-test-prep-for-6015", "Prepare for test") withActions (setupSessionFor6015: _*)
   setup("web-test-prep-for-6016", "Prepare for test") withActions (setupSessionFor6016: _*)
   setup("web-test-prep-for-6020", "Prepare for test") withActions (setupSessionFor6020: _*)
+  setup("web-test-prep-for-6030", "Prepare for test") withActions (setupSessionFor6030: _*)
 
 }
