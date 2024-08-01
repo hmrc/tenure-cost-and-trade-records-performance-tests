@@ -137,11 +137,11 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   setup("Franchise-or-Lettings-6030", "Submit Trading history section")
     .withRequests(FranchiseOrLettingsRequests.franchiseOrLettingsSectionFor6030: _*)
 
+  setup("Lease-or-Agreement-6030", "Submit Lease or agreement section")
+    .withRequests(LeaseOrAgreementRequests.leaseOrAgreementSectionFor6030: _*)
 
-
-
-
-
+  setup("Additional-information-6030", "Submit Additional information section")
+    .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
 
   runSimulation()
 }
