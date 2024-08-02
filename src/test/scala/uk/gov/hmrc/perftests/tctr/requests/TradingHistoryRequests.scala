@@ -106,6 +106,23 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
+  val getTurnOver6030: HttpRequestBuilder =
+    http("[GET] get turnover page")
+      .get(s"$baseUrl/$route/turnover-6030")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postTurnOver6030(income: String, visitors: String): HttpRequestBuilder =
+    http("[POST] post turnover page")
+      .post(s"$baseUrl/$route/turnover-6030")
+      .formParamMap(Map(
+        "0.weeks" -> "52",
+        "0.grossIncome" -> income,
+        "totalVisitorNumber" -> visitors,
+        "csrfToken" -> f"$${csrfToken}"))
+      .check(status.is(303))
+
+
   val getCostOfSales: HttpRequestBuilder =
     http("[GET] get cost of sales page")
       .get(s"$baseUrl/$route/cost-of-sales")
@@ -483,4 +500,20 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     postElectricVehicleChargingPoints("yes", "12"),
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes"))
+
+  val TradingHistorySectionFor6030: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDates,
+    postFinancialYearEndDates,
+    getTurnOver6030,
+    postTurnOver6030("1234", "50"),
+    getUnusualCircumstances,
+    postUnusualCircumstances("Details of unusual circumstances"),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes"))
+
+
 }
