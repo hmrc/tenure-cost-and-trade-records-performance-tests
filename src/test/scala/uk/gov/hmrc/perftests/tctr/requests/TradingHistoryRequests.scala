@@ -26,6 +26,12 @@ import utils.DateUtils._
 
 object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
 
+  val getWhatYouWillNeed: HttpRequestBuilder =
+    http("[GET] get what you will need page")
+      .get(s"$baseUrl/$route/what-you-will-need")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
   val getAboutYourTradingHistory: HttpRequestBuilder =
     http("[GET] get about your trading history page")
       .get(s"$baseUrl/$route/about-your-trading-history")
@@ -56,18 +62,160 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
   val getFinancialYearEndDatesSummary: HttpRequestBuilder =
-    http("[GET]bget financial year end dates summary page")
+    http("[GET] get financial year end dates summary page")
       .get(s"$baseUrl/$route/financial-year-end-dates-summary")
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
-  def postFinancialYearEndDatesSummary(option: String): HttpRequestBuilder =
-    http("[GET]bget financial year end dates summary page")
-      .post(s"$baseUrl/$route/financial-year-end-dates-summary")
+  val getElectricityGenerated: HttpRequestBuilder =
+    http("[GET] get electricity generated page")
+      .get(s"$baseUrl/$route/electricity-generated")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getGrossReceiptsExcludingVat: HttpRequestBuilder =
+    http("[GET] get gross receipts excluding VAT receipts page")
+      .get(s"$baseUrl/$route/gross-receipts-excluding-vat")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postGrossReceiptsExcludingVat: HttpRequestBuilder =
+    http("[POST] post gross receipts excluding VAT receipts page")
+      .post(s"$baseUrl/$route/gross-receipts-excluding-vat")
       .formParamMap(Map(
-        "isFinancialYearEndDatesCorrect" -> option,
+        "grossReceiptsExcludingVAT[0].electricitySales" -> "123",
+        "grossReceiptsExcludingVAT[0].feedInTariff" -> "123",
+        "grossReceiptsExcludingVAT[0].rocBuyout" -> "123",
+        "grossReceiptsExcludingVAT[0].rocRecycle" -> "123",
+        "grossReceiptsExcludingVAT[0].contractForDifference" -> "123",
+        "grossReceiptsExcludingVAT[0].capacityMarket" -> "123",
+        "grossReceiptsExcludingVAT[0].balancingServices" -> "123",
+        "grossReceiptsExcludingVAT[0].embeddedBenefits" -> "123",
         "csrfToken" -> f"$${csrfToken}"
       ))
+      .check(status.is(303))
+
+  val getOtherIncome: HttpRequestBuilder =
+    http("[GET] get other income page")
+      .get(s"$baseUrl/$route/other-income")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postOtherIncome: HttpRequestBuilder =
+    http("[POST] get other income page")
+      .post(s"$baseUrl/$route/other-income")
+      .formParamMap(Map(
+        "otherIncomeSeq.turnover[0].otherIncome" -> "124",
+        "otherIncomeDetails" -> "details",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getCostOfSalesIntermittent: HttpRequestBuilder =
+    http("[GET] get cost of sales intermittent page")
+      .get(s"$baseUrl/$route/cost-of-sales-intermittent-6076")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCostOfSalesIntermittent: HttpRequestBuilder =
+    http("[POST] post cost of sales intermittent page")
+      .post(s"$baseUrl/$route/cost-of-sales-intermittent-6076")
+      .formParamMap(Map(
+        "costOfSales6076.[0].importedPower" -> "234",
+        "costOfSales6076.[0].TNuoS" -> "345",
+        "costOfSales6076.[0].BSuoS" -> "456",
+        "costOfSales6076.[0].otherSales" -> "432",
+        "otherSalesDetails" -> "details",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getStaffCosts: HttpRequestBuilder =
+    http("[GET] get staff costs page")
+      .get(s"$baseUrl/$route/staff-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postStaffCosts: HttpRequestBuilder =
+    http("[POST] post staff costs page")
+      .post(s"$baseUrl/$route/staff-costs")
+      .formParamMap(Map(
+        "staffCosts.[0].wages" -> "123",
+        "staffCosts.[0].NI" -> "234",
+        "staffCosts.[0].pension" -> "345",
+        "staffCosts.[0].remunerations" -> "345",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getPremisesCosts: HttpRequestBuilder =
+    http("[GET] get premises costs page")
+      .get(s"$baseUrl/$route/premises-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPremiseCosts: HttpRequestBuilder =
+    http("[POST] post premises costs page")
+      .post(s"$baseUrl/$route/premises-costs")
+      .formParamMap(Map(
+        "premisesCosts.[0].energyAndUtilities" -> "123",
+        "premisesCosts.[0].buildingRepairAndMaintenance" -> "234",
+        "premisesCosts.[0].repairsAndRenewalsOfFixtures" -> "456",
+        "premisesCosts.[0].rent" -> "678",
+        "premisesCosts.[0].businessRates" -> "789",
+        "premisesCosts.[0].buildingInsurance" -> "5678",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+      .check(status.is(303))
+
+  val getOperationalExpenses: HttpRequestBuilder =
+    http("[GET] get operational expenses")
+      .get(s"$baseUrl/$route/operational-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postOperationalExpenses: HttpRequestBuilder =
+    http("[POST] post operational expenses")
+      .post(s"$baseUrl/$route/operational-expenses")
+      .formParamMap(Map(
+        "operationalExpensesSeq.turnover[0].advertising" -> "123",
+        "operationalExpensesSeq.turnover[0].administration" -> "456",
+        "operationalExpensesSeq.turnover[0].insurance" -> "567",
+        "operationalExpensesSeq.turnover[0].legalFees" -> "679",
+        "operationalExpensesSeq.turnover[0].interest" -> "5678",
+        "operationalExpensesSeq.turnover[0].other" -> "567",
+        "otherExpensesDetails" -> "456",
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+   .check(status.is(303))
+
+  val getHeadOfficeExpenses: HttpRequestBuilder =
+    http("[GET] get head office expenses page")
+      .get(s"$baseUrl/$route/head-office-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postHeadOfficeExpenses: HttpRequestBuilder =
+    http("[POST] post head office expenses page")
+      .post(s"$baseUrl/$route/head-office-expenses")
+      .formParam("headOfficeExpensesSeq.turnover[0].headOfficeExpenses", "4567")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getIncomeExpenditureSummary6076: HttpRequestBuilder =
+    http("[GET] get income expenditure summary for 6076 page")
+      .get(s"$baseUrl/$route/income-expenditure-summary-6076")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postIncomeExpenditureSummary6076: HttpRequestBuilder =
+    http("[POST] post income expenditure summary for 6076 page")
+      .post(s"$baseUrl/$route/income-expenditure-summary-6076")
+      .formParam("incomeExpenditureSummary6076", "confirmed")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
 
   val getFinancialYearEndDates: HttpRequestBuilder =
     http("[GET] get financial year end dates page")
@@ -85,13 +233,161 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"
       ))
       .check(status.is(303))
-
+      .check(headerRegex("Set-Cookie", """mdtp=(.*?);""").saveAs("mdtpCookie"))
 
   val getTurnOverPage: HttpRequestBuilder =
     http("[GET] get turnover page")
       .get(s"$baseUrl/$route/turnover")
       .check(status.is(200))
+      .header(HttpHeaderNames.Cookie, "mdtp=${mdtpCookie}")
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getTurnOver6030: HttpRequestBuilder =
+    http("[GET] get turnover page")
+      .get(s"$baseUrl/$route/turnover-6030")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getCostOfSales: HttpRequestBuilder =
+    http("[GET] get cost of sales page")
+      .get(s"$baseUrl/$route/cost-of-sales")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getTotalPayrollCosts: HttpRequestBuilder =
+    http("[GET] get total payroll costs page")
+      .get(s"$baseUrl/$route/total-payroll-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getVariableOperatingExpenses: HttpRequestBuilder =
+    http("[GET] get Variable Operating Expenses page")
+      .get(s"$baseUrl/$route/variable-operating-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getFixedOperatingExpenses: HttpRequestBuilder =
+    http("[GET] get Fixed Operating Expenses page")
+      .get(s"$baseUrl/$route/fixed-operating-expenses")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getOtherCosts: HttpRequestBuilder =
+    http("[GET] get other costs page")
+      .get(s"$baseUrl/$route/other-costs")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getIncomeExpenditureSummary: HttpRequestBuilder =
+    http("[GET] get income expenditure summary page")
+      .get(s"$baseUrl/$route/income-expenditure-summary")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getUnusualCircumstances: HttpRequestBuilder =
+    http("[GET] get unusual circumstances page")
+      .get(s"$baseUrl/$route/unusual-circumstances")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getCYAAboutTradingHistory: HttpRequestBuilder =
+    http("[GET] get cya about your trading history")
+      .get(s"$baseUrl/$route/check-your-answers-about-the-trading-history")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getTotalFuelSold: HttpRequestBuilder =
+    http("[GET] get total fuel sold page")
+      .get(s"$baseUrl/$route/total-fuel-sold")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getBunkeredFuelQuestion: HttpRequestBuilder =
+    http("[GET] get bunkered fuel question page")
+      .get(s"$baseUrl/$route/bunkered-fuel-question")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getBunkeredFuelSold: HttpRequestBuilder =
+    http("[GET] get bunkered fuel sold page")
+      .get(s"$baseUrl/$route/bunkered-fuel-sold")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getBunkerFuelCardsDetails: HttpRequestBuilder =
+    http("[GET] get bunkered fuel card details page")
+      .get(s"$baseUrl/$route/bunker-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getAddAnotherBunkerFuelCardsDetails: HttpRequestBuilder =
+    http("[GET] get add another bunker fuel card details page")
+      .get(s"$baseUrl/$route/add-another-bunker-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getCustomerCreditAccounts: HttpRequestBuilder =
+    http("[GET] get customer credit accounts page")
+      .get(s"$baseUrl/$route/customer-credit-accounts")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getAcceptLowMarginFuelCard: HttpRequestBuilder =
+    http("[GET] get Accept Low Margin Fuel Card")
+      .get(s"$baseUrl/$route/accept-low-margin-fuel-card")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getPercentageFromFuelCards: HttpRequestBuilder =
+    http("[GET] get percentage from fuel card page")
+      .get(s"$baseUrl/$route/percentage-from-fuel-cards")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getLowMarginFuelCardsDetails: HttpRequestBuilder =
+    http("[GET] get low margin fuel cards details page")
+      .get(s"$baseUrl/$route/low-margin-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getAddAnotherLowMarginFuelCardDetails: HttpRequestBuilder =
+    http("[GET] get add another low margin fuel cards details page")
+      .get(s"$baseUrl/$route/add-another-low-margin-fuel-cards-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getNonFuelTurnOver: HttpRequestBuilder =
+    http("[GET] get non fuel turn over page")
+      .get(s"$baseUrl/$route/non-fuel-turnover")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val getElectricVehicleChargingPoints: HttpRequestBuilder =
+    http("[GET] get electric vehicle charging points page")
+      .get(s"$baseUrl/$route/electric-vehicle-charging-points")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postWhatYouWillNeed: HttpRequestBuilder =
+    http("[POST] post what you will need page")
+      .post(s"$baseUrl/$route/what-you-will-need")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  def postFinancialYearEndDatesSummary(option: String): HttpRequestBuilder =
+    http("[GET] get financial year end dates summary page")
+      .post(s"$baseUrl/$route/financial-year-end-dates-summary")
+      .formParamMap(Map(
+        "isFinancialYearEndDatesCorrect" -> option,
+        "csrfToken" -> f"$${csrfToken}"
+      ))
+
+  def postElectricityGenerated(weeks: Int, electricity: String): HttpRequestBuilder =
+    http("[POST] post electricity generated page")
+      .post(s"$baseUrl/$route/electricity-generated")
+      .formParam("turnover[0].weeks", weeks)
+      .formParam("turnover[0].electricityGenerated", electricity)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
 
   def postTurnOver(AlcoholDrinks: Int, Food: Int, otherReceipts: Int, accommodation: Int, averageOccupancyRate: Int): HttpRequestBuilder =
     http("[POST] post turnover page")
@@ -106,12 +402,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-  val getTurnOver6030: HttpRequestBuilder =
-    http("[GET] get turnover page")
-      .get(s"$baseUrl/$route/turnover-6030")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postTurnOver6030(income: String, visitors: String): HttpRequestBuilder =
     http("[POST] post turnover page")
       .post(s"$baseUrl/$route/turnover-6030")
@@ -122,13 +412,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-
-  val getCostOfSales: HttpRequestBuilder =
-    http("[GET] get cost of sales page")
-      .get(s"$baseUrl/$route/cost-of-sales")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postCostOfSales(accommodation: String, food: String, drinks: String, other: String): HttpRequestBuilder =
     http("[POST] post cost of sales page")
       .post(s"$baseUrl/$route/cost-of-sales")
@@ -138,15 +421,9 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "costOfSales[0].drinks" -> drinks,
         "costOfSales[0].other" -> other,
         "csrfToken" -> f"$${csrfToken}"))
-        .check(status.is(303))
+      .check(status.is(303))
 
-  val getTotalPayrollCosts: HttpRequestBuilder =
-    http("[GET] get total payroll costs page")
-      .get(s"$baseUrl/$route/total-payroll-costs")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postTotalPayrollCosts(managerAndStaff: String, remuneration:String): HttpRequestBuilder =
+  def postTotalPayrollCosts(managerAndStaff: String, remuneration: String): HttpRequestBuilder =
     http("[POST] POST total payroll costs page")
       .post(s"$baseUrl/$route/total-payroll-costs")
       .formParamMap(Map(
@@ -155,13 +432,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-  val getVariableOperatingExpenses: HttpRequestBuilder =
-    http("[GET] get Variable Operating Expenses page")
-      .get(s"$baseUrl/$route/variable-operating-expenses")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postVariableOperatingExpenses(energyAndUtilities: String, cleaningAndLaundry: String, buildingMaintenanceAndRepairs: String, fixturesFittingsAndEquipment:String, advertisingAndPromotions:String, administrationAndSundries:String, entertainment: String, other: String, otherExpensesDetails: String ): HttpRequestBuilder =
+  def postVariableOperatingExpenses(energyAndUtilities: String, cleaningAndLaundry: String, buildingMaintenanceAndRepairs: String, fixturesFittingsAndEquipment: String, advertisingAndPromotions: String, administrationAndSundries: String, entertainment: String, other: String, otherExpensesDetails: String): HttpRequestBuilder =
     http("[POST] post Variable Operating Expenses page")
       .post(s"$baseUrl/$route/variable-operating-expenses")
       .formParamMap(Map(
@@ -177,13 +448,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-  val getFixedOperatingExpenses: HttpRequestBuilder =
-    http("[GET] get Fixed Operating Expenses page")
-      .get(s"$baseUrl/$route/fixed-operating-expenses")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postFixedOperatingExpenses(rent: String, businessRates:String, insurance: String, loanInterest: String, depreciation: String ): HttpRequestBuilder =
+  def postFixedOperatingExpenses(rent: String, businessRates: String, insurance: String, loanInterest: String, depreciation: String): HttpRequestBuilder =
     http("[POST] post Fixed Operating Expenses page")
       .post(s"$baseUrl/$route/fixed-operating-expenses")
       .formParamMap(Map(
@@ -195,12 +460,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-  val getOtherCosts: HttpRequestBuilder =
-    http("[GET] get other costs page")
-      .get(s"$baseUrl/$route/other-costs")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postOtherCosts(contributionsToHeadOffice: String, otherCosts: String, otherCostsDetails: String): HttpRequestBuilder =
     http("[POST] post other costs page")
       .post(s"$baseUrl/$route/other-costs")
@@ -211,24 +470,12 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
         "csrfToken" -> f"$${csrfToken}"))
       .check(status.is(303))
 
-  val getIncomeExpenditureSummary: HttpRequestBuilder =
-    http("[GET] get income expenditure summary page")
-      .get(s"$baseUrl/$route/income-expenditure-summary")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postIncomeExpenditureSummary(option: String): HttpRequestBuilder =
     http("[POST] post income expenditure summary page")
       .post(s"$baseUrl/$route/income-expenditure-summary")
       .formParam("incomeExpenditureSummary", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-  val getUnusualCircumstances: HttpRequestBuilder =
-    http("[GET] get unusual circumstances page")
-      .get(s"$baseUrl/$route/unusual-circumstances")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postUnusualCircumstances(details: String): HttpRequestBuilder =
     http("[POST] post unusual circumstances page")
@@ -237,25 +484,12 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-
-  val getCYAAboutTradingHistory: HttpRequestBuilder =
-    http("[GET] get cya about your trading history")
-      .get(s"$baseUrl/$route/check-your-answers-about-the-trading-history")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postCYAAboutTradingHistory(option: String): HttpRequestBuilder =
     http("[POST] post cya about your trading history")
       .post(s"$baseUrl/$route/check-your-answers-about-the-trading-history")
       .formParam("checkYourAnswersAboutTheTradingHistory", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-  val getTotalFuelSold: HttpRequestBuilder =
-    http("[GET] get total fuel sold page")
-      .get(s"$baseUrl/$route/total-fuel-sold")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postTotalFuelSold(answer: String): HttpRequestBuilder =
     http("[POST] post total fuel sold")
@@ -264,12 +498,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getBunkeredFuelQuestion: HttpRequestBuilder =
-    http("[GET] get bunkered fuel question page")
-      .get(s"$baseUrl/$route/bunkered-fuel-question")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
   def postBunkeredFuelQuestion(option: String): HttpRequestBuilder =
     http("[POST] post bunkered fuel question page")
       .post(s"$baseUrl/$route/bunkered-fuel-question")
@@ -277,26 +505,14 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getBunkeredFuelSold : HttpRequestBuilder =
-    http("[GET] get bunkered fuel sold page")
-      .get(s"$baseUrl/$route/bunkered-fuel-sold")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postBunkeredFuelSold(option : String) : HttpRequestBuilder =
+  def postBunkeredFuelSold(option: String): HttpRequestBuilder =
     http("[POST] post bunkered fuel sold page")
       .post(s"$baseUrl/$route/bunkered-fuel-sold")
       .formParam("bunkeredFuelSold-0", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getBunkerFuelCardsDetails : HttpRequestBuilder =
-    http("[GET] get bunkered fuel card details page")
-      .get(s"$baseUrl/$route/bunker-fuel-cards-details")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postBunkerFuelCardsDetails(answer1: String, answer2 : String) : HttpRequestBuilder =
+  def postBunkerFuelCardsDetails(answer1: String, answer2: String): HttpRequestBuilder =
     http("[POST] post bunkered fuel card details page")
       .post(s"$baseUrl/$route/bunker-fuel-cards-details")
       .formParam("name", answer1)
@@ -304,49 +520,26 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getAddAnotherBunkerFuelCardsDetails : HttpRequestBuilder =
-    http("[GET] get add another bunker fuel card details page")
-      .get(s"$baseUrl/$route/add-another-bunker-fuel-cards-details")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postAddAnotherBunkerFuelCardsDetails(option: String) : HttpRequestBuilder =
+  def postAddAnotherBunkerFuelCardsDetails(option: String): HttpRequestBuilder =
     http("[POST] post add another bunker fuel card details page")
       .post(s"$baseUrl/$route/add-another-bunker-fuel-cards-details")
       .formParam("addAnotherBunkerFuelCardsDetails", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getCustomerCreditAccounts : HttpRequestBuilder =
-    http("[GET] get customer credit accounts page")
-      .get(s"$baseUrl/$route/customer-credit-accounts")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-  def postCustomerCreditAccounts(option: String) : HttpRequestBuilder =
+  def postCustomerCreditAccounts(option: String): HttpRequestBuilder =
     http("[POST] post customer credit accounts page")
       .post(s"$baseUrl/$route/customer-credit-accounts")
       .formParam("customerCreditAccounts-0", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getAcceptLowMarginFuelCard : HttpRequestBuilder =
-    http("[GET] get Accept Low Margin Fuel Card")
-      .get(s"$baseUrl/$route/accept-low-margin-fuel-card")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postAcceptLowMarginFuelCard(option: String) : HttpRequestBuilder =
+  def postAcceptLowMarginFuelCard(option: String): HttpRequestBuilder =
     http("[POST] post accept low Margin Fuel Card")
       .post(s"$baseUrl/$route/accept-low-margin-fuel-card")
       .formParam("acceptLowMarginFuelCard", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-  val getPercentageFromFuelCards : HttpRequestBuilder =
-    http("[GET] get percentage from fuel card page")
-      .get(s"$baseUrl/$route/percentage-from-fuel-cards")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postPercentageFromFuelCards(answer: String): HttpRequestBuilder =
     http("[POST] post percentage from fuel card page")
@@ -354,12 +547,6 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("percentageFromFuelCards-0", answer)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-  val getLowMarginFuelCardsDetails: HttpRequestBuilder =
-    http("[GET] get low margin fuel cards details page")
-      .get(s"$baseUrl/$route/low-margin-fuel-cards-details")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
   def postLowMarginFuelCardsDetails(answer1: String, answer2: String): HttpRequestBuilder =
     http("[POST] post low margin fuel cards details page")
@@ -369,26 +556,14 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getAddAnotherLowMarginFuelCardDetails : HttpRequestBuilder =
-    http("[GET] get add another low margin fuel cards details page")
-      .get(s"$baseUrl/$route/add-another-low-margin-fuel-cards-details")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postAddAnotherLowMarginFuelCardDetails(option: String) : HttpRequestBuilder =
+  def postAddAnotherLowMarginFuelCardDetails(option: String): HttpRequestBuilder =
     http("[POST] post add another low margin fuel cards details page")
       .post(s"$baseUrl/$route/add-another-low-margin-fuel-cards-details")
       .formParam("addAnotherLowMarginFuelCardsDetails", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-  val getNonFuelTurnOver : HttpRequestBuilder =
-    http("[GET] get non fuel turn over page")
-      .get(s"$baseUrl/$route/non-fuel-turnover")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postNonFuelTurnOver(shop: String, carWash: String, jetWash: String, lottery: String, payPointOrZone: String, otherIncome: String) : HttpRequestBuilder =
+  def postNonFuelTurnOver(shop: String, carWash: String, jetWash: String, lottery: String, payPointOrZone: String, otherIncome: String): HttpRequestBuilder =
     http("[POST] post non fuel turn over page")
       .post(s"$baseUrl/$route/non-fuel-turnover")
       .formParamMap(Map(
@@ -402,13 +577,7 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
-  val getElectricVehicleChargingPoints: HttpRequestBuilder =
-    http("[GET] get electric vehicle charging points page")
-      .get(s"$baseUrl/$route/electric-vehicle-charging-points")
-      .check(status.is(200))
-      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
-
-  def postElectricVehicleChargingPoints(option: String, answer: String) : HttpRequestBuilder =
+  def postElectricVehicleChargingPoints(option: String, answer: String): HttpRequestBuilder =
     http("[POST] post electric vehicle charging points page")
       .post(s"$baseUrl/$route/electric-vehicle-charging-points")
       .formParam("electricVehicleChargingPoints", option)
@@ -512,6 +681,36 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     postTurnOver6030("1234", "50"),
     getUnusualCircumstances,
     postUnusualCircumstances("Details of unusual circumstances"),
+    getCYAAboutTradingHistory,
+    postCYAAboutTradingHistory("yes"))
+
+  val TradingHistorySectionFor6076: Seq[HttpRequestBuilder] = Seq(
+    getWhatYouWillNeed,
+    postWhatYouWillNeed,
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYearEndDatesSummary,
+    postFinancialYearEndDatesSummary("true"),
+    getElectricityGenerated,
+    postElectricityGenerated(26, "10KW"),
+    getGrossReceiptsExcludingVat,
+    postGrossReceiptsExcludingVat,
+    getOtherIncome,
+    postOtherIncome,
+    getCostOfSalesIntermittent,
+    postCostOfSalesIntermittent,
+    getStaffCosts,
+    postStaffCosts,
+    getPremisesCosts,
+    postPremiseCosts,
+    getOperationalExpenses,
+    postOperationalExpenses,
+    getHeadOfficeExpenses,
+    postHeadOfficeExpenses,
+    getIncomeExpenditureSummary6076,
+    postIncomeExpenditureSummary6076,
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes"))
 

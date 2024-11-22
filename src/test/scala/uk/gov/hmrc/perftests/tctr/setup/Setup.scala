@@ -20,21 +20,33 @@ import io.gatling.core.Predef._
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.perftests.tctr.requests.tctrRequests.dynamicReferenceNumber
 
+import scala.Console.println
+
 object Setup {
 
-  private def setupSession(form: String, session: Session): Session =
+  private def setupSessionWithRefNumber(form: String, session: Session): Session = {
+    val referenceNumber = dynamicReferenceNumber(form)
+    println(s"reference number is" + referenceNumber)
     session.setAll(
       List(
-        "referenceNumber" -> dynamicReferenceNumber(form),
-//        "referenceNumberFor6011" -> dynamicReferenceNumber("6011"),
-//        "referenceNumberFor6015" -> dynamicReferenceNumber("6015"),
-//        "referenceNumberFor6016" -> dynamicReferenceNumber("6016")
+        "referenceNumber" -> dynamicReferenceNumber(form)
       )
     )
+  }
 
-  def setupSession(form: String): List[ActionBuilder] =
-    exec {
-      (session: Session) =>
-        setupSession(form, session)
+//  def setupSession(form: String): List[ActionBuilder] =
+//    exec {
+//      (session: Session) =>
+//        setupSessionWithRefNumber(form, session)
+//    }.actionBuilders
+
+  // Function to set up session with reference number in web-test-prep phase
+  def setupSession(form: String): List[ActionBuilder] = {
+    exec { session =>
+      val referenceNumber = dynamicReferenceNumber(form) // Generate reference number for form 1234
+      println(s"Setting reference number in session: $referenceNumber") // Print for debugging
+      session.set("referenceNumber", referenceNumber) // Store reference number in session
     }.actionBuilders
+  }
+
 }
