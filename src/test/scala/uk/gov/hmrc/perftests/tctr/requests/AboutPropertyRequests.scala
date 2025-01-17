@@ -156,6 +156,18 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
+  val getPropertyCurrentlyUsed: HttpRequestBuilder =
+    http("[GET] get property currently used page")
+      .get(s"$baseUrl/$route/property-currently-used")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postPropertyCurrentlyUsed(option: String): HttpRequestBuilder =
+    http("[POST] post property currently used page")
+      .post(s"$baseUrl/$route/property-currently-used")
+      .formParam("propertyCurrentlyUsed[]", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
   val getRenewablesPlants: HttpRequestBuilder =
     http("[GET] get renewables plants page")
       .get(s"$baseUrl/$route/renewables-plants")
@@ -220,9 +232,6 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("generatorCapacity", capacity)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-
-
 
   val getWebsiteForProperty: HttpRequestBuilder =
     http("[GET] get website for the property")
@@ -629,5 +638,38 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )
+
+  def aboutYouAndPropertySection6045(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getPropertyCurrentlyUsed,
+    postPropertyCurrentlyUsed("fleetCaravanPark"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes", "www.example.com"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
 
 }

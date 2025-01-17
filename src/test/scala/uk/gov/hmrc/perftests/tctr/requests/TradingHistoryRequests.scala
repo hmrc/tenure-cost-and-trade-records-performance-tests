@@ -67,6 +67,24 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(200))
       .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
 
+  val getFinancialYears: HttpRequestBuilder =
+    http("[GET] get financial years page")
+      .get(s"$baseUrl/$route/financial-years")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  val postFinancialYears: HttpRequestBuilder =
+    http("[POST] post financial years page")
+      .post(s"$baseUrl/$route/financial-years")
+      .formParam("isFinancialYearsCorrect", "true")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
+
+
+
   val getElectricityGenerated: HttpRequestBuilder =
     http("[GET] get electricity generated page")
       .get(s"$baseUrl/$route/electricity-generated")
@@ -713,6 +731,19 @@ object TradingHistoryRequests extends HttpConfiguration with servicesConfig {
     postIncomeExpenditureSummary6076,
     getCYAAboutTradingHistory,
     postCYAAboutTradingHistory("yes"))
+
+  val TradingHistorySectionFor6045: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourTradingHistory,
+    postAboutYourTradingHistory,
+    getFinancialYearEnd,
+    postFinancialYearEnd,
+    getFinancialYears,
+    postFinancialYears,
+
+
+
+
+  )
 
 
 }

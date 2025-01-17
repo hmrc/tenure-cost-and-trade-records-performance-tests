@@ -33,6 +33,7 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   val aboutYouAndPropertySectionFor6020: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6020("6020")
   val aboutYouAndPropertySectionFor6030: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6030("6030")
   val aboutYouAndPropertySectionFor6076: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6076("6076")
+  val aboutYouAndPropertySectionFor6045: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6045("6045")
 
   setup("vacant-property-submission-6011", "submit vacant property journey")
   .withRequests(submit6011VacantProperty:_*)
@@ -156,6 +157,13 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   setup("Additional-information-6076", "Submit Additional information section")
     .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
+
+  //---6045----
+  setup("About-property-6045", "Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6045: _*)
+
+  setup("Trading-History-6045", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6045: _*)
 
 
 
