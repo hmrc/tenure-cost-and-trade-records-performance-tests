@@ -165,6 +165,17 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   setup("Trading-History-6045", "Submit Trading history section")
     .withRequests(TradingHistoryRequests.TradingHistorySectionFor6045: _*)
 
+  setup("Trading-History-6045", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.StaticCaravansSection: _*)
+
+  setup("Trading-History-6045", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.OtherHolidayAccommodation: _*)
+
+  setup("Trading-History-6045", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TouringAndTentingPitches: _*)
+
+  setup("Trading-History-6045", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.AdditionActivitiesOnSite: _*)
 
 
   runSimulation()
