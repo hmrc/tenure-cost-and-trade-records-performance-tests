@@ -156,6 +156,82 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       ))
       .check(status.is(303))
 
+  val getPropertyCurrentlyUsed: HttpRequestBuilder =
+    http("[GET] get property currently used page")
+      .get(s"$baseUrl/$route/property-currently-used")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+  def postPropertyCurrentlyUsed(option: String): HttpRequestBuilder =
+    http("[POST] post property currently used page")
+      .post(s"$baseUrl/$route/property-currently-used")
+      .formParam("propertyCurrentlyUsed[]", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getRenewablesPlants: HttpRequestBuilder =
+    http("[GET] get renewables plants page")
+      .get(s"$baseUrl/$route/renewables-plants")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postRenewablesPlants(option: String): HttpRequestBuilder =
+    http("[POST] post renewables plants page")
+      .post(s"$baseUrl/$route/renewables-plants")
+      .formParam("renewablesPlant", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getThreeYearsConstructed: HttpRequestBuilder =
+    http("[GET] get three years constructed page")
+      .get(s"$baseUrl/$route/three-years-constructed")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postThreeYearsConstructed(option: String): HttpRequestBuilder =
+    http("[POST] post three years constructed page")
+      .post(s"$baseUrl/$route/renewables-plants")
+      .formParam("threeYearsConstructed", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCostsBreakdown: HttpRequestBuilder =
+    http("[GET] get costs breakdown page")
+      .get(s"$baseUrl/$route/costs-breakdown")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCostsBreakdown(details: String): HttpRequestBuilder =
+    http("[POST] post costs breakdown page")
+      .post(s"$baseUrl/$route/costs-breakdown")
+      .formParam("costsBreakdown", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPlantAndTechnology: HttpRequestBuilder =
+    http("[GET] get plant and technology page")
+      .get(s"$baseUrl/$route/plant-and-technology")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPlantAndTechnology(details: String): HttpRequestBuilder =
+    http("[POST] post plant and technology page")
+      .post(s"$baseUrl/$route/plant-and-technology")
+      .formParam("plantAndTechnology", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getGeneratorCapacity: HttpRequestBuilder =
+    http("[GET] get generator capacity page")
+      .get(s"$baseUrl/$route/generator-capacity")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postGeneratorCapacity(capacity: String): HttpRequestBuilder =
+    http("[POST] get generator capacity page")
+      .post(s"$baseUrl/$route/generator-capacity")
+      .formParam("generatorCapacity", capacity)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
 
   val getWebsiteForProperty: HttpRequestBuilder =
     http("[GET] get website for the property")
@@ -199,9 +275,6 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .check(status.is(303))
 
 
-
-
-
   val getLicensableActivities: HttpRequestBuilder =
     http("[GET] get licensable activities page")
       .get(s"$baseUrl/$route/licensable-activities")
@@ -239,10 +312,6 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("premisesLicenseGrantedInformation", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
-
-
-
-
 
   val getLicensableActivitiesDetails: HttpRequestBuilder =
     http("[GET] get licensable activities details")
@@ -533,4 +602,74 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )
+
+  def aboutYouAndPropertySection6076(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getRenewablesPlants,
+    postRenewablesPlants("intermittent"),
+    getThreeYearsConstructed,
+    postThreeYearsConstructed("yes"),
+    getCostsBreakdown,
+    postCostsBreakdown("costs breakdown details"),
+    getPlantAndTechnology,
+    postPlantAndTechnology("plant and technology name"),
+    getGeneratorCapacity,
+    postGeneratorCapacity("50 MW"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+  def aboutYouAndPropertySection6045(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getPropertyCurrentlyUsed,
+    postPropertyCurrentlyUsed("fleetCaravanPark"),
+    getWebsiteForProperty,
+    postWebsiteForProperty("yes", "www.example.com"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+
 }

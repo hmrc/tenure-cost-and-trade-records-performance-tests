@@ -122,6 +122,21 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
+  val getProvideDetailsOfYourLease: HttpRequestBuilder =
+    http("[GET] get provide details of your lease")
+      .get(s"$baseUrl/$route/provide-details-of-your-lease")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postProvideDetailsOfYourLease: HttpRequestBuilder =
+    http("[POST] post provide details of your lease")
+      .post(s"$baseUrl/$route/provide-details-of-your-lease")
+      .formParam("provideDetailsOfYourLease", "details")
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+
+
   val getCurrentAnnualRent: HttpRequestBuilder =
     http("[GET] get current annual rent page")
       .get(s"$baseUrl/$route/current-annual-rent")
@@ -1334,4 +1349,19 @@ object LeaseOrAgreementRequests extends HttpConfiguration with servicesConfig {
     postLegalOrPlanningRestrictionsDetails("details"),
     getCYALeaseOrTenure,
     postCYALeaseOrTenure("yes"))
+
+  val leaseOrAgreementSectionFor6076: Seq[HttpRequestBuilder] = Seq(
+    getAboutYourLandlord,
+    postAboutYourLandlordFor6015("Dru"),
+    getConnectionToLandlord,
+    postConnectionToLandlord("yes"),
+    getConnectedLandlordDetails,
+    postConnectedLandlordDetails("Connected to landlord details"),
+    getPropertyUseLeaseBackArrangement,
+    postPropertyUseLeaseBackArrangement("yes"),
+    getProvideDetailsOfYourLease,
+    postProvideDetailsOfYourLease,
+    getCYALeaseOrTenure,
+    postCYALeaseOrTenure("yes"))
+
 }

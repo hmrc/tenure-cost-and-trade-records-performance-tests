@@ -28,6 +28,8 @@ trait SetupSimulation {
   def setupSessionFor6016: List[ActionBuilder] = Setup.setupSession("6016")
   def setupSessionFor6020: List[ActionBuilder] = Setup.setupSession("6020")
   def setupSessionFor6030: List[ActionBuilder] = Setup.setupSession("6030")
+  def setupSessionFor6076: List[ActionBuilder] = Setup.setupSession("6076")
+  def setupSessionFor6045: List[ActionBuilder] = Setup.setupSession("6045")
 
   setup("web-test-prep-for-6011", "Prepare for test") withActions (setupSessionFor6011: _*)
   setup("web-test-prep-for-6010", "Prepare for test") withActions (setupSessionFor6010: _*)
@@ -35,5 +37,7 @@ trait SetupSimulation {
   setup("web-test-prep-for-6016", "Prepare for test") withActions (setupSessionFor6016: _*)
   setup("web-test-prep-for-6020", "Prepare for test") withActions (setupSessionFor6020: _*)
   setup("web-test-prep-for-6030", "Prepare for test") withActions (setupSessionFor6030: _*)
+  setup("web-test-prep-for-6076", "Prepare for test") withActions (setupSessionFor6076: _*)
+  setup("web-test-prep-for-6045", "Prepare for test") withActions (setupSessionFor6045: _*)
 
 }

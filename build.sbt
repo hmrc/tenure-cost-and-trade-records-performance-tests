@@ -2,8 +2,8 @@ lazy val root = (project in file("."))
   .enablePlugins(GatlingPlugin)
   .settings(
     name := "tenure-cost-and-trade-records-performance-tests",
-    version := "0.1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    version := "2.0.0",
+    scalaVersion := "2.13.14",
     //implicitConversions & postfixOps are Gatling recommended -language settings
     scalacOptions ++= Seq("-feature", "-language:implicitConversions", "-language:postfixOps"),
     // Enabling sbt-auto-build plugin provides DefaultBuildSettings with default `testOptions` from `sbt-settings` plugin.
