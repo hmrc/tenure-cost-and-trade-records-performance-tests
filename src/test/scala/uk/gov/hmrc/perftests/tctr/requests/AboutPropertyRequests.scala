@@ -274,7 +274,6 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
-
   val getLicensableActivities: HttpRequestBuilder =
     http("[GET] get licensable activities page")
       .get(s"$baseUrl/$route/licensable-activities")
@@ -402,6 +401,86 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     http("[POST] post tied for goods details")
       .post(s"$baseUrl/$route/tied-for-goods-details")
       .formParam("tiedForGoodsDetails", details)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCommercialLettingQuestion: HttpRequestBuilder =
+    http("[GET] get commercial letting question")
+      .get(s"$baseUrl/$route/commercial-letting-question")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCommercialLettingQuestion(month: Int, year: Int): HttpRequestBuilder =
+    http("[POST] post commercial letting question")
+      .post(s"$baseUrl/$route/commercial-letting-question")
+      .formParam("commercialLettingQuestion.month", month)
+      .formParam("commercialLettingQuestion.year", year)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCommercialLettingAvailability: HttpRequestBuilder =
+    http("[GET] get commercial letting availability")
+      .get(s"$baseUrl/$route/commercial-letting-availability")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCommercialLettingAvailability(months: Int): HttpRequestBuilder =
+    http("[POST] post commercial letting availability")
+      .post(s"$baseUrl/$route/commercial-letting-availability")
+      .formParam("commercialLettingAvailability", months)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getCompletedCommercialLettings: HttpRequestBuilder =
+    http("[GET] get completed commercial lettings")
+      .get(s"$baseUrl/$route/completed-commercial-lettings")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postCompletedCommercialLettings(nights: Int): HttpRequestBuilder =
+    http("[POST] post completed commercial lettings")
+      .post(s"$baseUrl/$route/completed-commercial-lettings")
+      .formParam("completedCommercialLettings", nights)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getPartsUnavailable: HttpRequestBuilder =
+    http("[GET] get parts unavailable")
+      .get(s"$baseUrl/$route/parts-unavailable")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postPartsUnavailable(option: String): HttpRequestBuilder =
+    http("[POST] post parts unavailable")
+      .post(s"$baseUrl/$route/parts-unavailable")
+      .formParam("partsUnavailable", option)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getOccupiersDetails: HttpRequestBuilder =
+    http("[GET] get occupiers details")
+      .get(s"$baseUrl/$route/occupiers-details")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postOccupiersDetails(occupierName: String, occupierAddress: String): HttpRequestBuilder =
+    http("[POST] post occupiers details")
+      .post(s"$baseUrl/$route/occupiers-details")
+      .formParam("occupiersDetailsName", occupierName)
+      .formParam("occupiersDetailsAddress", occupierAddress)
+      .formParam("csrfToken", f"$${csrfToken}")
+      .check(status.is(303))
+
+  val getOccupiersDetailsList: HttpRequestBuilder =
+    http("[GET] get occupiers details list")
+      .get(s"$baseUrl/$route/occupiers-details-list")
+      .check(status.is(200))
+      .check(css("input[name=csrfToken]", "value").saveAs("csrfToken"))
+
+  def postOccupiersDetailsList(option: String): HttpRequestBuilder =
+    http("[POST] post occupiers details list")
+      .post(s"$baseUrl/$route/occupiers-details-list")
+      .formParam("occupiersDetailsList", option)
       .formParam("csrfToken", f"$${csrfToken}")
       .check(status.is(303))
 
@@ -667,6 +746,46 @@ object AboutPropertyRequests extends HttpConfiguration with servicesConfig {
     postPropertyCurrentlyUsed("fleetCaravanPark"),
     getWebsiteForProperty,
     postWebsiteForProperty("yes", "www.example.com"),
+    getCYAAboutTheProperty,
+    postCYAAboutTheProperty("yes")
+  )
+
+  def aboutYouAndPropertySection6048(form: String): Seq[HttpRequestBuilder] = Seq(
+    getHomePage,
+    getLoginPage,
+    postLoginPage("BN12 4AX", form),
+    getAreYouStillConnectedPage,
+    postAreYouStillConnectedPage("yes"),
+    getVacantPropertiesPage,
+    postVacantProperties("no"),
+    getNameOfOperatorFromProperty,
+    postNameOfOperatorFromProperty("Dru"),
+    getTradingNameOwnTheProperty,
+    postTradingNameOwnTheProperty("no"),
+    getTradingNamePayingRent,
+    postPostTradingNamePayingRent("yes"),
+    getAreYouThirdParty,
+    postAreYouThirdParty("yes"),
+    getCYAConnectionToTheProperty,
+    postCYAConnectionToTheProperty("yes"),
+    getAboutYouPage,
+    postAboutYouPage("minion", "01234567899", "minion@example.com"),
+    getContactDetailsQuestion,
+    postContactDetailsQuestion("yes"),
+    getAlternateContactDetails,
+    postAlternateContactDetails("10 Minion Street", "MinionsCity", "BN12 4AX"),
+    getCommercialLettingQuestion,
+    postCommercialLettingQuestion(10,2024),
+    getCommercialLettingAvailability,
+    postCommercialLettingAvailability(10),
+    getCompletedCommercialLettings,
+    postCompletedCommercialLettings(110),
+    getPartsUnavailable,
+    postPartsUnavailable("yes"),
+    getOccupiersDetails,
+    postOccupiersDetails("Tom Hitchings", "Test Street, Banana Valley, BN12 6AB"),
+    getOccupiersDetailsList,
+    postOccupiersDetailsList("no"),
     getCYAAboutTheProperty,
     postCYAAboutTheProperty("yes")
   )

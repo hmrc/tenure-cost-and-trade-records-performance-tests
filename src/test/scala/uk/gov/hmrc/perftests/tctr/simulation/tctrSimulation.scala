@@ -18,7 +18,7 @@ package uk.gov.hmrc.perftests.tctr.simulation
 
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, AdditionalInformationRequests, FranchiseOrLettingsRequests, LeaseOrAgreementRequests, TradingHistoryRequests, tctrRequests}
+import uk.gov.hmrc.perftests.tctr.requests.{AboutPropertyRequests, AccommodationDetailsRequests, AdditionalInformationRequests, FranchiseOrLettingsRequests, LeaseOrAgreementRequests, LettingHistoryRequests, TradingHistoryRequests, tctrRequests}
 import uk.gov.hmrc.perftests.tctr.simulation.setup.SetupSimulation
 
 class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
@@ -34,6 +34,7 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
   val aboutYouAndPropertySectionFor6030: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6030("6030")
   val aboutYouAndPropertySectionFor6076: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6076("6076")
   val aboutYouAndPropertySectionFor6045: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6045("6045")
+  val aboutYouAndPropertySectionFor6048: Seq[HttpRequestBuilder] = AboutPropertyRequests.aboutYouAndPropertySection6048("6048")
 
   setup("vacant-property-submission-6011", "submit vacant property journey")
   .withRequests(submit6011VacantProperty:_*)
@@ -176,6 +177,25 @@ class tctrSimulation extends PerformanceTestRunner with SetupSimulation {
 
   setup("Trading-History-6045", "Submit Trading history section")
     .withRequests(TradingHistoryRequests.AdditionActivitiesOnSite: _*)
+
+//---6048----
+  setup("About-property-6048", "Submit about you and your property section")
+    .withRequests(aboutYouAndPropertySectionFor6048: _*)
+
+  setup("Letting-History-6048", "Submit Letting History section")
+    .withRequests(LettingHistoryRequests.lettingHistorySectionFor6048: _*)
+
+  setup("Accommodation-Details-6048", "Submit Accommodation Details section")
+    .withRequests(AccommodationDetailsRequests.AccommodationDetailsSectionFor6048: _*)
+
+  setup("Trading-History-6048", "Submit Trading history section")
+    .withRequests(TradingHistoryRequests.TradingHistorySectionFor6048: _*)
+
+  setup("Lease-or-Agreement-6048", "Submit Lease or Agreement section")
+    .withRequests(LeaseOrAgreementRequests.leaseOrAgreementSectionFor6048: _*)
+
+  setup("Additional-information-6048", "Submit Additional information section")
+    .withRequests(AdditionalInformationRequests.additionalInformationSection: _*)
 
 
   runSimulation()
